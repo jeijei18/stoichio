@@ -345,23 +345,13 @@ left:50%;
 transform:translateX(-50%);
 width:90%;
 text-align:center;
-font-size:clamp(18px,2.5vw,34px);
+font-size:40px !important;
 color:var(--yellow);
 text-shadow:4px 4px #000;
 letter-spacing:1px;
 }
 
-.story-scene-subtitle{
-position:absolute;
-top:16%;
-left:50%;
-transform:translateX(-50%);
-width:90%;
-text-align:center;
-font-size:clamp(8px,1vw,12px);
-color:#b9d8e8;
-letter-spacing:2px;
-}
+.story-scene-subtitle{display:none;}
 
 .story-actor{
 position:absolute;
@@ -376,8 +366,8 @@ filter:drop-shadow(0 12px 0 rgba(0,0,0,.35));
 animation:actorFloat .7s steps(2) infinite alternate;
 }
 
-.story-actor.left{left:8%}
-.story-actor.right{right:8%}
+.story-actor.left{left:8%;display:flex !important}
+.story-actor.right{right:8%;display:flex !important}
 
 .actor-robot{font-size:112px}
 .actor-crystal{font-size:105px}
@@ -467,29 +457,41 @@ to{transform:translateY(-7px)}
 position:relative;
 z-index:5;
 width:min(1180px,92vw);
-min-height:118px;
+min-height:150px;
 margin:0 auto 22px;
-padding:20px 28px 18px;
+padding:22px 30px 24px;
 background:rgba(6,20,29,.96);
 border:4px solid #5ac8ff;
 box-shadow:0 0 0 3px #07131a,0 0 25px rgba(72,190,255,.28);
-text-align:left;
+text-align:center;
 }
 
 .dialogue-name{
-font-size:14px;
+display:block;
+width:max-content;
+max-width:100%;
+margin:0 auto 14px;
+padding:7px 12px;
+border:2px solid rgba(90,200,255,.72);
+background:rgba(16,44,53,.92);
 color:var(--yellow);
-margin-bottom:10px;
+font-size:clamp(9px,1vw,13px);
+line-height:1.4;
+letter-spacing:1.5px;
 text-shadow:2px 2px #000;
 }
 
 .dialogue-text{
 font-family:Arial,sans-serif;
-font-size:20px;
-line-height:1.55;
+font-size:clamp(16px,1.65vw,21px);
+line-height:1.6;
 min-height:62px;
 color:#fff;
 letter-spacing:.2px;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
 }
 
 .dialogue-caret{
@@ -516,15 +518,7 @@ gap:10px;
 align-items:center;
 }
 
-.story-progress{
-position:absolute;
-left:4vw;
-bottom:34px;
-z-index:20;
-font-size:10px;
-color:#9db9c7;
-letter-spacing:1px;
-}
+.story-progress{display:none!important;}
 
 .story-skip{
 background:#1b303b;
@@ -552,9 +546,38 @@ font-weight:bold;
 .actor-robot,.actor-crystal,.actor-molecule{font-size:72px}
 .story-actor.left{left:2%}
 .story-actor.right{right:2%}
-.dialogue-box{width:94vw;padding:15px 18px;min-height:130px}
-.dialogue-text{font-size:16px}
-.story-scene-title{left:4%;top:7%}
+.dialogue-box{width:94vw;padding:16px 16px 18px;min-height:145px}
+.dialogue-name{margin-bottom:11px;padding:6px 9px;font-size:9px}
+.dialogue-text{font-size:16px;line-height:1.55}
+.story-scene-title{left:50%;top:6%;width:94%;font-size:clamp(17px,5.5vw,25px)}
+}
+
+/* STORYLINE SECONDARY HEADING — TEXT LABEL, NO BOX */
+.story-screen .dialogue-name{
+  display:block !important;
+  border:0 !important;
+  box-shadow:none !important;
+  background:transparent !important;
+  outline:0 !important;
+  padding:0 !important;
+  margin:0 0 14px !important;
+  color:var(--yellow) !important;
+  text-align:center !important;
+  font-size:20px !important;
+}
+
+/* STORYLINE-ONLY RESPONSIVE TUNING */
+@media(max-width:430px){
+.story-scene-title{top:5%;width:92%;font-size:clamp(16px,6vw,23px)}
+.dialogue-box{width:94vw;padding:14px 13px 16px;min-height:140px}
+.dialogue-name{margin-bottom:10px;font-size:8px;letter-spacing:1px}
+.dialogue-text{font-size:15px;line-height:1.5}
+}
+@media(max-height:520px) and (orientation:landscape){
+.story-scene-title{top:4%;font-size:clamp(15px,3.8vw,24px)}
+.dialogue-box{min-height:105px;padding:12px 18px 13px;margin-bottom:12px}
+.dialogue-name{margin-bottom:7px;padding:4px 8px;font-size:8px}
+.dialogue-text{font-size:14px;line-height:1.4;min-height:42px}
 }
 
 /* =====================================================
@@ -5769,61 +5792,21 @@ let storyTyping=false;
 let storyTimer=null;
 
 const STORY_SCENES=[
-{
-title:"THE REACTION STORM",
-sub:"CHEMISTIA // NIGHT 01",
-left:"⚗️",right:"",speaker:"CHEMISTIA SYSTEM",
-text:"A reaction storm has torn through Chemistia. The Balance Crystal is breaking apart..."
-},
-{
-title:"THE LAST SIGNAL",
-sub:"CHEMISTIA // LAB DISTRICT",
-left:"🧪",right:"⚛",speaker:"FIELD LOG",
-text:"The equations are collapsing one by one. If we do nothing, every reaction route will be locked."
-},
-{
-title:"THE BALANCE CORE",
-sub:"UNDERGROUND ARCHIVE",
-left:"💎",right:"⚗️",speaker:"ARCHIVE LOG",
-text:"I can detect the missing pattern. Matter is never created or destroyed. The atoms must still be accounted for."
-},
-{
-title:"THE FIRST GATE",
-sub:"HYDROGEN HOP",
-left:"⚛",right:"🧪",speaker:"MISSION GUIDE",
-text:"Then we start with the simplest reaction. Identify the substances first. Balance the atoms second."
-},
-{
-title:"THE RULE",
-sub:"REACTION PROTOCOL",
-left:"⚗️",right:"⚖",speaker:"REACTION PROTOCOL",
-text:"Remember: change coefficients, not chemical formulas. Every atom on the left must have a matching count on the right."
-},
-{
-title:"THE PATH OPENS",
-sub:"CHEMISTIA // WORLD MAP",
-left:"⚗️",right:"🧪",speaker:"MISSION GUIDE",
-text:"One balanced equation unlocks the next path. Each world will test a new skill."
-},
-{
-title:"THE QUEST",
-sub:"15 MISSIONS AHEAD",
-left:"💎",right:"⚛",speaker:"CHEMISTIA SYSTEM",
-text:"Collect coins. Earn XP. Solve the reactions. Restore the Balance Crystal."
-},
-{
-title:"READY?",
-sub:"CHEMISTIA // WORLD 01",
-left:"⚗️",right:"🧪",speaker:"MISSION GUIDE",
-text:"The first gate is opening. Your chemistry adventure starts now."
-}
+{title:"🍔 A Simple Recipe",sub:"FIELD LOG",left:"🍔",right:"⚗️",speaker:"FIELD LOG",text:"Every great reaction begins with a recipe. Let’s start with something simple: a burger."},
+{title:"⚗️ A Chemical Recipe",sub:"MISSION BRIEF",left:"⚗️",right:"🧪",speaker:"MISSION BRIEF",text:"But chemistry has recipes too. Soon, you’ll discover how chemical equations guide reactions."},
+{title:"🔢 The Hidden Ratios",sub:"CHEMIST'S NOTE",left:"🔢",right:"⚗️",speaker:"CHEMIST'S NOTE",text:"Every reaction follows a relationship. You’ll learn how mole ratios reveal the amounts of substances involved."},
+{title:"⚔️ The Reactant Challenge",sub:"REACTION ALERT",left:"⚔️",right:"🧪",speaker:"REACTION ALERT",text:"But what happens when reactants are not present in the right amounts? One may run out first."},
+{title:"🚨 The Limiting Reagent",sub:"LAB REPORT",left:"🚨",right:"⚗️",speaker:"LAB REPORT",text:"You’ll discover how to find the reactant that controls how far a reaction can go."},
+{title:"🏭 The Maximum Product",sub:"PRODUCTION LOG",left:"🏭",right:"🧪",speaker:"PRODUCTION LOG",text:"Then, you’ll uncover how much product a reaction can produce at most."},
+{title:"📊 The Final Result",sub:"YIELD ANALYSIS",left:"📊",right:"⚗️",speaker:"YIELD ANALYSIS",text:"But reactions don’t always give the expected amount. You’ll learn how to measure the actual result."},
+{title:"🧪 The Chemist’s Mission",sub:"FINAL MISSION BRIEF",left:"🧪",right:"⚗️",speaker:"FINAL MISSION BRIEF",text:"By the end, you’ll bring everything together and solve stoichiometry problems like a true chemist."}
 ];
 
 function updateReactionStormStoryFX(){
   const fx=document.getElementById("reactionStormStoryFX");
   if(!fx)return;
   // Storm belongs to the opening cover scene only.
-  const shouldStorm=(storyIndex===0 && !document.getElementById("storyScreen").hidden);
+  const shouldStorm=false;
   fx.classList.toggle("active",shouldStorm);
 }
 
@@ -5837,8 +5820,7 @@ document.getElementById("storySceneSubtitle").textContent=scene.sub;
 document.getElementById("storyActorLeft").textContent=scene.left;
 document.getElementById("storyActorRight").textContent=scene.right;
 document.getElementById("storySpeaker").textContent=scene.speaker;
-document.getElementById("storyProgress").textContent=
-`SCENE ${String(storyIndex+1).padStart(2,"0")} / ${String(STORY_SCENES.length).padStart(2,"0")}`;
+document.getElementById("storyProgress").textContent="";
 
 const box=document.getElementById("storyText");
 box.innerHTML="";
