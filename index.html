@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -518,7 +519,24 @@ gap:10px;
 align-items:center;
 }
 
-.story-progress{display:none!important;}
+/* Story scene counter — inside the storyline box, at the lower endpoint */
+.story-progress{
+  display:block !important;
+  position:static !important;
+  width:auto !important;
+  min-width:0 !important;
+  margin:12px 0 0 !important;
+  padding:0 !important;
+  color:#b9d8e8 !important;
+  background:transparent !important;
+  border:0 !important;
+  box-shadow:none !important;
+  font-size:12px !important;
+  font-weight:800 !important;
+  letter-spacing:1px !important;
+  text-align:right !important;
+  white-space:nowrap !important;
+}
 
 .story-skip{
 background:#1b303b;
@@ -3254,6 +3272,210 @@ html.hc-no-scroll,body.hc-no-scroll{overflow:hidden!important;height:100%!import
     0 3px 0 rgba(0,0,0,.75) !important;
 }
 </style>
+
+<style id="part-b-missing-ingredient-style">
+/* PART B — reuses the existing Hungry Chemist / Level 01 visual language. */
+.hc-partb-overlay{
+  position:fixed!important;inset:0!important;z-index:2147483646!important;
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  padding:18px!important;box-sizing:border-box!important;
+  background:radial-gradient(circle at 50% 35%,rgba(24,87,122,.58),rgba(3,10,24,.96) 72%)!important;
+  opacity:0;transition:opacity .22s ease!important;overflow:auto!important;
+  font-family:"Press Start 2P",cursive!important;
+}
+.hc-partb-overlay.show{opacity:1!important}
+.hc-partb-overlay *{box-sizing:border-box}
+.hc-partb-transition-card,.hc-partb-builder-card{
+  width:min(1180px,96vw);max-height:94vh;overflow:auto;
+  border:4px solid #35bfff;border-radius:20px;
+  background:rgba(4,18,27,.98);box-shadow:0 0 28px rgba(53,191,255,.28),8px 8px 0 #02080d;
+  padding:24px;text-align:center;animation:hcPartBIn .35s ease both;
+}
+.hc-partb-transition-card{max-width:820px}
+.hc-partb-kicker,.hc-partb-mission-label,.hc-partb-discovery-kicker{font-size:13px;color:#35bfff;letter-spacing:1px;margin-bottom:12px}
+.hc-partb-transition-title,.hc-partb-builder-title{font-size:clamp(18px,2.5vw,30px);line-height:1.35;color:#ffe36a;text-shadow:3px 3px 0 #000;margin-bottom:20px}
+.hc-partb-speaker{display:inline-block;font-size:10px;color:#7dff9a;border:2px solid #7dff9a;padding:8px 10px;margin-bottom:16px}
+.hc-partb-transition-text{font-family:"Comic Sans MS","Comic Sans",cursive;font-weight:700;font-size:clamp(16px,1.6vw,21px);line-height:1.7;color:#fff;max-width:760px;margin:0 auto 22px}
+.hc-partb-primary{margin-top:18px;width:100%;max-width:430px;font-family:"Press Start 2P",cursive!important;font-size:11px!important}
+.hc-partb-mission-label{margin-top:-2px}
+.hc-partb-mission{font-family:"Comic Sans MS","Comic Sans",cursive;font-weight:700;color:#fff;font-size:clamp(16px,1.5vw,20px);line-height:1.55;margin-bottom:18px}
+.hc-partb-info-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px}
+.hc-partb-info-card{border:3px solid rgba(53,191,255,.7);border-radius:15px;background:#081b25;padding:14px;text-align:left}
+.hc-partb-info-title{font-size:11px;color:#ffe36a;margin-bottom:12px;text-align:center}
+.hc-partb-recipe-line{font-family:Arial,sans-serif;font-size:16px;color:#fff;line-height:1.8;text-align:center}
+.hc-partb-recipe-line span{font-size:22px}
+.hc-partb-inventory{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.hc-partb-item{min-height:92px;border:3px solid #35bfff;border-radius:12px;background:#0b2631;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:grab;touch-action:none;user-select:none;position:relative;transition:.12s;overflow:hidden}
+.hc-partb-item:hover{transform:translateY(-2px);box-shadow:0 0 13px rgba(53,191,255,.32)}
+.hc-partb-item:active{cursor:grabbing;transform:scale(.97)}
+.hc-partb-item.empty{opacity:.35;cursor:not-allowed;filter:grayscale(.45)}
+.hc-partb-item-art{height:39px;display:flex;align-items:center;justify-content:center}
+.hc-partb-item-art .hc-food.patty{width:50px;height:20px}
+.hc-partb-item-art .hc-food.tomato{width:31px;height:31px}
+.hc-partb-item-art .hc-food.bottombun{width:50px;height:15px}
+.hc-partb-item-name{font-size:8px;color:#fff;margin-top:4px}
+.hc-partb-item-count{font-size:11px;color:#ffe36a;margin-top:4px}
+.hc-partb-drag-note{font-size:9px;color:#9fc4d1;line-height:1.7;margin:10px 0 12px}
+.hc-partb-burgers{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.hc-partb-burger-card{border:3px solid rgba(53,191,255,.7);border-radius:15px;background:#081b25;padding:10px;text-align:center;min-width:0}
+.hc-partb-burger-title{font-size:11px;color:#ffe36a;margin-bottom:8px}
+.hc-partb-drop{height:205px;border:3px dashed #35bfff;border-radius:13px;background:linear-gradient(180deg,#0c2633,#06131b);position:relative;display:flex;align-items:flex-end;justify-content:center;overflow:hidden;transition:.12s}
+.hc-partb-drop.drag-over{box-shadow:0 0 0 3px #ffe36a,0 0 22px rgba(255,227,106,.28);border-color:#ffe36a}
+.hc-partb-drop.complete{border-style:solid;border-color:#55dc66;box-shadow:inset 0 0 0 3px rgba(85,220,102,.16),0 0 15px rgba(85,220,102,.18)}
+.hc-partb-drop-hint{position:absolute;top:9px;left:4px;right:4px;color:#58d9ff;font-size:8px;letter-spacing:.4px;z-index:4}
+.hc-partb-drop.complete .hc-partb-drop-hint{color:#7dff9a}
+.hc-partb-stack{width:100%;height:165px;position:relative;padding-bottom:10px;pointer-events:none}
+.hc-partb-layer{position:absolute;left:50%;transform:translateX(-50%);height:31px;display:flex;align-items:center;justify-content:center;animation:hcPartBPiece .2s ease-out both}
+.hc-partb-layer:nth-child(1){bottom:10px;z-index:1}
+.hc-partb-layer:nth-child(2){bottom:35px;z-index:2}
+.hc-partb-layer:nth-child(3){bottom:58px;z-index:3}
+.hc-partb-layer:nth-child(4){bottom:76px;z-index:4}
+.hc-partb-layer .hc-food.patty{width:105px;height:23px}
+.hc-partb-layer .hc-food.tomato{width:78px;height:19px}
+.hc-partb-layer .hc-food.bottombun{width:110px;height:15px}
+.hc-partb-layer .hc-food.topbun{width:110px;height:29px}
+/* PART B — keep all burger layers visually balanced */
+.hc-partb-layer .hc-food.bottombun{width:110px!important;height:18px!important}
+.hc-partb-layer .hc-food.patty{width:110px!important;height:18px!important}
+.hc-partb-layer .hc-food.tomato{width:110px!important;height:18px!important}
+.hc-partb-layer .hc-food.topbun{width:110px!important;height:24px!important}
+.hc-partb-requirement{font-size:7px;color:#9fc4d1;line-height:1.6;margin-top:7px}
+.hc-partb-slot-status{font-family:Arial,sans-serif;font-size:12px;color:#fff;line-height:1.5;margin-top:5px;min-height:36px;display:flex;align-items:center;justify-content:center}
+.hc-partb-build-status{font-size:11px;color:#ffe36a;margin-top:14px}
+.hc-partb-feedback{min-height:22px;font-family:Arial,sans-serif;font-size:14px;color:#fff;line-height:1.5;margin-top:7px}
+.hc-partb-feedback.bun-out{color:#ffe36a}
+.hc-partb-feedback.try-again{color:#ffb7b7}
+.hc-partb-observation{font-family:Arial,sans-serif;font-size:clamp(17px,1.7vw,22px);line-height:1.7;color:#fff;max-width:850px;margin:8px auto 18px}
+.hc-partb-question-progress{font-size:10px;color:#35bfff;letter-spacing:1px;margin-bottom:18px}
+.hc-partb-question{font-family:Arial,sans-serif;font-size:clamp(18px,2vw,25px);line-height:1.6;color:#fff;max-width:900px;margin:0 auto 20px}
+.hc-partb-answer-wrap{width:min(620px,100%);margin:0 auto}
+.hc-partb-answer{width:100%;height:56px;border:4px solid #35bfff;border-radius:12px;background:#06151d;color:#fff;text-align:center;font-family:Arial,sans-serif;font-size:22px;outline:none;padding:8px 12px}
+.hc-partb-answer:focus{box-shadow:0 0 0 3px rgba(53,191,255,.22)}
+.hc-partb-answer.correct{border-color:#55dc66;background:#12321d;color:#fff;box-shadow:0 0 18px rgba(85,220,102,.25)}
+.hc-partb-question-feedback{font-family:Arial,sans-serif;font-size:14px;line-height:1.55;min-height:28px;margin-top:12px;color:#fff}
+.hc-partb-question-feedback.correct{color:#7dff9a}
+.hc-partb-question-feedback.wrong{color:#ffb7b7}
+.hc-partb-back{margin-top:10px!important;min-width:230px!important;font-size:9px!important;opacity:.96}
+.hc-partb-discovery-kicker{font-family:"Comic Sans MS","Comic Sans",cursive;font-size:18px;font-weight:700;color:#ffe36a;text-shadow:2px 2px #000;letter-spacing:1px}
+.hc-partb-discovery-text,.hc-partb-key-text{font-family:"Comic Sans MS","Comic Sans",cursive;font-size:clamp(16px,1.6vw,21px);font-weight:700;line-height:1.7;color:#fff;max-width:900px;margin:0 auto 22px;text-shadow:2px 2px #000}
+.hc-partb-key-title{font-family:"Comic Sans MS","Comic Sans",cursive;font-size:18px;font-weight:700;color:#35bfff;letter-spacing:1px;margin:16px 0 10px;text-shadow:2px 2px #000}
+.hc-partb-key-text{border:3px solid rgba(53,191,255,.7);border-radius:14px;background:#081b25;padding:18px;margin-bottom:4px}
+.hc-partb-drag-ghost{position:fixed!important;left:0;top:0;z-index:2147483647!important;width:76px!important;height:78px!important;pointer-events:none!important;opacity:.92!important;transform:translate(-50%,-50%) scale(1.05)!important;box-shadow:0 0 20px rgba(53,191,255,.5)!important}
+.hc-partb-drag-ghost .hc-partb-item-count{color:#7dff9a}
+@keyframes hcPartBIn{from{opacity:0;transform:translateY(12px) scale(.97)}to{opacity:1;transform:none}}
+@keyframes hcPartBPiece{from{opacity:0;transform:translateY(-18px) scale(.8)}to{opacity:1;transform:none}}
+@media(max-width:850px){
+  .hc-partb-info-grid{grid-template-columns:1fr}
+  .hc-partb-burgers{grid-template-columns:1fr}
+  .hc-partb-drop{height:185px}
+  .hc-partb-stack{height:145px}
+  .hc-partb-builder-card,.hc-partb-transition-card{padding:17px}
+}
+@media(max-width:520px){
+  .hc-partb-overlay{padding:8px!important}
+  .hc-partb-builder-card,.hc-partb-transition-card{width:99vw;padding:13px;border-width:3px;border-radius:15px}
+  .hc-partb-transition-text,.hc-partb-mission{font-size:15px}
+  .hc-partb-info-title{font-size:9px}
+  .hc-partb-recipe-line{font-size:14px}
+  .hc-partb-inventory{gap:6px}
+  .hc-partb-item{min-height:82px}
+  .hc-partb-item-name{font-size:7px}
+  .hc-partb-item-count{font-size:10px}
+  .hc-partb-question{font-size:17px}
+  .hc-partb-answer{height:52px;font-size:20px}
+  .hc-partb-primary{font-size:9px!important}
+}
+
+/* PART C — CHARGING STATION MISSION */
+.hc-partc-overlay{position:fixed!important;inset:0!important;z-index:2147483647!important;display:flex!important;align-items:center!important;justify-content:center!important;padding:14px!important;background:radial-gradient(circle at 50% 30%,rgba(24,87,122,.6),rgba(3,10,24,.97) 72%)!important;overflow:auto!important;font-family:"Press Start 2P",cursive!important}
+.hc-partc-card,.hc-partc-transition-card{width:min(1180px,97vw);max-height:95vh;overflow:auto;border:4px solid #35bfff;border-radius:20px;background:rgba(4,18,27,.98);box-shadow:0 0 30px rgba(53,191,255,.3),8px 8px 0 #02080d;padding:22px;text-align:center;animation:hcPartCIn .35s ease both}
+.hc-partc-transition-card{max-width:820px}.hc-partc-transition-title,.hc-partc-title{font-size:clamp(20px,2.7vw,32px);color:#ffe36a;text-shadow:3px 3px #000;margin-bottom:10px}.hc-partc-speaker{display:inline-block;color:#7dff9a;border:2px solid #7dff9a;padding:7px 10px;font-size:9px;margin-bottom:14px}.hc-partc-transition-text,.hc-partc-chemist-note,.hc-partc-discovery-text,.hc-partc-discovery-chemist,.hc-partc-final-dialogue{font-family:"Comic Sans MS","Comic Sans",cursive;font-weight:700;color:#fff;font-size:clamp(16px,1.55vw,21px);line-height:1.65;text-shadow:2px 2px #000;max-width:900px;margin:0 auto 18px}.hc-partc-transition-text p{margin:0 0 13px}.hc-partc-primary{font-family:"Press Start 2P",cursive!important;font-size:10px!important;margin-top:14px;width:min(440px,100%)}
+.hc-partc-challenge-label,.hc-partc-section-title{font-size:10px;color:#35bfff;letter-spacing:1px;margin-bottom:10px}.hc-partc-mission-title{font-family:"Press Start 2P",cursive;font-size:clamp(20px,2.4vw,30px);color:#fff;text-shadow:3px 3px #000;margin:4px 0 12px}.hc-partc-mission-sub{font-family:"Comic Sans MS","Comic Sans",cursive;font-weight:700;color:#ffe36a;font-size:clamp(17px,1.8vw,24px);margin-bottom:16px;text-shadow:2px 2px #000}.hc-partc-chemist-note{font-size:18px;color:#dff8ff}.hc-partc-workspace{display:grid;grid-template-columns:minmax(250px,.9fr) minmax(360px,1.2fr);gap:15px;text-align:left}.hc-partc-material-panel,.hc-partc-machine-panel{border:3px solid rgba(53,191,255,.65);border-radius:15px;background:#081b25;padding:13px}.hc-partc-materials{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;min-height:150px;align-content:center}.hc-partc-material{width:104px;min-height:118px;border:3px solid #35bfff;border-radius:12px;background:#0b2631;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:grab;touch-action:none;user-select:none;transition:.12s}.hc-partc-material span{font-size:7px;color:#fff;margin-top:7px;text-align:center;line-height:1.3}.hc-partc-material:hover{transform:translateY(-3px);box-shadow:0 0 14px rgba(53,191,255,.35)}
+.hc-partc-machine{min-height:285px;border:4px solid #35bfff;border-radius:22px;background:linear-gradient(180deg,#102e3b,#06131b);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;transition:.12s;box-shadow:inset 0 0 25px rgba(53,191,255,.08)}.hc-partc-machine:before{content:"";position:absolute;inset:10px;border:2px solid rgba(53,191,255,.22);border-radius:16px;pointer-events:none}.hc-partc-machine:after{content:"";position:absolute;top:22px;width:70%;height:6px;border-radius:5px;background:#35bfff;box-shadow:0 0 15px rgba(53,191,255,.7);opacity:.55}.hc-partc-machine.drag-over{border-color:#ffe36a;box-shadow:0 0 0 3px #ffe36a,0 0 25px rgba(255,227,106,.25)}.hc-partc-machine-screen{font-size:9px;color:#7dff9a;margin-bottom:13px;z-index:2}.hc-partc-machine-label{font-family:"Press Start 2P",cursive;font-size:9px;color:#fff;z-index:2;margin-bottom:9px}.hc-partc-machine-slot{width:84%;min-height:82px;border:3px dashed #35bfff;border-radius:13px;display:flex;align-items:center;justify-content:center;gap:9px;z-index:2;background:rgba(0,0,0,.22);flex-wrap:wrap;padding:8px}
+.hc-partc-machine-slot{position:relative;align-content:center}
+.hc-partc-drop-slots{width:100%;display:grid;grid-template-columns:repeat(3,minmax(54px,1fr));gap:8px;align-items:center}
+.hc-partc-drop-slot{height:70px;border:3px dashed rgba(53,191,255,.8);border-radius:10px;background:rgba(3,18,28,.55);display:flex;align-items:center;justify-content:center;min-width:0}
+.hc-partc-drop-slot.filled{border-color:#7dff9a;background:rgba(20,70,43,.2)}
+.hc-partc-drop-slot .hc-partc-battery,.hc-partc-drop-slot .hc-partc-power{transform:scale(.58)}
+.hc-partc-slot-placeholder{font-family:"Comic Sans MS","Comic Sans",cursive;font-weight:700;color:#83aebb;font-size:12px;line-height:1.3;grid-column:1/-1}
+.hc-partc-clear{font-family:"Press Start 2P",cursive!important;font-size:8px!important;margin-top:9px!important;padding:9px 12px!important}
+@media(max-width:720px){.hc-partc-drop-slot{height:62px}.hc-partc-slot-placeholder{font-size:10px}}
+.hc-partc-machine-slot .hc-partc-battery,.hc-partc-machine-slot .hc-partc-power{transform:scale(.62)}.hc-partc-machine-status{font-size:7px;color:#9fc4d1;margin-top:11px;z-index:2;text-align:center}.hc-partc-activate-status{font-family:"Comic Sans MS","Comic Sans",cursive;font-weight:700;color:#ffe36a;font-size:15px;min-height:22px;margin-top:8px;z-index:2}.hc-partc-output{margin-top:13px;text-align:center}.hc-partc-output-items{min-height:110px;display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap}.hc-partc-counters{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:13px 0;font-size:8px;color:#ffe36a}.hc-partc-feedback{min-height:24px;color:#7dff9a;font-family:"Comic Sans MS","Comic Sans",cursive;font-weight:700;font-size:16px;line-height:1.4}.hc-partc-question-progress{font-size:10px;color:#35bfff;letter-spacing:1px;margin:10px 0 18px}.hc-partc-question{font-family:"Comic Sans MS","Comic Sans",cursive;font-weight:700;color:#fff;font-size:clamp(18px,2vw,25px);line-height:1.55;max-width:900px;margin:0 auto 18px;text-shadow:2px 2px #000}.hc-partc-answer{width:min(620px,100%);height:56px;border:4px solid #35bfff;border-radius:12px;background:#06151d;color:#fff;text-align:center;font-family:"Comic Sans MS","Comic Sans",cursive;font-weight:700;font-size:22px;outline:none}.hc-partc-answer.correct{border-color:#55dc66;background:#12321d;box-shadow:0 0 18px rgba(85,220,102,.25)}.hc-partc-question-feedback{font-family:"Comic Sans MS","Comic Sans",cursive;font-weight:700;font-size:15px;line-height:1.5;min-height:28px;margin-top:10px;color:#fff}.hc-partc-question-feedback.correct{color:#7dff9a}.hc-partc-question-feedback.wrong{color:#ffb7b7}
+.hc-partc-battery{position:relative;width:54px;height:78px;border-radius:10px;background:linear-gradient(135deg,#202c36,#0b151d 60%,#172a35);border:3px solid #7d96a5;box-shadow:inset 8px 0 0 rgba(255,255,255,.06),0 0 16px rgba(53,191,255,.55);display:inline-flex;align-items:center;justify-content:center}.hc-partc-battery:before{content:"";position:absolute;top:-8px;width:27px;height:8px;border-radius:4px 4px 2px 2px;background:#9daeb8;border:2px solid #52636d}.hc-partc-battery:after{content:"";position:absolute;left:8px;right:8px;top:12px;height:42px;border-radius:5px;border:2px solid #35bfff;background:linear-gradient(180deg,#35bfff 0 18%,#0d2a3c 18% 27%,#35bfff 27% 45%,#0d2a3c 45% 54%,#35bfff 54% 72%,#0d2a3c 72% 81%,#35bfff 81% 100%);box-shadow:0 0 10px rgba(53,191,255,.55)}.hc-partc-battery i{position:absolute;bottom:5px;width:23px;height:4px;border-radius:4px;background:#6f8490;z-index:2}
+.hc-partc-power{position:relative;width:68px;height:58px;border-radius:13px;background:linear-gradient(145deg,#d6dee3,#778892 48%,#3d4c55);border:3px solid #b7c5cb;box-shadow:inset -7px -5px 0 rgba(0,0,0,.18),0 0 15px rgba(255,211,60,.3);display:inline-flex;align-items:center;justify-content:center}.hc-partc-power:before{content:"";position:absolute;left:8px;right:8px;top:8px;height:38px;border-radius:8px;background:#27353c;border:2px solid #9fb0b8}.hc-partc-power:after{content:"";position:absolute;right:-9px;top:21px;width:10px;height:16px;border-radius:2px;background:#d3b24e;border:2px solid #776222}.hc-partc-power i{width:17px;height:17px;border-radius:50%;background:#ffe36a;box-shadow:0 0 13px #ffe36a;position:relative;z-index:2}.hc-partc-power b{position:absolute;width:7px;height:7px;border-radius:50%;background:#7dff9a;left:14px;top:13px;box-shadow:0 0 7px #7dff9a;z-index:2}
+.hc-partc-device{position:relative;width:108px;height:145px;border-radius:15px;background:linear-gradient(145deg,#8a9aa3,#2b3a43 38%,#111d24);border:4px solid #aebcc3;box-shadow:inset 0 0 0 5px #26353d,0 0 18px rgba(53,191,255,.35);display:flex;align-items:center;justify-content:center;animation:hcDeviceIdle 1.8s ease-in-out infinite}.hc-partc-device-screen{width:76px;height:101px;border-radius:8px;background:#071118;border:3px solid #536b77;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}.hc-partc-device-screen:before{content:"";width:38px;height:5px;border-radius:5px;background:#35bfff;box-shadow:0 0 12px #35bfff;opacity:.2}.hc-partc-device.charging .hc-partc-device-screen{background:linear-gradient(180deg,#07304b,#061118)}.hc-partc-device.charging .hc-partc-device-screen:before{height:65px;width:28px;opacity:.9;background:linear-gradient(180deg,#7dff9a 0 12%,#35bfff 12% 100%);box-shadow:0 0 18px rgba(53,191,255,.9);animation:hcChargeFill 1.4s ease-out forwards}.hc-partc-device.charged{animation:hcChargedPulse .9s ease-in-out 2;border-color:#7dff9a;background:linear-gradient(145deg,#4f8d61,#173b24 42%,#0b2113);box-shadow:inset 0 0 0 5px #1e5b32,0 0 24px rgba(125,255,154,.75)}.hc-partc-device.charged .hc-partc-device-screen{background:linear-gradient(180deg,#0a4562,#073247)}.hc-partc-device.charged .hc-partc-device-screen:before{width:42px;height:42px;opacity:1;background:#7dff9a;box-shadow:0 0 22px #7dff9a;clip-path:polygon(50% 0,61% 34%,100% 34%,69% 55%,80% 100%,50% 70%,20% 100%,31% 55%,0 34%,39% 34%)}.hc-partc-device.failed{animation:hcFailedPulse .7s ease-in-out 2;border-color:#ff4f68;background:linear-gradient(145deg,#8f3f4b,#3a121a 42%,#18090d);box-shadow:inset 0 0 0 5px #681d2a,0 0 24px rgba(255,79,104,.78)}.hc-partc-device.failed .hc-partc-device-screen{background:linear-gradient(180deg,#3b0b15,#16070c);border-color:#ff4f68}.hc-partc-device.failed .hc-partc-device-screen:before{width:46px;height:5px;opacity:1;background:#ff4f68;box-shadow:0 0 18px #ff4f68}.hc-partc-device.failed .hc-partc-device-status{color:#ff6b7e;text-shadow:0 0 8px rgba(255,79,104,.8),1px 1px #000}.hc-partc-device-status{position:absolute;bottom:-21px;left:50%;transform:translateX(-50%);white-space:nowrap;font-family:"Press Start 2P",cursive;font-size:7px;color:#7dff9a;text-shadow:1px 1px #000}.hc-partc-charging-row{display:flex;align-items:center;justify-content:center;gap:28px;flex-wrap:wrap;margin:12px 0 17px}.hc-partc-device-wrap{min-height:170px;display:flex;align-items:center;justify-content:center;position:relative}.hc-partc-energy-stream{width:120px;height:8px;border-radius:8px;background:linear-gradient(90deg,transparent,#35bfff,transparent);box-shadow:0 0 16px #35bfff;animation:hcEnergyStream .8s linear infinite;opacity:0}.hc-partc-device.charging~.hc-partc-energy-stream{opacity:1}
+.hc-partc-discovery-box,.hc-partc-key-box,.hc-partc-observe-box{border:3px solid rgba(53,191,255,.7);border-radius:14px;background:#081b25;padding:17px;max-width:900px;margin:0 auto 16px}.hc-partc-discovery-kicker,.hc-partc-key-title,.hc-partc-observe-title{font-family:"Comic Sans MS","Comic Sans",cursive;font-weight:700;color:#ffe36a;font-size:19px;text-shadow:2px 2px #000;margin-bottom:12px}.hc-partc-key-title{color:#35bfff;margin-top:14px}.hc-partc-key-text{font-family:"Comic Sans MS","Comic Sans",cursive;font-weight:700;color:#fff;font-size:clamp(19px,2.2vw,28px);line-height:1.5;text-shadow:2px 2px #000}.hc-partc-pattern{display:flex;flex-direction:column;gap:10px;max-width:700px;margin:12px auto 18px}.hc-partc-pattern-row{border:2px solid rgba(53,191,255,.55);border-radius:12px;background:#0b2631;padding:12px;color:#fff;font-family:"Comic Sans MS","Comic Sans",cursive;font-weight:700;font-size:18px}.hc-partc-pattern-arrow{color:#ffe36a;font-family:"Press Start 2P",cursive;font-size:14px}.hc-partc-checklist{max-width:850px;margin:15px auto;text-align:left;display:grid;gap:10px}.hc-partc-check-option{border:3px solid rgba(53,191,255,.65);border-radius:13px;background:#0b2631;padding:15px 17px;color:#fff;font-family:"Comic Sans MS","Comic Sans",cursive;font-weight:700;font-size:17px;cursor:pointer;transition:.15s;user-select:none}.hc-partc-check-option:hover{transform:translateX(3px);box-shadow:0 0 12px rgba(53,191,255,.25)}.hc-partc-check-option.selected{border-color:#ffe36a;box-shadow:0 0 14px rgba(255,227,106,.3)}.hc-partc-check-option.correct{border-color:#55dc66;background:#12321d;box-shadow:0 0 18px rgba(85,220,102,.25)}.hc-partc-check-option .checkmark{display:inline-block;width:22px}.hc-partc-final-dialogue{font-size:clamp(18px,1.7vw,23px)}.hc-partc-recap{max-width:800px;margin:15px auto;text-align:left;border:3px solid rgba(53,191,255,.65);border-radius:14px;background:#081b25;padding:15px 20px;font-family:"Comic Sans MS","Comic Sans",cursive;font-weight:700;color:#fff;font-size:17px;line-height:1.65}.hc-partc-recap div{margin:7px 0}.hc-partc-drag-ghost{position:fixed!important;left:0;top:0;z-index:2147483647!important;pointer-events:none!important;opacity:.94!important;transform:translate(-50%,-50%) scale(1.04)!important;box-shadow:0 0 22px rgba(53,191,255,.55)!important}.hc-partc-drag-ghost .hc-partc-material{display:flex!important}
+@keyframes hcPartCIn{from{opacity:0;transform:translateY(12px) scale(.97)}to{opacity:1;transform:none}}@keyframes hcChargeFill{from{transform:scaleY(.1);transform-origin:bottom}to{transform:scaleY(1);transform-origin:bottom}}@keyframes hcFailedPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.035)}}
+@keyframes hcChargedPulse{0%,100%{filter:brightness(1)}50%{filter:brightness(1.45) drop-shadow(0 0 18px rgba(125,255,154,.75))}}@keyframes hcEnergyStream{0%{transform:translateX(-18px);opacity:.25}50%{opacity:1}100%{transform:translateX(18px);opacity:.25}}@keyframes hcDeviceIdle{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@media(max-width:850px){.hc-partc-workspace{grid-template-columns:1fr}.hc-partc-materials{min-height:120px}.hc-partc-machine{min-height:250px}}
+@media(max-width:520px){.hc-partc-overlay{padding:7px!important}.hc-partc-card,.hc-partc-transition-card{width:99vw;padding:13px;border-width:3px;border-radius:15px}.hc-partc-transition-text,.hc-partc-chemist-note,.hc-partc-discovery-text,.hc-partc-discovery-chemist{font-size:15px}.hc-partc-title,.hc-partc-transition-title{font-size:20px}.hc-partc-challenge-label,.hc-partc-section-title{font-size:8px}.hc-partc-mission-title{font-size:19px}.hc-partc-mission-sub{font-size:17px}.hc-partc-material{width:88px;min-height:105px}.hc-partc-battery{transform:scale(.86)}.hc-partc-power{transform:scale(.86)}.hc-partc-device{transform:scale(.88)}.hc-partc-question{font-size:17px}.hc-partc-answer{height:52px;font-size:20px}.hc-partc-primary{font-size:9px!important}.hc-partc-check-option{font-size:15px;padding:12px}.hc-partc-pattern-row{font-size:15px}}
+</style>
+
+<style id="partb-center-and-button-fix">
+/* PART B: keep every burger stack centered inside its drop box */
+.hc-partb-drop{
+  display:block!important;
+  position:relative!important;
+  text-align:center!important;
+}
+.hc-partb-stack{
+  position:absolute!important;
+  left:50%!important;
+  bottom:0!important;
+  width:110px!important;
+  height:155px!important;
+  transform:translateX(-50%)!important;
+  padding:0!important;
+  margin:0!important;
+}
+.hc-partb-layer{
+  left:0!important;
+  width:110px!important;
+  transform:none!important;
+  margin:0!important;
+  padding:0!important;
+}
+.hc-partb-layer:nth-child(1){bottom:8px!important}
+.hc-partb-layer:nth-child(2){bottom:32px!important}
+.hc-partb-layer:nth-child(3){bottom:56px!important}
+.hc-partb-layer:nth-child(4){bottom:80px!important}
+.hc-partb-layer .hc-food.bottombun,
+.hc-partb-layer .hc-food.patty,
+.hc-partb-layer .hc-food.tomato,
+.hc-partb-layer .hc-food.topbun{
+  display:block!important;
+  width:110px!important;
+  margin:0 auto!important;
+}
+.hc-partb-layer .hc-food.bottombun{height:18px!important}
+.hc-partb-layer .hc-food.patty{height:18px!important}
+.hc-partb-layer .hc-food.tomato{height:18px!important}
+.hc-partb-layer .hc-food.topbun{height:24px!important}
+
+/* Keep Part B question controls above the overlay/card layers and clickable. */
+.hc-partb-question-feedback,
+.hc-partb-answer-wrap,
+#hcPartBAnswer,
+#hcPartBSubmit{
+  position:relative!important;
+  z-index:20!important;
+  pointer-events:auto!important;
+}
+#hcPartBSubmit{
+  cursor:pointer!important;
+  touch-action:manipulation!important;
+}
+</style>
+
+<style id="partc-question-controls-bottom-center">
+.hc-partc-answer-area{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:flex-start!important;width:100%!important;margin:20px auto 0!important;text-align:center!important;gap:10px!important;}
+.hc-partc-answer-area .hc-partc-answer{display:block!important;margin:0 auto!important;text-align:center!important;width:min(420px,82%)!important;}
+.hc-partc-answer-area #hcPartCSubmit{display:block!important;margin:0 auto!important;}
+.hc-partc-answer-area .hc-partc-question-feedback{width:100%!important;text-align:center!important;}
+.hc-partc-answer-area .hc-partc-continue-slot{display:flex!important;justify-content:center!important;width:100%!important;}
+.hc-partc-answer-area #hcPartCBack{display:block!important;margin:2px auto 0!important;}
+</style>
+
 </head>
 
 <body>
@@ -3328,9 +3550,8 @@ CINEMATIC STORY
     <div class="dialogue-box">
       <div id="storySpeaker" class="dialogue-name">SYSTEM</div>
       <div id="storyText" class="dialogue-text"></div>
+      <div id="storyProgress" class="story-progress">SCENE 01 / 08</div>
     </div>
-
-    <div id="storyProgress" class="story-progress">SCENE 01 / 08</div>
 
     <div class="story-controls">
       <button id="storySkipBtn" class="story-skip">SKIP ▶▶</button>
@@ -3411,7 +3632,7 @@ GUIDE
 
 <div class="hub-card-text">
 Learn how the missions work,
-how to balance equations,
+how to solve stoich problems,
 and how to earn rewards.
 </div>
 
@@ -3436,7 +3657,7 @@ GAME
 </div>
 
 <div class="hub-card-text">
-Enter Chemistia, follow the path,
+Enter Stoich World, follow the path,
 and complete all 15 chemical missions.
 </div>
 
@@ -3777,24 +3998,18 @@ GUIDE MODAL
 <div class="guide-modal-content">
 
 <div class="guide-step">
-<b>🗺️ 1. FOLLOW THE MAP</b><br>
-Start at Level 01. Complete a mission to unlock the next level.
+<b>🧭 1. FOLLOW THE MISSION</b><br>
+Start at Level 01 and complete each mission to unlock the next challenge.
 </div>
 
 <div class="guide-step">
-<b>⚖️ 2. BALANCE THE EQUATION</b><br>
-Change coefficients only. Never change the chemical formula itself.
-</div>
-
-<div class="guide-example">
-H₂ + O₂ → H₂O
-<br><br>
-2H₂ + O₂ → 2H₂O
+<b>📖 2. READ THE BRIEF</b><br>
+Read the instructions and story carefully before starting each challenge.
 </div>
 
 <div class="guide-step">
-<b>🔬 3. WATCH THE ATOM LAB</b><br>
-Use the atom counts to check whether the same number of atoms exists on both sides.
+<b>🔬 3. EXPLORE THE CHALLENGE</b><br>
+Observe the information, interact with the elements, and use what you discover to complete the mission.
 </div>
 
 <div class="guide-step">
@@ -3804,17 +4019,17 @@ Wrong attempts cost a heart. You have three hearts for each mission.
 
 <div class="guide-step">
 <b>💡 5. USE HINTS</b><br>
-A hint costs 3 coins and gives a clue without revealing the answer.
+A hint costs 3 coins and gives you a clue without revealing the answer.
 </div>
 
 <div class="guide-step">
 <b>⭐ 6. EARN STARS</b><br>
-Stars reward your performance. Faster and cleaner solving earns more stars.
+Complete challenges carefully and efficiently to earn stars based on your performance.
 </div>
 
 <div class="guide-step">
 <b>🪙 7. COLLECT COINS</b><br>
-Complete missions to earn coins. Use coins when you need a hint.
+Complete missions to earn coins. Use your coins when you need a hint.
 </div>
 
 </div>
@@ -3850,7 +4065,7 @@ ARE YOU READY?
 </div>
 
 <div id="readyText" class="ready-text">
-Chemistia is waiting for you!
+Stoich World is waiting for you!
 </div>
 
 <div class="modal-actions">
@@ -4755,6 +4970,8 @@ S.constructionRewarded=true;
 
 S.xp+=25;
 
+if(typeof awardLiveReward==='function') awardLiveReward();
+
 updateHearts();
 
 showXPPop();
@@ -5326,6 +5543,8 @@ showFeedback(
 "⚖ PERFECT BALANCE! ALL ATOMS ARE CONSERVED!"
 );
 
+if(typeof awardLiveReward==='function') awardLiveReward();
+
 soundCorrect();
 
 completeLevel();
@@ -5820,7 +6039,7 @@ document.getElementById("storySceneSubtitle").textContent=scene.sub;
 document.getElementById("storyActorLeft").textContent=scene.left;
 document.getElementById("storyActorRight").textContent=scene.right;
 document.getElementById("storySpeaker").textContent=scene.speaker;
-document.getElementById("storyProgress").textContent="";
+document.getElementById("storyProgress").textContent=`SCENE ${storyIndex+1} / ${STORY_SCENES.length}`;
 
 const box=document.getElementById("storyText");
 box.innerHTML="";
@@ -5974,7 +6193,7 @@ updateCharacterPreview();
 document
 .getElementById("readyText")
 .textContent=
-`${CHARACTERS[S.selectedCharacter].name}, Chemistia is waiting for you! Your first mission is ready.`;
+`${CHARACTERS[S.selectedCharacter].name}, Stoich World is waiting for you! Your first mission is ready.`;
 
 document
 .getElementById("readyModal")
@@ -6544,6 +6763,9 @@ function assembleBurger(){
   setTimeout(()=>{
     burgerState.made++;
     burgerState.completedBurgers.push("🍔");
+
+    // LIVE REWARD: every successfully assembled burger earns a visible reward.
+    if(typeof awardLiveReward==='function') awardLiveReward();
     burgerState.current={patty:0,tomato:0,bun:0};
 
     const status=document.getElementById("burgerStatus");
@@ -7180,12 +7402,12 @@ function clearConstruction(){
         <div class="hc-def-excellent">EXCELLENT!</div>
         <div class="hc-def-title">LEVEL 01 COMPLETE!</div>
         <div class="hc-def-mission">🍔 BURGER MISSION CLEARED!</div>
-        <div class="hc-def-stars">★★★ <span>3/3 STARS</span></div>
+        <div class="hc-def-stars hc-reward-stamp">★★★ <span>3/3 STARS</span></div>
         <div class="hc-def-rewards">
-          <div>🪙 <b>+10 COINS</b></div>
-          <div>⭐ <b>+100 XP</b></div>
+          <div class="hc-reward-stamp hc-stamp-delay-2">🪙 <b>+10 COINS</b></div>
+          <div class="hc-reward-stamp hc-stamp-delay-3">⭐ <b>+100 XP</b></div>
         </div>
-        <div class="hc-def-unlock">🔓 NEXT LEVEL UNLOCKED!</div>
+        <div class="hc-def-unlock hc-reward-stamp hc-stamp-delay-4">🔓 NEXT LEVEL UNLOCKED!</div>
         <button type="button" class="arcade-btn green hc-def-next">NEXT LEVEL ▶</button>
       </div>`;
     document.body.appendChild(overlay);
@@ -7257,6 +7479,7 @@ function clearConstruction(){
             btn.classList.add('correct');
             feedbackEl.textContent='CORRECT! GREAT JOB!';
             feedbackEl.className='hc-quiz-feedback correct';
+            if(typeof awardLiveReward==='function') awardLiveReward();
             choicesEl.querySelectorAll('.hc-quiz-choice').forEach(b=>b.disabled=true);
             cont.hidden=false;
             soundCorrect();
@@ -7278,11 +7501,883 @@ function clearConstruction(){
           overlay.remove();
           document.documentElement.classList.remove('hc-no-scroll');
           document.body.classList.remove('hc-no-scroll');
-          showBurgerRecognition();
+          showPartBTransition();
         },220);
       }
     };
     renderQ();
+  }
+
+  /* =====================================================
+     LIVE REWARD BANK — small rewards for correct answers
+     ===================================================== */
+  let __liveRewardCount = 0;
+  function awardLiveReward(coinsEarned, xpEarned){
+    // Every correct submission receives a visible reward. If no explicit
+    // amount is supplied, rotate through several reward values.
+    __liveRewardCount++;
+    const rewardSteps = [
+      {coins:10,xp:20},
+      {coins:15,xp:25},
+      {coins:20,xp:30},
+      {coins:25,xp:40},
+      {coins:30,xp:50}
+    ];
+    // Always rotate the reward so consecutive correct actions do not all show +10.
+    const chosen = rewardSteps[(__liveRewardCount-1)%rewardSteps.length];
+    coinsEarned=chosen.coins;
+    xpEarned=chosen.xp;
+    S.coins=Math.max(0,Number(S.coins)||0)+coinsEarned;
+    S.xp=Math.max(0,Number(S.xp)||0)+xpEarned;
+    if(typeof updateHearts==='function') updateHearts();
+    ['mapCoins','gameCoins'].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=S.coins});
+    ['mapXP','gameXP'].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=S.xp});
+    let bank=document.getElementById('hcLiveBank');
+    if(bank){const c=bank.querySelector('[data-live-coins]'),x=bank.querySelector('[data-live-xp]');if(c)c.textContent=S.coins;if(x)x.textContent=S.xp;}
+    /* DIRECT LIVE REWARD POPUP — created here so it cannot be blocked by any later popup override. */
+    (function(){
+      try{
+        const old=document.getElementById('stoichDirectRewardPopup');
+        if(old) old.remove();
+        const pop=document.createElement('div');
+        pop.id='stoichDirectRewardPopup';
+        pop.style.cssText='position:fixed!important;left:50vw!important;top:50vh!important;transform:translate(-50%,-50%) scale(.82)!important;z-index:2147483647!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;pointer-events:none!important;opacity:0!important;visibility:visible!important;background:transparent!important;border:0!important;box-shadow:none!important;width:max-content!important;height:auto!important;margin:0!important;padding:0!important;font-family:Arial,sans-serif!important;font-weight:900!important;text-align:center!important;white-space:nowrap!important;';
+        pop.innerHTML='<div style="font-size:15px;font-weight:900;line-height:1.45;color:#ffd21f;text-shadow:2px 2px 0 #000;transform:translateX(-10px) rotate(-7deg);">+'+coinsEarned+' COINS</div><div style="font-size:15px;font-weight:900;line-height:1.45;color:#ffd21f;text-shadow:2px 2px 0 #000;transform:translateX(10px) rotate(7deg);">+'+xpEarned+' XP</div>';
+        document.body.appendChild(pop);
+        requestAnimationFrame(function(){
+          pop.style.transition='opacity .12s ease-out, transform 1s ease-out';
+          pop.style.opacity='1';
+          pop.style.transform='translate(-50%,-58%) scale(1)';
+        });
+        setTimeout(function(){
+          pop.style.opacity='0';
+          pop.style.transform='translate(-50%,-78%) scale(1.03)';
+        },650);
+        setTimeout(function(){ if(pop.parentNode) pop.remove(); },1050);
+      }catch(e){ console.error('Direct reward popup error:',e); }
+    })();
+    if(typeof soundCoin==='function')soundCoin();
+  }
+
+  function showLiveRewardPop(coinsEarned,xpEarned){
+    let pop=document.getElementById('hcLiveRewardPop');
+    if(!pop){pop=document.createElement('div');pop.id='hcLiveRewardPop';pop.className='hc-live-reward-pop';document.body.appendChild(pop)}
+    pop.innerHTML='<div>🪙 +'+coinsEarned+' COINS</div><div>⭐ +'+xpEarned+' XP</div>';
+    pop.classList.remove('show');void pop.offsetWidth;pop.classList.add('show');
+  }
+  function ensureLiveBank(){
+    let bank=document.getElementById('hcLiveBank');
+    if(!bank){
+      bank=document.createElement('div');bank.id='hcLiveBank';bank.className='hc-live-bank';
+      bank.innerHTML='<span>🪙 <b data-live-coins>0</b></span><span>⭐ <b data-live-xp>0</b> XP</span>';
+      document.body.appendChild(bank);
+    }
+    const c=bank.querySelector('[data-live-coins]'),x=bank.querySelector('[data-live-xp]');
+    if(c)c.textContent=S.coins;if(x)x.textContent=S.xp;bank.classList.add('show');
+  }
+  function hideLiveBank(){const bank=document.getElementById('hcLiveBank');if(bank)bank.classList.remove('show')}
+
+  /* =====================================================
+     PART B — THE MISSING INGREDIENT
+     Added after the existing two burger checkpoint questions.
+     Reuses the existing Level 01 burger artwork/CSS and does not
+     alter the existing two questions or later-level progression.
+     ===================================================== */
+
+  const PART_B_QUESTIONS = [
+    {
+      q:"How many complete burgers were you able to make?",
+      answers:["2"],
+      feedback:"Correct! You were able to make 2 complete burgers."
+    },
+    {
+      q:"Which ingredient was not enough to complete the 3rd burger?",
+      answers:["bun","bun half","bun halves","buns halves","buns half","buns"],
+      feedback:"Correct! The bun halves ran out before you could complete the 3rd burger."
+    },
+    {
+      q:"How many bun halves are needed to make 3 complete burgers?",
+      answers:["6"],
+      feedback:"Correct! Each burger needs 2 bun halves, so 3 burgers need 6 bun halves."
+    },
+    {
+      q:"How many bun halves did you have?",
+      answers:["4"],
+      feedback:"Correct! You had 4 bun halves available."
+    },
+    {
+      q:"How many more bun halves do you need to complete 3 burgers?",
+      answers:["2"],
+      feedback:"Correct! You need 2 more bun halves to complete the 3rd burger."
+    }
+  ];
+
+  const PART_B_STATE = {
+    inventory:{patty:3,tomato:3,bun:4},
+    burgers:[
+      {patty:0,tomato:0,bun:0},
+      {patty:0,tomato:0,bun:0},
+      {patty:0,tomato:0,bun:0}
+    ],
+    completed:[false,false,false],
+    questionIndex:0,
+    attempted:false,
+    drag:null
+  };
+
+  function partBBunFood(){
+    return '<span class="hc-food bottombun"></span>';
+  }
+
+  function partBIsComplete(b){
+    return b.patty>=1 && b.tomato>=1 && b.bun>=2;
+  }
+
+  function partBResetState(){
+    PART_B_STATE.inventory={patty:3,tomato:3,bun:4};
+    PART_B_STATE.burgers=[
+      {patty:0,tomato:0,bun:0},
+      {patty:0,tomato:0,bun:0},
+      {patty:0,tomato:0,bun:0}
+    ];
+    PART_B_STATE.completed=[false,false,false];
+    PART_B_STATE.questionIndex=0;
+    PART_B_STATE.attempted=false;
+    PART_B_STATE.drag=null;
+  }
+
+  function hcFastType(element, text, speed=7, onDone){
+    if(!element)return;
+    if(element._hcTypeTimer) clearInterval(element._hcTypeTimer);
+    element.textContent='';
+    let i=0;
+    element._hcTypeTimer=setInterval(()=>{
+      if(i<text.length){ element.textContent+=text[i++]; }
+      else { clearInterval(element._hcTypeTimer); element._hcTypeTimer=null; if(onDone)onDone(); }
+    },speed);
+  }
+
+  function hcFastTypeElements(elements, speed=7){
+    const list=elements.filter(Boolean);
+    list.forEach(el=>{ if(el._hcTypeTimer)clearInterval(el._hcTypeTimer); el.textContent=''; });
+    let i=0;
+    const tick=()=>{
+      if(i>=list.length)return;
+      const el=list[i++];
+      const text=el.dataset.hcTypeText||'';
+      let n=0;
+      const timer=setInterval(()=>{
+        if(n<text.length){el.textContent+=text[n++];}
+        else{clearInterval(timer);setTimeout(tick,25);}
+      },speed);
+    };
+    tick();
+  }
+
+  function showPartBTransition(){
+    document.querySelectorAll('.hc-partb-overlay').forEach(x=>x.remove());
+    document.querySelectorAll('.screen').forEach(sc=>{sc.hidden=true;sc.style.display='none'});
+    document.documentElement.classList.add('hc-no-scroll');
+    document.body.classList.add('hc-no-scroll');
+
+    const overlay=document.createElement('div');
+    overlay.className='hc-partb-overlay show';
+    overlay.innerHTML=`
+      <div class="hc-partb-transition-card">
+        <div class="hc-partb-transition-title">THE MISSING INGREDIENT</div>
+        <div class="hc-partb-speaker">THE CHEMIST</div>
+        <div class="hc-partb-transition-text">Great work! But making burgers is not always that simple. What happens when you have enough of some ingredients, but another ingredient runs out?</div>
+        <button type="button" id="hcPartBBegin" class="arcade-btn green hc-partb-primary">START MISSION ▶</button>
+      </div>`;
+    document.body.appendChild(overlay);
+    const transitionText=overlay.querySelector('.hc-partb-transition-text');
+    hcFastType(transitionText,'Great work! But making burgers is not always that simple. What happens when you have enough of some ingredients, but another ingredient runs out?',7);
+
+    const begin=overlay.querySelector('#hcPartBBegin');
+    if(begin){
+      begin.addEventListener('click',e=>{
+        e.preventDefault();
+        e.stopPropagation();
+        soundClick();
+        overlay.classList.remove('show');
+        setTimeout(()=>{
+          overlay.remove();
+          showPartBBuilder();
+        },220);
+      });
+    }
+  }
+
+  function showPartBBuilder(preserveState=false){
+    if(!preserveState) partBResetState();
+    document.querySelectorAll('.hc-partb-overlay').forEach(x=>x.remove());
+    document.querySelectorAll('.screen').forEach(sc=>{sc.hidden=true;sc.style.display='none'});
+    document.documentElement.classList.add('hc-no-scroll');
+    document.body.classList.add('hc-no-scroll');
+
+    const overlay=document.createElement('div');
+    overlay.className='hc-partb-overlay show';
+    overlay.innerHTML=`
+      <div class="hc-partb-builder-card">
+        <div class="hc-partb-builder-title">THE MISSING INGREDIENT</div>
+        <div class="hc-partb-mission-label">MISSION</div>
+        <div class="hc-partb-mission">Make 3 complete burgers using the available ingredients.</div>
+
+        <div class="hc-partb-info-grid">
+          <div class="hc-partb-info-card">
+            <div class="hc-partb-info-title">RECIPE FOR 1 BURGER</div>
+            <div class="hc-partb-recipe-line"><span>🍖</span> 1 Patty</div>
+            <div class="hc-partb-recipe-line"><span>🍅</span> 1 Tomato</div>
+            <div class="hc-partb-recipe-line"><span>🍞</span> 2 Bun Halves</div>
+          </div>
+          <div class="hc-partb-info-card">
+            <div class="hc-partb-info-title">AVAILABLE INGREDIENTS</div>
+            <div class="hc-partb-inventory" id="hcPartBInventory"></div>
+          </div>
+        </div>
+
+        <div class="hc-partb-drag-note">DRAG THE INGREDIENTS INTO BURGER 1, BURGER 2, OR BURGER 3.</div>
+        <div class="hc-partb-burgers" id="hcPartBBurgers"></div>
+        <div class="hc-partb-build-status" id="hcPartBStatus">COMPLETE BURGERS: 0 / 3</div>
+        <div class="hc-partb-feedback" id="hcPartBFeedback"></div>
+        <button type="button" id="hcPartBAttempt" class="arcade-btn green hc-partb-primary">CHECK BURGERS ▶</button>
+      </div>`;
+    document.body.appendChild(overlay);
+    if(typeof ensureLiveBank==='function') ensureLiveBank();
+    renderPartBBuilder();
+  }
+
+  function partBIngredientHTML(key){
+    if(key==='patty')return food('patty');
+    if(key==='tomato')return food('tomato');
+    return partBBunFood();
+  }
+
+  function renderPartBBuilder(){
+    const inv=document.getElementById('hcPartBInventory');
+    const burgers=document.getElementById('hcPartBBurgers');
+    if(!inv||!burgers)return;
+
+    const labels={patty:'PATTY',tomato:'TOMATO',bun:'BUN HALF'};
+    const icons={patty:'patty',tomato:'tomato',bun:'bottombun'};
+    inv.innerHTML=['patty','tomato','bun'].map(key=>`
+      <div class="hc-partb-item ${PART_B_STATE.inventory[key]===0?'empty':''}" data-partb-key="${key}" role="button" aria-label="Drag ${labels[key]}">
+        <div class="hc-partb-item-art">${food(icons[key])}</div>
+        <div class="hc-partb-item-name">${labels[key]}</div>
+        <div class="hc-partb-item-count" id="hcPartBCount-${key}">${PART_B_STATE.inventory[key]}</div>
+      </div>`).join('');
+
+    burgers.innerHTML=[0,1,2].map(i=>{
+      const b=PART_B_STATE.burgers[i];
+      const complete=partBIsComplete(b);
+      const layers=[];
+      if(b.bun>=1)layers.push(`<div class="hc-partb-layer"><span class="hc-food bottombun"></span></div>`);
+      if(b.patty>=1)layers.push(`<div class="hc-partb-layer"><span class="hc-food patty"></span></div>`);
+      if(b.tomato>=1)layers.push(`<div class="hc-partb-layer"><span class="hc-food tomato"></span></div>`);
+      if(b.bun>=2)layers.push(`<div class="hc-partb-layer"><span class="hc-food topbun"></span></div>`);
+      return `
+        <div class="hc-partb-burger-card">
+          <div class="hc-partb-burger-title">BURGER ${i+1}</div>
+          <div class="hc-partb-drop ${complete?'complete':''}" data-partb-slot="${i}">
+            <div class="hc-partb-drop-hint">${complete?'COMPLETE':'DROP INGREDIENTS HERE'}</div>
+            <div class="hc-partb-stack">${layers.join('')}</div>
+          </div>
+          <div class="hc-partb-requirement">1 PATTY • 1 TOMATO • 2 BUN HALVES</div>
+          <div class="hc-partb-slot-status">${complete?'✓ COMPLETE':`PATTY ${b.patty}/1 • TOMATO ${b.tomato}/1 • BUN HALVES ${b.bun}/2`}</div>
+        </div>`;
+    }).join('');
+
+    const completeCount=PART_B_STATE.completed.filter(Boolean).length;
+    const status=document.getElementById('hcPartBStatus');
+    if(status)status.textContent=`COMPLETE BURGERS: ${completeCount} / 3`;
+
+    bindPartBDragging();
+    const attempt=document.getElementById('hcPartBAttempt');
+    if(attempt){
+      if(PART_B_STATE.attempted && completeCount===2){
+        attempt.textContent='CONTINUE TO QUESTIONS ▶';
+        attempt.onclick=()=>showPartBQuestions();
+      }else{
+        attempt.textContent='CHECK BURGERS ▶';
+        attempt.onclick=finishPartBBuild;
+      }
+    }
+  }
+
+  function bindPartBDragging(){
+    document.querySelectorAll('.hc-partb-item').forEach(item=>{
+      item.addEventListener('pointerdown',partBPointerDown,{passive:false});
+    });
+  }
+
+  function partBPointerDown(e){
+    const item=e.currentTarget;
+    const key=item.dataset.partbKey;
+    if(!key||PART_B_STATE.inventory[key]<=0)return;
+    e.preventDefault();
+    const drag={key,started:false,ghost:null,x:e.clientX,y:e.clientY,item};
+    PART_B_STATE.drag=drag;
+    const move=ev=>partBPointerMove(ev,move,up);
+    const up=ev=>partBPointerUp(ev,move,up);
+    document.addEventListener('pointermove',move,{passive:false});
+    document.addEventListener('pointerup',up,{passive:false,once:true});
+    document.addEventListener('pointercancel',up,{passive:false,once:true});
+  }
+
+  function partBPointerMove(e,move,up){
+    const d=PART_B_STATE.drag;
+    if(!d)return;
+    const dx=e.clientX-d.x,dy=e.clientY-d.y;
+    if(!d.started && Math.hypot(dx,dy)<6)return;
+    e.preventDefault();
+    if(!d.started){
+      d.started=true;
+      d.ghost=d.item.cloneNode(true);
+      d.ghost.classList.add('hc-partb-drag-ghost');
+      document.body.appendChild(d.ghost);
+    }
+    if(d.ghost){
+      d.ghost.style.left=(e.clientX+12)+'px';
+      d.ghost.style.top=(e.clientY+12)+'px';
+    }
+    const target=document.elementFromPoint(e.clientX,e.clientY);
+    document.querySelectorAll('.hc-partb-drop').forEach(z=>z.classList.remove('drag-over'));
+    const zone=target&&target.closest ? target.closest('.hc-partb-drop') : null;
+    if(zone&&!zone.classList.contains('complete'))zone.classList.add('drag-over');
+  }
+
+  function partBPointerUp(e,move,up){
+    document.removeEventListener('pointermove',move);
+    document.removeEventListener('pointercancel',up);
+    const d=PART_B_STATE.drag;
+    if(!d)return;
+    e.preventDefault();
+    const target=document.elementFromPoint(e.clientX,e.clientY);
+    const zone=target&&target.closest ? target.closest('.hc-partb-drop') : null;
+    document.querySelectorAll('.hc-partb-drop').forEach(z=>z.classList.remove('drag-over'));
+    if(d.started&&zone&&!zone.classList.contains('complete'))addPartBIngredient(Number(zone.dataset.partbSlot),d.key);
+    if(d.ghost)d.ghost.remove();
+    PART_B_STATE.drag=null;
+  }
+
+  function addPartBIngredient(slot,key){
+    if(slot<0||slot>2||PART_B_STATE.inventory[key]<=0)return;
+    const b=PART_B_STATE.burgers[slot];
+
+    // Each burger must be built in order:
+    // bottom bun → patty → tomato → top bun.
+    if(key==='bun' && b.bun>=1 && !(b.patty>=1 && b.tomato>=1))return;
+    if(key==='patty' && (b.bun<1 || b.patty>=1))return;
+    if(key==='tomato' && (b.patty<1 || b.tomato>=1))return;
+    if(key==='bun' && b.bun>=2)return;
+
+    // A bun half is the first layer when none has been placed,
+    // and becomes the top bun only after patty and tomato are present.
+    if(key==='bun' && b.bun===0){
+      b.bun=1;
+    }else if(key==='bun' && b.bun===1 && b.patty>=1 && b.tomato>=1){
+      b.bun=2;
+    }else if(key==='patty'){
+      b.patty=1;
+    }else if(key==='tomato'){
+      b.tomato=1;
+    }else{
+      return;
+    }
+
+    PART_B_STATE.inventory[key]--;
+    PART_B_STATE.completed[slot]=partBIsComplete(b);
+    soundClick();
+    renderPartBBuilder();
+  }
+
+  function finishPartBBuild(){
+    PART_B_STATE.attempted=true;
+    const completeCount=PART_B_STATE.completed.filter(Boolean).length;
+    const allIngredientsUsed=PART_B_STATE.inventory.patty===0 && PART_B_STATE.inventory.tomato===0 && PART_B_STATE.inventory.bun===0;
+    if(!allIngredientsUsed && completeCount<2){
+      const fb=document.getElementById('hcPartBFeedback');
+      if(fb){fb.textContent='Use the available ingredients to build the burgers, then check again.';fb.className='hc-partb-feedback try-again';}
+      return;
+    }
+    if(completeCount!==2){
+      const fb=document.getElementById('hcPartBFeedback');
+      if(fb){fb.textContent='Keep observing the ingredient amounts and try the burger build again.';fb.className='hc-partb-feedback try-again';}
+      return;
+    }
+    const overlay=document.querySelector('.hc-partb-overlay');
+    if(!overlay)return;
+    overlay.querySelector('.hc-partb-builder-card').innerHTML=`
+      <div class="hc-partb-builder-title">THE MISSING INGREDIENT</div>
+      <div class="hc-partb-observation">You tried to make 3 burgers, but only 2 were completed.</div>
+      <button type="button" id="hcPartBToQuestions" class="arcade-btn green hc-partb-primary">CONTINUE TO QUESTIONS ▶</button>`;
+    soundCorrect();
+    if(!PART_B_STATE.__buildRewardGiven){
+      PART_B_STATE.__buildRewardGiven=true;
+      if(typeof awardLiveReward==='function') awardLiveReward();
+    }
+    const btn=overlay.querySelector('#hcPartBToQuestions');
+    if(btn)btn.onclick=()=>{
+      soundClick();
+      showPartBQuestions();
+    };
+  }
+
+  function showPartBQuestions(){
+    const overlay=document.querySelector('.hc-partb-overlay');
+    if(!overlay)return;
+    PART_B_STATE.questionIndex=0;
+    const card=overlay.querySelector('.hc-partb-builder-card');
+    card.innerHTML=`
+      <div class="hc-partb-builder-title">THE MISSING INGREDIENT</div>
+      <div class="hc-partb-question-progress">QUESTION <span id="hcPartBQuestionNumber">1</span> OF 5</div>
+      <div id="hcPartBQuestion" class="hc-partb-question"></div>
+      <div class="hc-partb-answer-wrap"><input id="hcPartBAnswer" class="hc-partb-answer" type="text" inputmode="text" autocomplete="off" aria-label="Answer"></div>
+      <button type="button" id="hcPartBSubmit" class="arcade-btn green hc-partb-primary">CHECK ANSWER ▶</button>
+      <div id="hcPartBQuestionFeedback" class="hc-partb-question-feedback"></div>
+      <button type="button" id="hcPartBBackToActivity" class="arcade-btn hc-partb-back">BACK TO BURGER ACTIVITY ◀</button>`;
+    renderPartBQuestion();
+    const back=document.getElementById('hcPartBBackToActivity');
+    if(back)back.onclick=()=>showPartBBuilder(true);
+  }
+
+  function normalizePartBAnswer(value){
+    return String(value||'').trim().toLowerCase().replace(/[.,!?]/g,'').replace(/\s+/g,' ');
+  }
+
+  function renderPartBQuestion(){
+    const item=PART_B_QUESTIONS[PART_B_STATE.questionIndex];
+    const q=document.getElementById('hcPartBQuestion');
+    const num=document.getElementById('hcPartBQuestionNumber');
+    const input=document.getElementById('hcPartBAnswer');
+    const fb=document.getElementById('hcPartBQuestionFeedback');
+    const btn=document.getElementById('hcPartBSubmit');
+    if(!item||!q||!input||!fb||!btn)return;
+    q.textContent=item.q;
+    num.textContent=String(PART_B_STATE.questionIndex+1);
+    input.value='';
+    input.disabled=false;
+    input.className='hc-partb-answer';
+    fb.textContent='';
+    fb.className='hc-partb-question-feedback';
+    btn.disabled=false;
+    btn.textContent='CHECK ANSWER ▶';
+    btn.type='button';
+    btn.onclick=function(ev){
+      ev.preventDefault();
+      ev.stopPropagation();
+      submitPartBQuestion();
+    };
+    btn.style.pointerEvents='auto';
+    btn.style.position='relative';
+    btn.style.zIndex='2147483647';
+    setTimeout(()=>input.focus(),80);
+  }
+
+  function submitPartBQuestion(){
+    const item=PART_B_QUESTIONS[PART_B_STATE.questionIndex];
+    const input=document.getElementById('hcPartBAnswer');
+    const fb=document.getElementById('hcPartBQuestionFeedback');
+    const btn=document.getElementById('hcPartBSubmit');
+    if(!item||!input||!fb||!btn)return;
+    const answer=normalizePartBAnswer(input.value);
+    const correct=item.answers.some(a=>normalizePartBAnswer(a)===answer);
+    if(correct){
+      input.classList.add('correct');
+      input.disabled=true;
+      fb.textContent=item.feedback;
+      fb.className='hc-partb-question-feedback correct';
+      soundCorrect();
+      if(typeof awardLiveReward==='function') awardLiveReward();
+      btn.textContent=PART_B_STATE.questionIndex===PART_B_QUESTIONS.length-1?'CONTINUE TO DISCOVERY ▶':'NEXT QUESTION ▶';
+      btn.onclick=(ev)=>{
+        ev.preventDefault();
+        ev.stopPropagation();
+        if(PART_B_STATE.questionIndex<PART_B_QUESTIONS.length-1){
+          PART_B_STATE.questionIndex++;
+          renderPartBQuestion();
+        }else{
+          showPartBDiscovery();
+        }
+      };
+      btn.disabled=false;
+      btn.style.pointerEvents='auto';
+      btn.style.cursor='pointer';
+    }else{
+      input.classList.remove('correct');
+      fb.textContent='Use what you observed and try again.';
+      fb.className='hc-partb-question-feedback wrong';
+      soundWrong();
+      input.focus();
+    }
+  }
+
+  /* Part B uses the button's own click handler. No global capture listener is needed. */
+
+  function showPartBDiscovery(){
+    const overlay=document.querySelector('.hc-partb-overlay');
+    if(!overlay)return;
+    const card=overlay.querySelector('.hc-partb-builder-card');
+    card.innerHTML=`
+      <div class="hc-partb-discovery-kicker">THE CHEMIST'S NOTE</div>
+      <div class="hc-partb-discovery-text">You had enough patties and tomatoes, but the bun halves ran out first. Because of this, you could only make 2 complete burgers instead of 3.</div>
+      <div class="hc-partb-key-title">KEY IDEA</div>
+      <div class="hc-partb-key-text">When one needed ingredient runs out first, it can determine how many complete products can be made.</div>
+      <button type="button" id="hcPartBDiscoveryContinue" class="arcade-btn green hc-partb-primary">CONTINUE ▶</button>`;
+    const discoveryText=overlay.querySelector('.hc-partb-discovery-text');
+    const keyText=overlay.querySelector('.hc-partb-key-text');
+    hcFastType(discoveryText,'You had enough patties and tomatoes, but the bun halves ran out first. Because of this, you could only make 2 complete burgers instead of 3.',7);
+    hcFastType(keyText,'When one needed ingredient runs out first, it can determine how many complete products can be made.',7);
+    const btn=overlay.querySelector('#hcPartBDiscoveryContinue');
+    if(btn)btn.onclick=()=>{
+      soundCorrect();
+      overlay.classList.remove('show');
+      setTimeout(()=>{
+        overlay.remove();
+        document.documentElement.classList.remove('hc-no-scroll');
+        document.body.classList.remove('hc-no-scroll');
+        showPartCTransition();
+      },220);
+    };
+  }
+
+  /* =====================================================
+     PART C — CHARGING STATION MISSION
+     Discovery activity for fixed component relationships.
+     ===================================================== */
+
+  const PART_C_QUESTIONS = [
+    {q:'How many Battery Packs were used to fully charge 1 device?', answers:['2'], feedback:'Correct! You used 2 Battery Packs.'},
+    {q:'How many Power Units were used to fully charge 1 device?', answers:['1'], feedback:'Correct! You used 1 Power Unit.'},
+    {q:'How many Battery Packs did you use to charge the second device?', answers:['2'], feedback:'Correct! You used 2 Battery Packs again.'},
+    {q:'How many Battery Packs were used to charge both devices in total?', answers:['4'], feedback:'Correct! 4 Battery Packs were used for 2 devices.'},
+    {q:'How many devices did you fully charge?', answers:['3'], feedback:'Correct! You fully charged 3 devices.'},
+    {q:'How many Battery Packs were needed for 3 fully charged devices?', answers:['6'], feedback:'Correct! 6 Battery Packs were needed.'},
+    {q:'How many complete devices were you able to charge?', answers:['2'], feedback:'Correct! You fully charged 2 devices.'}
+  ];
+
+  const PART_C_STATE={
+    challenge:1, questionIndex:0, battery:0, power:0, stationBattery:0, stationPower:0, stationComponents:[],
+    devices:0, devicesWaiting:0, activatedThisChallenge:0, cycleMessage:'', checklistChoice:null, lastActivation:'', history:[]
+  };
+
+  function partCReset(b,p,waiting){
+    PART_C_STATE.battery=b; PART_C_STATE.power=p; PART_C_STATE.stationBattery=0; PART_C_STATE.stationPower=0;
+    PART_C_STATE.devices=0; PART_C_STATE.devicesWaiting=waiting||0; PART_C_STATE.stationComponents=[];
+    PART_C_STATE.cycleMessage=''; PART_C_STATE.checklistChoice=null; PART_C_STATE.lastActivation='';
+  }
+
+  function partCArt(type,charged=false,failed=false){
+    if(type==='battery') return '<div class="hc-partc-battery"><i></i></div>';
+    if(type==='power') return '<div class="hc-partc-power"><i></i><b></b></div>';
+    return '<div class="hc-partc-device '+(charged?'charged ':'')+(failed?'failed':'')+'"><div class="hc-partc-device-screen"></div><div class="hc-partc-device-status">'+(failed?'0%':(charged?'100% CHARGED':'WAITING'))+'</div></div>';
+  }
+
+  function showPartCTransition(){
+    document.querySelectorAll('.hc-partc-overlay').forEach(x=>x.remove());
+    document.querySelectorAll('.screen').forEach(sc=>{sc.hidden=true;sc.style.display='none'});
+    document.documentElement.classList.add('hc-no-scroll'); document.body.classList.add('hc-no-scroll');
+    const overlay=document.createElement('div'); overlay.className='hc-partc-overlay show';
+    overlay.innerHTML=`<div class="hc-partc-transition-card">
+      <div class="hc-partc-speaker">${partCChemistTag()}</div>
+      <div class="hc-partc-transition-text">
+        <p data-hc-type-text="You discovered what happens when one ingredient runs out."></p>
+        <p data-hc-type-text="But there’s another pattern you need to uncover."></p>
+        <p data-hc-type-text="This time, you’re in control of a charging station."></p>
+        <p data-hc-type-text="Your mission is to find out what combination makes the system work."></p>
+      </div>
+      <div class="hc-partc-discovery-box"><div class="hc-partc-discovery-kicker">NEW MISSION</div><div class="hc-partc-title">CHARGING STATION</div><div class="hc-partc-mission-sub">POWER THE DEVICES</div><button type="button" id="hcPartCStart" class="arcade-btn green hc-partc-primary">START MISSION ▶</button></div>
+    </div>`;
+    document.body.appendChild(overlay);
+    ensureLiveBank();
+    const transitionTexts=Array.from(overlay.querySelectorAll('.hc-partc-transition-text [data-hc-type-text]')); if(transitionTexts.length) hcFastTypeElements(transitionTexts, 7);
+    const startBtn=overlay.querySelector('#hcPartCStart');
+    if(startBtn) startBtn.onclick=()=>{ soundClick(); showPartCActivity(); };
+  }
+
+  function showPartCActivity(){
+    PART_C_STATE.history=[];
+    partCReset(4,2,1); PART_C_STATE.challenge=1; PART_C_STATE.questionIndex=0;
+    document.querySelectorAll('.hc-partc-overlay').forEach(x=>x.remove());
+    document.querySelectorAll('.screen').forEach(sc=>{sc.hidden=true;sc.style.display='none'});
+    document.documentElement.classList.add('hc-no-scroll'); document.body.classList.add('hc-no-scroll');
+    const overlay=document.createElement('div'); overlay.className='hc-partc-overlay show';
+    overlay.innerHTML=`<div class="hc-partc-card" id="hcPartCCard"></div>`;
+    document.body.appendChild(overlay); ensureLiveBank(); renderPartCChallenge();
+  }
+
+  function getPartCChosenChemist(){
+    return (typeof CHARACTERS!=='undefined' && CHARACTERS[S.selectedCharacter||'nova']) ? CHARACTERS[S.selectedCharacter||'nova'] : {name:'NOVA',emoji:'👩🏽‍🔬'};
+  }
+
+  function partCChemistTag(){
+    const ch=getPartCChosenChemist();
+    return `<div class="hc-partc-chemist-tag"><div class="hc-partc-chemist-avatar">${ch.emoji}</div><div class="hc-partc-chemist-name">${ch.name}</div></div>`;
+  }
+
+  function partCBackButton(label='BACK ◀', handler){
+    return `<button type="button" class="arcade-btn hc-partc-back" id="hcPartCBack">${label}</button>`;
+  }
+
+  function restorePartCHistory(index){
+    const snap=PART_C_STATE.history[index];
+    if(!snap)return false;
+    PART_C_STATE.challenge=snap.challenge;
+    PART_C_STATE.battery=snap.battery; PART_C_STATE.power=snap.power;
+    PART_C_STATE.stationBattery=snap.stationBattery; PART_C_STATE.stationPower=snap.stationPower;
+    PART_C_STATE.stationComponents=[...(snap.stationComponents||[])];
+    PART_C_STATE.devices=snap.devices; PART_C_STATE.devicesWaiting=snap.devicesWaiting;
+    PART_C_STATE.activatedThisChallenge=snap.activatedThisChallenge;
+    PART_C_STATE.cycleMessage=snap.cycleMessage; PART_C_STATE.lastActivation=snap.lastActivation;
+    renderPartCChallenge();
+    return true;
+  }
+
+  function renderPartCChallenge(){
+    const card=document.getElementById('hcPartCCard'); if(!card)return;
+    const c=PART_C_STATE.challenge;
+    let title='',sub='',note='';
+    if(c===1){title='POWER UP ONE DEVICE';note='The station needs the correct combination of components to fully charge a device.<br><br>Find out what combination works.';}
+    if(c===2){title='CHARGE ANOTHER DEVICE';note='Another device is waiting.<br><br>You still have components left. Can you power it?';}
+    if(c===3){title='CHARGE AS MANY AS POSSIBLE';note='Several devices are waiting.<br><br>Charge as many as you can.';}
+    if(c===4){title='THE LEFTOVER DEVICE';note='Two devices are already charged, but one device is still waiting.<br><br>Use the remaining components and see what happens.';}
+    const waiting=Math.max(0,PART_C_STATE.devicesWaiting-PART_C_STATE.devices);
+    sub = waiting===1 ? '1 DEVICE IS WAITING' : `${waiting} DEVICES ARE WAITING`;
+    const leftoverFailed=c===4 && PART_C_STATE.lastActivation==='leftover-fail';
+    const normalWaiting=Math.max(0,waiting-(leftoverFailed?1:0));
+    const deviceVisuals=Array.from({length:PART_C_STATE.devices},()=>partCArt('device',true)).join('')+
+      (leftoverFailed?partCArt('device',false,true):'')+
+      Array.from({length:normalWaiting},()=>partCArt('device',false)).join('');
+    const stationTypes=PART_C_STATE.stationComponents||[];
+    const stationSlots=Array.from({length:3},(_,i)=>{
+      const type=stationTypes[i];
+      if(!type)return `<div class="hc-partc-slot-wrap"><div class="hc-partc-drop-slot"></div><button type="button" class="hc-partc-remove" data-remove-slot="${i}" disabled>REMOVE</button></div>`;
+      const status=partCComponentStatus(i);
+      return `<div class="hc-partc-slot-wrap"><div class="hc-partc-drop-slot filled ${status}">${partCArt(type)}</div><button type="button" class="hc-partc-remove" data-remove-slot="${i}">REMOVE</button></div>`;
+    }).join('');
+    const stationTotal=stationTypes.length;
+    const success=PART_C_STATE.lastActivation==='success';
+    const wrong=PART_C_STATE.lastActivation==='wrong';
+    const machineClass=wrong?'wrong':success?'success':(leftoverFailed?'failed':(PART_C_STATE.lastActivation==='charging'?'charging':''));
+    const canContinue=(leftoverFailed || (success && ((c===1)||(c===2)||(c===3 && PART_C_STATE.devices>=3))));
+    const continueLabel=canContinue?'CONTINUE ▶':'';
+    card.innerHTML=`
+      <div class="hc-partc-title">CHARGING STATION MISSION</div>
+      <div class="hc-partc-challenge-label">CHALLENGE ${c} OF 4</div>
+      <div class="hc-partc-mission-title">${title}</div>
+      <div class="hc-partc-mission-sub">${sub}</div>
+      <div class="hc-partc-chemist-note">${partCChemistTag()}<div>${note}</div></div>
+      <div class="hc-partc-workspace">
+        <div class="hc-partc-material-panel">
+          <div class="hc-partc-section-title">AVAILABLE COMPONENTS</div>
+          <div class="hc-partc-materials">
+            ${Array.from({length:PART_C_STATE.battery},(_,i)=>`<div class="hc-partc-material" data-pc-type="battery" data-pc-id="b${i}">${partCArt('battery')}<span>BATTERY PACK</span></div>`).join('')}
+            ${Array.from({length:PART_C_STATE.power},(_,i)=>`<div class="hc-partc-material" data-pc-type="power" data-pc-id="p${i}">${partCArt('power')}<span>POWER UNIT</span></div>`).join('')}
+          </div>
+          <div class="hc-partc-counters"><span>BATTERY PACKS ×${PART_C_STATE.battery}</span><span>POWER UNITS ×${PART_C_STATE.power}</span></div>
+        </div>
+        <div class="hc-partc-machine-panel">
+          <div class="hc-partc-section-title">CHARGING STATION</div>
+          <div class="hc-partc-charging-row"><div class="hc-partc-device-wrap">${deviceVisuals||partCArt('device',false)}</div></div>
+          <div class="hc-partc-machine ${machineClass}" id="hcPartCMachine">
+            <div class="hc-partc-machine-screen">CHARGING CORE • ${success?'100% CHARGED':wrong?'CHECK COMPONENTS':leftoverFailed?'POWER UNIT UNAVAILABLE':'READY'}</div>
+            <div class="hc-partc-machine-label">DRAG 3 COMPONENTS INTO THE BOX</div>
+            <div class="hc-partc-machine-slot" id="hcPartCSlot"><div class="hc-partc-drop-slots">${stationSlots}</div></div>
+            <div class="hc-partc-machine-status">BATTERY PACKS ${PART_C_STATE.stationBattery}/2 • POWER UNITS ${PART_C_STATE.stationPower}/1</div>
+            <div class="hc-partc-activate-status">${success?'DEVICE FULLY CHARGED!':leftoverFailed?'The Power Unit is gone. This device cannot reach 100%.':wrong?'Wrong combination. Remove the red component and try another combination.':stationTotal===3?'Checking combination…':'Place components in the three slots.'}</div>
+          </div>
+        </div>
+      </div>
+      <div id="hcPartCFeedback" class="hc-partc-feedback ${wrong?'wrong':''}">${wrong?'The highlighted red component is the one that should be removed.':''}</div>
+      ${canContinue?`<button type="button" id="hcPartCChargeContinue" class="arcade-btn green hc-partc-primary">${continueLabel}</button>`:''}
+      ${c===2?partCBackButton():c===3?partCBackButton():c===4?partCBackButton():''}`;
+    bindPartCDrag();
+    document.querySelectorAll('[data-remove-slot]').forEach(btn=>btn.onclick=()=>removePartCComponent(Number(btn.dataset.removeSlot)));
+    if(canContinue){
+      const b=document.getElementById('hcPartCChargeContinue'); if(b)b.onclick=continueAfterPartCCharge;
+    }
+    const back=document.getElementById('hcPartCBack');
+    if(back){
+      back.onclick=()=>{
+        if(PART_C_STATE.challenge===2){ restorePartCHistory(0); }
+        else if(PART_C_STATE.challenge===3){ restorePartCHistory(1); }
+        else if(PART_C_STATE.challenge===4){ restorePartCHistory(4); }
+      };
+    }
+  }
+
+  function partCComponentStatus(index){
+    const arr=PART_C_STATE.stationComponents||[];
+    let needB=2,needP=1;
+    for(let i=0;i<index;i++){
+      if(arr[i]==='battery')needB--; else if(arr[i]==='power')needP--;
+    }
+    if(arr[index]==='battery') return needB>0?'correct-component':'wrong-component';
+    return needP>0?'correct-component':'wrong-component';
+  }
+
+  function bindPartCDrag(){
+    document.querySelectorAll('.hc-partc-material').forEach(el=>el.addEventListener('pointerdown',partCPointerDown,{passive:false}));
+  }
+  function partCPointerDown(e){
+    const el=e.currentTarget,type=el.dataset.pcType;if(!type)return;e.preventDefault();
+    const startX=e.clientX,startY=e.clientY;let started=false,ghost=null;
+    const move=ev=>{ev.preventDefault();if(!started&&Math.hypot(ev.clientX-startX,ev.clientY-startY)<6)return;if(!started){started=true;ghost=el.cloneNode(true);ghost.classList.add('hc-partc-drag-ghost');document.body.appendChild(ghost)}if(ghost){ghost.style.left=ev.clientX+'px';ghost.style.top=ev.clientY+'px'}const t=document.elementFromPoint(ev.clientX,ev.clientY);document.getElementById('hcPartCMachine')?.classList.toggle('drag-over',!!(t&&t.closest&&t.closest('#hcPartCMachine')))};
+    const up=ev=>{document.removeEventListener('pointermove',move);document.removeEventListener('pointerup',up);document.getElementById('hcPartCMachine')?.classList.remove('drag-over');const t=document.elementFromPoint(ev.clientX,ev.clientY);if(started&&t&&t.closest&&t.closest('#hcPartCMachine'))placePartCMaterial(type);if(ghost)ghost.remove()};
+    document.addEventListener('pointermove',move,{passive:false});document.addEventListener('pointerup',up,{passive:false});
+  }
+  function placePartCMaterial(type){
+    if(PART_C_STATE.stationComponents.length>=3)return;
+    if(type==='battery'&&PART_C_STATE.battery>0){PART_C_STATE.battery--;PART_C_STATE.stationBattery++;}
+    else if(type==='power'&&PART_C_STATE.power>0){PART_C_STATE.power--;PART_C_STATE.stationPower++;}
+    else return;
+    PART_C_STATE.stationComponents.push(type); PART_C_STATE.lastActivation=''; PART_C_STATE.cycleMessage=''; soundClick(); renderPartCChallenge();
+    if(PART_C_STATE.stationComponents.length===3) setTimeout(checkPartCCombination,120);
+    else if(PART_C_STATE.challenge===4 && PART_C_STATE.stationBattery===2 && PART_C_STATE.stationPower===0 && PART_C_STATE.power===0){
+      setTimeout(()=>{
+        PART_C_STATE.lastActivation='leftover-fail';
+        PART_C_STATE.cycleMessage='0% — POWER UNIT UNAVAILABLE';
+        soundWrong();
+        renderPartCChallenge();
+      },180);
+    }
+  }
+  function clearPartCComponents(){
+    PART_C_STATE.battery+=PART_C_STATE.stationBattery; PART_C_STATE.power+=PART_C_STATE.stationPower;
+    PART_C_STATE.stationBattery=0; PART_C_STATE.stationPower=0; PART_C_STATE.stationComponents=[]; PART_C_STATE.lastActivation=''; PART_C_STATE.cycleMessage=''; soundClick(); renderPartCChallenge();
+  }
+  function removePartCComponent(index){
+    const type=(PART_C_STATE.stationComponents||[])[index]; if(!type)return;
+    if(type==='battery'){PART_C_STATE.battery++;PART_C_STATE.stationBattery--;} else {PART_C_STATE.power++;PART_C_STATE.stationPower--;}
+    PART_C_STATE.stationComponents.splice(index,1); PART_C_STATE.lastActivation=''; PART_C_STATE.cycleMessage=''; soundClick(); renderPartCChallenge();
+  }
+  function checkPartCCombination(){
+    const ok=PART_C_STATE.stationBattery===2 && PART_C_STATE.stationPower===1;
+    if(!ok){PART_C_STATE.lastActivation='wrong';PART_C_STATE.cycleMessage='WRONG COMBINATION';soundWrong();renderPartCChallenge();return;}
+    PART_C_STATE.lastActivation='charging'; PART_C_STATE.cycleMessage='CHARGING… 100%'; soundCorrect(); renderPartCChallenge();
+    setTimeout(()=>{
+      PART_C_STATE.devices++; PART_C_STATE.activatedThisChallenge++;
+      PART_C_STATE.lastActivation='success'; PART_C_STATE.cycleMessage='DEVICE FULLY CHARGED!';
+      PART_C_STATE.history.push({
+        challenge:PART_C_STATE.challenge,
+        battery:PART_C_STATE.battery, power:PART_C_STATE.power,
+        stationBattery:PART_C_STATE.stationBattery,
+        stationPower:PART_C_STATE.stationPower,
+        stationComponents:[...(PART_C_STATE.stationComponents||[])],
+        devices:PART_C_STATE.devices, devicesWaiting:PART_C_STATE.devicesWaiting,
+        activatedThisChallenge:PART_C_STATE.activatedThisChallenge,
+        cycleMessage:PART_C_STATE.cycleMessage, lastActivation:'success'
+      });
+      /* Consume used components only when another device is still waiting.
+         Keep the final device's components visible in the station boxes. */
+      const lastDeviceNow = PART_C_STATE.devices >= PART_C_STATE.devicesWaiting;
+      if(!lastDeviceNow){
+        PART_C_STATE.stationBattery=0;
+        PART_C_STATE.stationPower=0;
+        PART_C_STATE.stationComponents=[];
+      }
+      if(typeof awardLiveReward==='function') awardLiveReward();
+      renderPartCChallenge();
+    },900);
+  }
+  function continueAfterPartCCharge(){
+    if(PART_C_STATE.challenge===1 && PART_C_STATE.devices===1)partCShowQuestion(0);
+    else if(PART_C_STATE.challenge===2 && PART_C_STATE.devices===1)partCShowQuestion(2);
+    else if(PART_C_STATE.challenge===3 && PART_C_STATE.devices===3)partCShowQuestion(4);
+    else if(PART_C_STATE.challenge===4 && PART_C_STATE.lastActivation==='leftover-fail'){showPartCQuestion7();}
+  }
+  function showPartCQuestion7(){partCShowQuestion(6);}
+
+  function partCShowQuestion(index){
+    const card=document.getElementById('hcPartCCard');if(!card)return;const item=PART_C_QUESTIONS[index];PART_C_STATE.questionIndex=index;
+    const backAction={
+      0:()=>restorePartCHistory(0),
+      1:()=>restorePartCHistory(0),
+      2:()=>restorePartCHistory(1),
+      3:()=>restorePartCHistory(1),
+      4:()=>restorePartCHistory(4),
+      5:()=>restorePartCHistory(4),
+      6:()=>{PART_C_STATE.challenge=4;PART_C_STATE.lastActivation='leftover-fail';PART_C_STATE.cycleMessage='0% — POWER UNIT UNAVAILABLE';renderPartCChallenge()}
+    }[index];
+    card.innerHTML=`<div class="hc-partc-title">CHARGING STATION MISSION</div><div class="hc-partc-question-progress">QUESTION ${index+1}</div><div class="hc-partc-question">${item.q}</div><div class="hc-partc-answer-area"><input id="hcPartCAnswer" class="hc-partc-answer" type="text" autocomplete="off" inputmode="text"><button type="button" id="hcPartCSubmit" class="arcade-btn green hc-partc-primary">SUBMIT ANSWER ▶</button><div id="hcPartCQuestionFeedback" class="hc-partc-question-feedback"></div><div class="hc-partc-continue-slot"></div>${backAction?partCBackButton():''}</div>`;
+    const input=document.getElementById('hcPartCAnswer'),btn=document.getElementById('hcPartCSubmit');btn.onclick=()=>submitPartCQuestion(index);
+    const back=document.getElementById('hcPartCBack');if(back)back.onclick=backAction;
+    setTimeout(()=>input.focus(),80);
+  }
+  function normalizePartCAnswer(v){return String(v||'').trim().toLowerCase().replace(/[.,!?]/g,'').replace(/\s+/g,' ')}
+  function submitPartCQuestion(index){
+    const card=document.getElementById('hcPartCCard');
+    const item=PART_C_QUESTIONS[index],input=document.getElementById('hcPartCAnswer'),fb=document.getElementById('hcPartCQuestionFeedback'),btn=document.getElementById('hcPartCSubmit');if(!item||!input||!fb||!btn||!card)return;
+    const ok=item.answers.some(x=>normalizePartCAnswer(x)===normalizePartCAnswer(input.value));
+    if(!ok){fb.className='hc-partc-question-feedback wrong';fb.textContent='Use what you observed and try again.';soundWrong();input.focus();return;}
+    input.classList.add('correct');input.disabled=true;fb.className='hc-partc-question-feedback correct';fb.textContent=item.feedback;soundCorrect();
+    if(typeof awardLiveReward==='function') awardLiveReward();
+    btn.textContent='CONTINUE ▶';
+    const continueSlot=card.querySelector('.hc-partc-continue-slot');
+    if(continueSlot){
+      continueSlot.appendChild(btn);
+    }
+    btn.onclick=()=>{
+      if(index===0)partCShowQuestion(1);
+      else if(index===1){partCReset(2,1,1);PART_C_STATE.challenge=2;renderPartCChallenge();}
+      else if(index===2)partCShowQuestion(3);
+      else if(index===3){showPartCObserve2();}
+      else if(index===4)partCShowQuestion(5);
+      else if(index===5)showPartCObserve3();
+      else if(index===6)showPartCChecklist();
+    };
+  }
+
+  function showPartCObserve2(){
+    const card=document.getElementById('hcPartCCard');if(!card)return;
+    card.innerHTML=`<div class="hc-partc-observe-box"><div class="hc-partc-observe-title">OBSERVE</div><div class="hc-partc-discovery-text">You used the same number of Battery Packs each time you charged one device.</div></div><button type="button" id="hcPartCObserveContinue" class="arcade-btn green hc-partc-primary">CONTINUE ▶</button>${partCBackButton()}`;
+    document.getElementById('hcPartCObserveContinue').onclick=()=>{partCReset(6,3,3);PART_C_STATE.challenge=3;renderPartCChallenge()};
+    document.getElementById('hcPartCBack').onclick=()=>partCShowQuestion(3);
+  }
+  function showPartCObserve3(){
+    const card=document.getElementById('hcPartCCard');if(!card)return;
+    card.innerHTML=`<div class="hc-partc-observe-box"><div class="hc-partc-observe-title">OBSERVE THE PATTERN</div><div class="hc-partc-pattern"><div class="hc-partc-pattern-row">1 Device → 2 Battery Packs</div><div class="hc-partc-pattern-arrow">↓</div><div class="hc-partc-pattern-row">2 Devices → 4 Battery Packs</div><div class="hc-partc-pattern-arrow">↓</div><div class="hc-partc-pattern-row">3 Devices → 6 Battery Packs</div></div></div><button type="button" id="hcPartCObserveContinue" class="arcade-btn green hc-partc-primary">CONTINUE ▶</button>${partCBackButton()}`;
+    document.getElementById('hcPartCObserveContinue').onclick=()=>{partCReset(6,2,3);PART_C_STATE.challenge=4;renderPartCChallenge()};
+    document.getElementById('hcPartCBack').onclick=()=>showPartCObserve2();
+  }
+  function showPartCChecklist(){
+    const card=document.getElementById('hcPartCCard');if(!card)return;
+    const opts=['The Battery Packs were too many.','The Power Units were already used up.','The Charging Station changed its requirement.','The devices needed different components each time.'];
+    card.innerHTML=`<div class="hc-partc-title">FIND THE CAUSE</div><div class="hc-partc-question">Select the reason why another device could not be fully charged.</div><div class="hc-partc-checklist">${opts.map((x,i)=>`<div class="hc-partc-check-option" data-choice="${i}"><span class="checkmark">☐</span>${x}</div>`).join('')}</div><div id="hcPartCChecklistFeedback" class="hc-partc-question-feedback"></div><button type="button" id="hcPartCChecklistContinue" class="arcade-btn green hc-partc-primary" disabled>CONTINUE ▶</button>${partCBackButton()}`;
+    const fb=document.getElementById('hcPartCChecklistFeedback'),btn=document.getElementById('hcPartCChecklistContinue');
+    document.getElementById('hcPartCBack').onclick=()=>partCShowQuestion(6);
+    document.querySelectorAll('.hc-partc-check-option').forEach(opt=>opt.onclick=()=>{
+      document.querySelectorAll('.hc-partc-check-option').forEach(x=>x.classList.remove('selected','correct'));
+      opt.classList.add('selected');const choice=Number(opt.dataset.choice);PART_C_STATE.checklistChoice=choice;
+      if(choice===1){opt.classList.add('correct');opt.querySelector('.checkmark').textContent='☑';fb.className='hc-partc-question-feedback correct';fb.textContent='Exactly! The Power Units were already used up, so the remaining Battery Packs could not complete another charging cycle.';soundCorrect();if(typeof awardLiveReward==='function') awardLiveReward();btn.disabled=false;btn.onclick=showPartCDiscoverySequence}
+      else{opt.querySelector('.checkmark').textContent='☐';fb.className='hc-partc-question-feedback wrong';fb.textContent='Look at which component is still available and which one has already run out.';soundWrong();btn.disabled=true}
+    });
+  }
+  function showPartCDiscoverySequence(){
+    const card=document.getElementById('hcPartCCard');if(!card)return;
+    card.innerHTML=`<div class="hc-partc-observe-box"><div class="hc-partc-observe-title">WHAT DID YOU NOTICE?</div><div class="hc-partc-pattern"><div class="hc-partc-pattern-row">1 DEVICE<br><strong>2 Battery Packs + 1 Power Unit</strong></div><div class="hc-partc-pattern-arrow">↓</div><div class="hc-partc-pattern-row">2 DEVICES<br><strong>4 Battery Packs + 2 Power Units</strong></div><div class="hc-partc-pattern-arrow">↓</div><div class="hc-partc-pattern-row">3 DEVICES<br><strong>6 Battery Packs + 3 Power Units</strong></div></div><div class="hc-partc-discovery-text">The number of devices changed, but the same combination of components was needed each time.</div></div><button type="button" id="hcPartCNoticeContinue" class="arcade-btn green hc-partc-primary">CONTINUE ▶</button>${partCBackButton()}`;
+    document.getElementById('hcPartCNoticeContinue').onclick=showPartCKeyIdea;
+    document.getElementById('hcPartCBack').onclick=showPartCChecklist;
+  }
+  function showPartCKeyIdea(){
+    const card=document.getElementById('hcPartCCard');if(!card)return;
+    card.innerHTML=`<div class="hc-partc-key-box"><div class="hc-partc-key-title">KEY IDEA</div><div class="hc-partc-key-text">Components can work together in a fixed relationship.</div><div class="hc-partc-pattern-row">2 Battery Packs + 1 Power Unit → 1 Fully Charged Device</div></div><button type="button" id="hcPartCKeyContinue" class="arcade-btn green hc-partc-primary">CONTINUE ▶</button>${partCBackButton()}`;
+    document.getElementById('hcPartCKeyContinue').onclick=showPartCFinalDialogue;
+    document.getElementById('hcPartCBack').onclick=showPartCDiscoverySequence;
+  }
+  function showPartCFinalDialogue(){
+    const card=document.getElementById('hcPartCCard');if(!card)return;
+    card.innerHTML=`<div class="hc-partc-speaker">${partCChemistTag()}</div><div class="hc-partc-final-dialogue"><p data-hc-type-text="You found the pattern, Chemist!"></p><p data-hc-type-text="The amount of components changed, but the relationship needed to complete each charging cycle stayed the same."></p><p class="hc-yellow-type" data-hc-type-text="Chemical reactions work the same way."></p><p data-hc-type-text="And that’s the real mission waiting for you."></p><p data-hc-type-text="Everything you discovered here will help you in the challenges ahead."></p><p class="hc-yellow-type" data-hc-type-text="Excellent work, Chemist!"></p></div><button type="button" id="hcPartCFinish" class="arcade-btn green hc-partc-primary">CONTINUE ▶</button>${partCBackButton()}`;
+    hcFastTypeElements(Array.from(card.querySelectorAll('.hc-partc-final-dialogue [data-hc-type-text]')),7);
+    document.getElementById('hcPartCFinish').onclick=()=>{soundCorrect();showPartCLevelCompletion()};
+    document.getElementById('hcPartCBack').onclick=showPartCKeyIdea;
+  }
+  function showPartCLevelCompletion(){
+    const card=document.getElementById('hcPartCCard');if(!card)return;
+    card.innerHTML=`<div class="hc-partc-discovery-box"><div class="hc-partc-discovery-kicker">LEVEL 1 COMPLETE!</div><div class="hc-partc-discovery-text" data-hc-type-text="You completed all the challenges in Level 1."></div><div class="hc-partc-recap"><div data-hc-type-text="✓ You explored quantities through the Burger Activity."></div><div data-hc-type-text="✓ You discovered what happens when a needed component runs out."></div><div data-hc-type-text="✓ You discovered that components can follow a fixed relationship."></div></div></div><div class="hc-partc-speaker">${partCChemistTag()}</div><div class="hc-partc-final-dialogue"><p data-hc-type-text="You’ve completed the challenges here in Level 1."></p><p data-hc-type-text="You learned that materials do not simply combine in any amount."></p><p data-hc-type-text="They can work together according to a fixed relationship."></p><p class="hc-yellow-type" data-hc-type-text="Chemical reactions work the same way."></p><p data-hc-type-text="But now it’s time to take what you discovered into the world of chemical reactions."></p><p data-hc-type-text="So what are you waiting for, Chemist?"></p><p class="hc-yellow-type" data-hc-type-text="Let’s jump to the next level!"></p></div><button type="button" id="hcPartCExistingComplete" class="arcade-btn green hc-partc-primary hc-next-level-stamp">CONTINUE TO LEVEL 2 ▶</button>${partCBackButton()}`;
+    hcFastTypeElements(Array.from(card.querySelectorAll('[data-hc-type-text]')),7);
+    document.getElementById('hcPartCExistingComplete').onclick=()=>{soundCorrect();const ov=document.querySelector('.hc-partc-overlay');if(ov)ov.remove();document.documentElement.classList.remove('hc-no-scroll');document.body.classList.remove('hc-no-scroll');hideLiveBank();showBurgerRecognition()};
+    document.getElementById('hcPartCBack').onclick=showPartCFinalDialogue;
   }
 
   function tasteTest(){
@@ -7815,6 +8910,558 @@ button:focus-visible,.level-node:focus-visible,.bank-card:focus-visible,.hc-reci
   paint-order:stroke fill !important;
 }
 </style>
+
+<style id="part-b-comic-text-final">
+/* Arcade/comic typography for the Part B story and mission text */
+.hc-partb-transition-text,
+.hc-partb-mission,
+.hc-partb-discovery-text,
+.hc-partb-key-text{
+  font-family:"Comic Sans MS","Comic Sans",cursive !important;
+  font-weight:700 !important;
+  letter-spacing:.15px;
+  text-shadow:2px 2px 0 #000 !important;
+}
+</style>
+
+<style id="part-c-chemist-and-slot-style">
+.hc-partc-chemist-tag{display:inline-flex;align-items:center;justify-content:center;gap:9px;margin:0 auto 12px;padding:6px 10px;border:2px solid #35bfff;border-radius:14px;background:rgba(4,20,30,.9);box-shadow:0 0 14px rgba(53,191,255,.2)}
+.hc-partc-chemist-avatar{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#102c3b;border:2px solid #7dff9a;font-size:25px;line-height:1;box-shadow:0 0 10px rgba(125,255,154,.25)}
+.hc-partc-chemist-name{font-family:"Press Start 2P",cursive;font-size:9px;color:#ffe36a;text-shadow:2px 2px #000}
+.hc-partc-speaker .hc-partc-chemist-tag{margin-bottom:0}
+.hc-partc-slot-wrap{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:0}
+.hc-partc-remove{font-family:"Press Start 2P",cursive;font-size:6px;padding:5px 6px;border:2px solid #ff6b6b;border-radius:7px;background:#321318;color:#fff;cursor:pointer}
+.hc-partc-remove:disabled{visibility:hidden}
+.hc-partc-drop-slot.correct-component{border-color:#7dff9a!important;box-shadow:0 0 12px rgba(125,255,154,.35);background:rgba(20,70,43,.22)}
+.hc-partc-drop-slot.wrong-component{border-color:#ff5d67!important;box-shadow:0 0 16px rgba(255,70,80,.45);background:rgba(100,20,25,.28);animation:hcPartCWrongPulse .55s ease-in-out infinite alternate}
+.hc-partc-machine.success{border-color:#7dff9a!important;box-shadow:0 0 24px rgba(125,255,154,.35),inset 0 0 25px rgba(125,255,154,.1)}
+.hc-partc-machine.wrong{border-color:#ff5d67!important;box-shadow:0 0 24px rgba(255,70,80,.28),inset 0 0 25px rgba(255,70,80,.08)}.hc-partc-machine.failed{border-color:#ff4f68;box-shadow:0 0 28px rgba(255,79,104,.28),inset 0 0 24px rgba(255,79,104,.08)}.hc-partc-machine.failed .hc-partc-machine-screen{border-color:#ff4f68;color:#ff6b7e}.hc-partc-machine.failed .hc-partc-machine-status{color:#ff6b7e}.hc-partc-machine.failed .hc-partc-activate-status{color:#ff6b7e}
+
+@keyframes hcPartCWrongPulse{from{box-shadow:0 0 5px rgba(255,70,80,.25)}to{box-shadow:0 0 18px rgba(255,70,80,.65)}}
+@media(max-width:520px){.hc-partc-chemist-avatar{width:38px;height:38px;font-size:22px}.hc-partc-chemist-name{font-size:8px}.hc-partc-remove{font-size:5px;padding:4px}}
+</style>
+
+<style id="stoich-requested-typing-final">
+/* Requested fast-typed sections only — mission instructions remain static. */
+.hc-partb-transition-text,
+.hc-partb-discovery-text,
+.hc-partb-key-text,
+.hc-partc-final-dialogue,
+.hc-partc-discovery-box .hc-partc-discovery-text,
+.hc-partc-recap{
+  font-family:"Press Start 2P",cursive !important;
+}
+.hc-partc-final-dialogue p,
+.hc-partc-recap div,
+.hc-partc-discovery-box .hc-partc-discovery-text{
+  line-height:1.8 !important;
+}
+/* Part C challenge instructions/notes are deliberately static. */
+.hc-partc-chemist-note,
+.hc-partc-mission-sub,
+.hc-partc-machine-label,
+.hc-partc-activate-status{
+  animation:none !important;
+}
+</style>
+
+<style id="level1-stamp-and-completion-effects">
+/* Larger arcade Level 1 completion card */
+.hc-partc-discovery-box .hc-partc-discovery-kicker{
+  font-family:"Press Start 2P",cursive!important;
+  font-size:clamp(20px,3.4vw,38px)!important;
+  line-height:1.25!important;
+  letter-spacing:1px!important;
+  text-align:center!important;
+  text-shadow:3px 3px 0 #000,0 0 14px rgba(53,191,255,.28)!important;
+}
+.hc-partc-discovery-box .hc-partc-discovery-text{
+  font-family:"Press Start 2P",cursive!important;
+  font-size:clamp(13px,2vw,22px)!important;
+  line-height:1.7!important;
+}
+.hc-partc-recap{
+  font-family:"Press Start 2P",cursive!important;
+  font-size:clamp(10px,1.45vw,16px)!important;
+}
+.hc-partc-recap div{
+  color:#7dff9a!important;
+  text-shadow:2px 2px 0 #000,0 0 8px rgba(125,255,154,.18)!important;
+}
+
+/* Stamp-on-paper reward effects */
+.hc-reward-stamp{
+  opacity:0;
+  transform:translateY(-18px) scale(1.45) rotate(-6deg);
+  transform-origin:center;
+  filter:blur(1.5px);
+  animation:hcRewardStamp .62s cubic-bezier(.2,1.45,.35,1) forwards!important;
+}
+.hc-def-stars.hc-reward-stamp{animation-delay:.65s!important}
+.hc-stamp-delay-2{animation-delay:1.05s!important}
+.hc-stamp-delay-3{animation-delay:1.42s!important}
+.hc-stamp-delay-4{animation-delay:1.79s!important}
+@keyframes hcRewardStamp{
+  0%{opacity:0;transform:translateY(-18px) scale(1.5) rotate(-8deg);filter:blur(2px)}
+  45%{opacity:1;transform:translateY(2px) scale(.9) rotate(2deg);filter:blur(.2px)}
+  70%{opacity:1;transform:translateY(-1px) scale(1.06) rotate(-1deg);filter:blur(0)}
+  100%{opacity:1;transform:translateY(0) scale(1) rotate(0);filter:blur(0)}
+}
+.hc-def-stars{font-family:"Press Start 2P",cursive!important}
+.hc-def-rewards{font-family:"Press Start 2P",cursive!important}
+.hc-def-unlock{font-family:"Press Start 2P",cursive!important}
+</style>
+
+<style id="partc-requested-yellow-and-next-stamp">
+/* Requested yellow typed dialogue */
+.hc-partc-final-dialogue .hc-yellow-type{
+  color:#ffe36a!important;
+  text-shadow:2px 2px 0 #000,0 0 12px rgba(255,227,106,.28)!important;
+}
+
+/* Level 2 button: stamp-in + gentle pulse */
+.hc-next-level-stamp{
+  position:relative!important;
+  animation:hcNextLevelStamp .78s cubic-bezier(.2,1.45,.35,1) .35s both,
+            hcNextLevelPulse 1.55s ease-in-out 1.25s infinite!important;
+  transform-origin:center!important;
+}
+@keyframes hcNextLevelStamp{
+  0%{opacity:0;transform:translateY(-18px) scale(1.35) rotate(-5deg);filter:blur(1.5px)}
+  45%{opacity:1;transform:translateY(2px) scale(.92) rotate(1.5deg);filter:blur(.2px)}
+  72%{opacity:1;transform:translateY(-1px) scale(1.05) rotate(-.7deg);filter:blur(0)}
+  100%{opacity:1;transform:translateY(0) scale(1) rotate(0);filter:blur(0)}
+}
+@keyframes hcNextLevelPulse{
+  0%,100%{box-shadow:0 0 0 rgba(125,255,154,0),0 0 12px rgba(125,255,154,.25);}
+  50%{box-shadow:0 0 0 7px rgba(125,255,154,.08),0 0 28px rgba(125,255,154,.62);}
+}
+</style>
+
+<style id="final-excellent-next-level-stamp">
+/* FINAL EXCELLENT CARD — NEXT LEVEL button: stamp in + pulse */
+.hc-definitive-card .hc-def-next{
+  opacity:1!important;
+  transform:translateY(-22px) scale(1.38) rotate(-6deg)!important;
+  transform-origin:center!important;
+  filter:blur(1.5px)!important;
+  animation:hcExcellentNextStamp .72s cubic-bezier(.2,1.45,.35,1) .15s both,
+            hcExcellentNextPulse 1.5s ease-in-out .95s infinite!important;
+}
+@keyframes hcExcellentNextStamp{
+  0%{opacity:0;transform:translateY(-22px) scale(1.38) rotate(-6deg);filter:blur(1.5px)}
+  42%{opacity:1;transform:translateY(2px) scale(.91) rotate(1.8deg);filter:blur(.2px)}
+  70%{opacity:1;transform:translateY(-1px) scale(1.06) rotate(-.8deg);filter:blur(0)}
+  100%{opacity:1;transform:translateY(0) scale(1) rotate(0);filter:blur(0)}
+}
+@keyframes hcExcellentNextPulse{
+  0%,100%{transform:scale(1);box-shadow:0 0 0 rgba(125,255,154,0),0 0 12px rgba(125,255,154,.22)}
+  50%{transform:scale(1.045);box-shadow:0 0 0 7px rgba(125,255,154,.08),0 0 30px rgba(125,255,154,.68)}
+}
+</style>
+
+<style id="final-stoich-reward-and-burger-fix">
+/* EXACT CENTER REWARD: no box, no movement off-center, 15px bold yellow. */
+#stoichCenterReward{
+  position:fixed!important;
+  left:50vw!important;
+  top:50vh!important;
+  width:max-content!important;
+  max-width:90vw!important;
+  margin:0!important;
+  padding:0!important;
+  z-index:2147483647!important;
+  transform:translate(-50%,-50%)!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  color:#ffd21f!important;
+  font-family:"Press Start 2P",Arial,sans-serif!important;
+  font-size:15px!important;
+  font-weight:900!important;
+  line-height:1.7!important;
+  text-align:center!important;
+  text-shadow:2px 2px 0 #000!important;
+  pointer-events:none!important;
+  opacity:0!important;
+  white-space:nowrap!important;
+}
+#stoichCenterReward.show{animation:stoichCenterRewardIn 1s ease-out forwards!important}
+#stoichCenterReward .reward-line{display:block!important;font-size:15px!important;font-weight:900!important;color:#ffd21f!important}
+@keyframes stoichCenterRewardIn{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(.92)}
+  12%{opacity:1;transform:translate(-50%,-50%) scale(1)}
+  78%{opacity:1;transform:translate(-50%,-50%) scale(1)}
+  100%{opacity:0;transform:translate(-50%,-50%) scale(1)}
+}
+
+/* LEVEL 01 story: make the requested two burgers visibly suspended on-screen. */
+#storyActorRight.burger-suspended-pair{
+  width:auto!important;
+  height:auto!important;
+  right:10%!important;
+  bottom:18%!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:22px!important;
+  font-size:0!important;
+  filter:none!important;
+  animation:none!important;
+  z-index:12!important;
+}
+#storyActorRight.burger-suspended-pair .story-burger-float{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:120px!important;
+  height:120px!important;
+  font-size:82px!important;
+  line-height:1!important;
+  filter:drop-shadow(0 12px 8px rgba(0,0,0,.45))!important;
+  animation:storyBurgerFloat 1.15s ease-in-out infinite alternate!important;
+}
+#storyActorRight.burger-suspended-pair .story-burger-float:nth-child(2){animation-delay:.22s!important}
+@keyframes storyBurgerFloat{
+  from{transform:translateY(5px) rotate(-3deg)}
+  to{transform:translateY(-13px) rotate(3deg)}
+}
+</style>
+<script id="final-stoich-reward-and-burger-script">
+function showCenterRewardPop(coinsEarned,xpEarned){
+  let pop=document.getElementById('stoichCenterReward');
+  if(!pop){
+    pop=document.createElement('div');
+    pop.id='stoichCenterReward';
+    document.body.appendChild(pop);
+  }
+  pop.innerHTML='<span class="reward-line">+'+Number(coinsEarned||0)+' COINS</span><span class="reward-line">+'+Number(xpEarned||0)+' XP</span>';
+  pop.classList.remove('show');
+  void pop.offsetWidth;
+  pop.classList.add('show');
+  clearTimeout(window.__stoichCenterRewardTimer);
+  window.__stoichCenterRewardTimer=setTimeout(function(){pop.classList.remove('show')},1000);
+}
+
+/* Only changes how the right-side burger artwork is rendered in the burger story. */
+(function(){
+  const originalRenderBurgerStoryScene=window.renderBurgerStoryScene;
+  if(typeof originalRenderBurgerStoryScene!=='function')return;
+  window.renderBurgerStoryScene=function(){
+    originalRenderBurgerStoryScene.apply(this,arguments);
+    const scene=burgerStoryScenes[burgerStoryIndex];
+    const right=document.getElementById('storyActorRight');
+    if(!right)return;
+    if(scene && scene.right==='🍔🍔'){
+      right.classList.add('burger-suspended-pair');
+      right.innerHTML='<span class="story-burger-float">🍔</span><span class="story-burger-float">🍔</span>';
+    }else{
+      right.classList.remove('burger-suspended-pair');
+      right.textContent=scene ? scene.right : '';
+    }
+  };
+})();
+</script>
+
+<style id="FINAL-HARD-FIX-STORY-ART-AND-REWARD">
+/* Keep ALL story artwork visibly above the dialogue panel. */
+#storyScreen.story-screen .story-actor{
+  z-index:60!important;
+  bottom:28%!important;
+  visibility:visible!important;
+  opacity:1!important;
+}
+#storyScreen.story-screen #storyActorLeft,
+#storyScreen.story-screen #storyActorRight{
+  z-index:60!important;
+  visibility:visible!important;
+  opacity:1!important;
+}
+#storyScreen.story-screen .dialogue-box{
+  z-index:10!important;
+}
+#storyScreen.story-screen .story-scene-title{
+  z-index:50!important;
+}
+#storyScreen.story-screen .cutscene-stage::after{
+  z-index:1!important;
+}
+#storyScreen.story-screen .cutscene-stage{
+  z-index:2!important;
+  overflow:visible!important;
+}
+#storyScreen.story-screen .story-card{
+  overflow:visible!important;
+}
+/* Burger pair: keep both burgers fully visible and suspended above the dialogue box. */
+#storyActorRight.burger-suspended-pair{
+  z-index:70!important;
+  bottom:28%!important;
+  right:8%!important;
+  visibility:visible!important;
+  opacity:1!important;
+}
+#storyActorRight.burger-suspended-pair .story-burger-float{
+  visibility:visible!important;
+  opacity:1!important;
+}
+</style>
+<script id="FINAL-HARD-FIX-REWARD">
+/* Bulletproof reward popup: direct inline styles, attached to <html>,
+   so it cannot be hidden behind the quiz/game overlays. */
+window.showCenterRewardPop = function(coinsEarned,xpEarned){
+  let pop=document.getElementById('stoichCenterRewardHard');
+  if(!pop){
+    pop=document.createElement('div');
+    pop.id='stoichCenterRewardHard';
+    (document.documentElement || document.body).appendChild(pop);
+  }
+  pop.innerHTML='<div>+'+Number(coinsEarned||0)+' COINS</div><div>+'+Number(xpEarned||0)+' XP</div>';
+  Object.assign(pop.style,{
+    position:'fixed',left:'50vw',top:'50vh',right:'auto',bottom:'auto',
+    transform:'translate(-50%,-50%)',
+    zIndex:'2147483647',display:'block',visibility:'visible',opacity:'1',
+    width:'max-content',maxWidth:'90vw',margin:'0',padding:'0',
+    background:'transparent',border:'0',boxShadow:'none',
+    color:'#ffd21f',fontFamily:'Arial, sans-serif',fontSize:'15px',
+    fontWeight:'900',lineHeight:'1.7',textAlign:'center',
+    textShadow:'2px 2px 0 #000',pointerEvents:'none',whiteSpace:'nowrap'
+  });
+  pop.querySelectorAll('div').forEach(function(el){
+    el.style.fontSize='15px';
+    el.style.fontWeight='900';
+    el.style.color='#ffd21f';
+    el.style.lineHeight='1.7';
+  });
+  pop.animate([
+    {opacity:0,transform:'translate(-50%,-50%) scale(.92)'},
+    {opacity:1,transform:'translate(-50%,-50%) scale(1)'},
+    {opacity:1,transform:'translate(-50%,-50%) scale(1)'},
+    {opacity:0,transform:'translate(-50%,-50%) scale(1)'}
+  ],{duration:1000,easing:'ease-out',fill:'forwards'});
+  clearTimeout(window.__stoichHardRewardTimer);
+  window.__stoichHardRewardTimer=setTimeout(function(){
+    if(pop) pop.style.opacity='0';
+  },1000);
+};
+</script>
+
+<style id="LAST-STORY-LOWER-FIX">
+/* Move the storyline/dialogue box LOWER so the scene artwork is never covered. */
+#storyScreen.story-screen .dialogue-box{
+  transform:translateY(75px)!important;
+  position:relative!important;
+  z-index:10!important;
+}
+#storyScreen.story-screen .story-controls{
+  bottom:8px!important;
+  z-index:100!important;
+}
+/* Keep the suspended burger pair comfortably above the lowered box. */
+#storyScreen.story-screen #storyActorRight.burger-suspended-pair{
+  bottom:31%!important;
+  z-index:100!important;
+}
+</style>
+<script id="LAST-REWARD-FORCE-FIX">
+/* Final reward trigger: awardLiveReward already calls this exact function. */
+window.showCenterRewardPop=function(coinsEarned,xpEarned){
+  var pop=document.getElementById('stoichCenterRewardHard');
+  if(!pop){
+    pop=document.createElement('div');
+    pop.id='stoichCenterRewardHard';
+    document.body.appendChild(pop);
+  }
+  pop.innerHTML='<div>+'+(Number(coinsEarned)||0)+' COINS</div><div>+'+(Number(xpEarned)||0)+' XP</div>';
+  pop.setAttribute('style',[
+    'position:fixed','left:50vw','top:50vh','right:auto','bottom:auto',
+    'transform:translate(-50%,-50%)','z-index:2147483647','display:block',
+    'visibility:visible','opacity:1','width:auto','height:auto','margin:0',
+    'padding:0','background:transparent','border:0','box-shadow:none',
+    'font-family:Arial,sans-serif','font-size:15px','font-weight:900',
+    'line-height:1.7','text-align:center','color:#ffd21f',
+    'text-shadow:2px 2px 0 #000','pointer-events:none','white-space:nowrap'
+  ].join(';'));
+  Array.from(pop.children).forEach(function(x){
+    x.style.cssText='font-size:15px!important;font-weight:900!important;color:#ffd21f!important;margin:0!important;padding:0!important;line-height:1.7!important;';
+  });
+  pop.animate([
+    {opacity:0,transform:'translate(-50%,-50%)'},
+    {opacity:1,transform:'translate(-50%,-50%)'},
+    {opacity:1,transform:'translate(-50%,-50%)'},
+    {opacity:0,transform:'translate(-50%,-50%)'}
+  ],{duration:1000,fill:'forwards'});
+};
+</script>
+
+
+<style id="ultimate-live-reward-style">
+#hcLiveRewardPop{
+  position:fixed!important;
+  left:50%!important;
+  top:50%!important;
+  z-index:2147483647!important;
+  width:max-content!important;
+  max-width:90vw!important;
+  margin:0!important;
+  padding:0!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  transform:translate(-50%,-50%)!important;
+  pointer-events:none!important;
+  text-align:center!important;
+  opacity:0!important;
+  font-family:Arial,sans-serif!important;
+  font-weight:900!important;
+  white-space:nowrap!important;
+}
+#hcLiveRewardPop.show{animation:ultimateRewardArc 1.05s ease-out forwards!important}
+#hcLiveRewardPop div{
+  font-size:15px!important;
+  line-height:1.8!important;
+  font-weight:900!important;
+  letter-spacing:.4px!important;
+  text-shadow:2px 2px 0 #061018,0 0 8px rgba(255,216,77,.55)!important;
+}
+#hcLiveRewardPop div:first-child{color:#ffd84d!important;transform:translateX(-10px) rotate(-5deg)!important}
+#hcLiveRewardPop div:last-child{color:#ffe66d!important;transform:translateX(10px) rotate(5deg)!important}
+@keyframes ultimateRewardArc{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(.75)}
+  15%{opacity:1;transform:translate(-50%,-50%) scale(1)}
+  70%{opacity:1;transform:translate(-50%,-58%) scale(1)}
+  100%{opacity:0;transform:translate(-50%,-72%) scale(1.04)}
+}
+</style>
+<script>
+window.showLiveRewardPop=function(coinsEarned,xpEarned){
+  let pop=document.getElementById('hcLiveRewardPop');
+  if(!pop){
+    pop=document.createElement('div');
+    pop.id='hcLiveRewardPop';
+    pop.className='hc-live-reward-pop';
+    document.body.appendChild(pop);
+  }
+  pop.innerHTML='<div>+'+Number(coinsEarned||0)+' COINS</div><div>+'+Number(xpEarned||0)+' XP</div>';
+  pop.classList.remove('show');
+  void pop.offsetWidth;
+  pop.classList.add('show');
+  clearTimeout(window.__ultimateRewardTimer);
+  window.__ultimateRewardTimer=setTimeout(()=>pop.classList.remove('show'),1050);
+};
+</script>
+
+
+<style id="final-burger-charging-reward-arc">
+#hcLiveRewardPop{
+  position:fixed!important;left:50vw!important;top:50vh!important;
+  z-index:2147483647!important;transform:translate(-50%,-50%)!important;
+  width:max-content!important;max-width:90vw!important;
+  background:transparent!important;border:0!important;box-shadow:none!important;
+  pointer-events:none!important;text-align:center!important;opacity:0!important;
+  white-space:nowrap!important;font-family:Arial,sans-serif!important;font-weight:900!important;
+}
+#hcLiveRewardPop div{font-size:15px!important;font-weight:900!important;line-height:1.65!important;text-shadow:2px 2px 0 #000!important;}
+#hcLiveRewardPop div:first-child{color:#ffd21f!important;transform:translateX(-9px) rotate(-5deg)!important;}
+#hcLiveRewardPop div:last-child{color:#ffd84d!important;transform:translateX(9px) rotate(5deg)!important;}
+#hcLiveRewardPop.show{animation:burgerChargeRewardArc 1.05s ease-out forwards!important;}
+@keyframes burgerChargeRewardArc{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(.78);}
+  15%{opacity:1;transform:translate(-50%,-50%) scale(1);}
+  68%{opacity:1;transform:translate(-50%,-56%) scale(1);}
+  100%{opacity:0;transform:translate(-50%,-72%) scale(1.03);}
+}
+</style>
+<script>
+/* Final popup trigger used by awardLiveReward. */
+window.showLiveRewardPop=function(coinsEarned,xpEarned){
+  let pop=document.getElementById('hcLiveRewardPop');
+  if(!pop){
+    pop=document.createElement('div');
+    pop.id='hcLiveRewardPop';
+    document.body.appendChild(pop);
+  }
+  pop.innerHTML='<div>+'+Number(coinsEarned||0)+' COINS</div><div>+'+Number(xpEarned||0)+' XP</div>';
+  pop.classList.remove('show');
+  void pop.offsetWidth;
+  pop.classList.add('show');
+  clearTimeout(window.__burgerChargeRewardTimer);
+  window.__burgerChargeRewardTimer=setTimeout(function(){pop.classList.remove('show');},1050);
+};
+</script>
+
+<style id="STOICH_FINAL_LIVE_REWARD_ARC_FIX">
+#stoichLiveRewardFinal{
+  position:fixed!important;
+  left:50vw!important;
+  top:50vh!important;
+  transform:translate(-50%,-50%)!important;
+  z-index:2147483647!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:auto!important;
+  height:auto!important;
+  margin:0!important;
+  padding:0!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  pointer-events:none!important;
+  opacity:0!important;
+  visibility:hidden!important;
+  white-space:nowrap!important;
+  font-family:Arial,sans-serif!important;
+  font-weight:900!important;
+  text-align:center!important;
+}
+#stoichLiveRewardFinal.show{
+  visibility:visible!important;
+  animation:stoichRewardArcFinal 1.15s ease-out forwards!important;
+}
+#stoichLiveRewardFinal .coins,
+#stoichLiveRewardFinal .xp{
+  font-size:15px!important;
+  line-height:1.45!important;
+  font-weight:900!important;
+  letter-spacing:.2px!important;
+  color:#ffd21f!important;
+  text-shadow:2px 2px 0 #000,0 0 7px rgba(255,210,31,.45)!important;
+  transform-origin:center!important;
+}
+#stoichLiveRewardFinal .coins{transform:translateX(-10px) rotate(-7deg)!important;}
+#stoichLiveRewardFinal .xp{transform:translateX(10px) rotate(7deg)!important;}
+@keyframes stoichRewardArcFinal{
+  0%{opacity:0;visibility:visible;transform:translate(-50%,-50%) scale(.78);}
+  12%{opacity:1;visibility:visible;transform:translate(-50%,-50%) scale(1);}
+  62%{opacity:1;visibility:visible;transform:translate(-50%,-58%) scale(1);}
+  100%{opacity:0;visibility:hidden;transform:translate(-50%,-78%) scale(1.03);}
+}
+</style>
+<script id="STOICH_FINAL_LIVE_REWARD_ARC_SCRIPT">
+(function(){
+  window.__STOICH_FORCE_REWARD_POP__=function(coinsEarned,xpEarned){
+    let pop=document.getElementById('stoichLiveRewardFinal');
+    if(!pop){
+      pop=document.createElement('div');
+      pop.id='stoichLiveRewardFinal';
+      document.body.appendChild(pop);
+    }
+    const coins=Number(coinsEarned)||0;
+    const xp=Number(xpEarned)||0;
+    pop.innerHTML='<div class="coins">+'+coins+' COINS</div><div class="xp">+'+xp+' XP</div>';
+    pop.classList.remove('show');
+    void pop.offsetWidth;
+    pop.classList.add('show');
+    clearTimeout(window.__stoichFinalRewardTimer);
+    window.__stoichFinalRewardTimer=setTimeout(function(){
+      pop.classList.remove('show');
+    },1150);
+  };
+})();
+</script>
+
 </body>
 
 <style id="hungry-chemist-recipe-fix">
@@ -8250,6 +9897,7 @@ button:focus-visible,.level-node:focus-visible,.bank-card:focus-visible,.hc-reci
   paint-order:stroke fill !important;
 }
 </style>
+
 </html>
 <script id="reaction-storm-next-final-fix">
 (function(){
@@ -9551,6 +11199,16 @@ button, input, select, textarea {
 }
 
 /* Small phones */
+@media (max-width: 700px) {
+  .story-progress{
+    left:12px !important;
+    bottom:clamp(92px,15vh,125px) !important;
+    min-width:78px !important;
+    padding:7px 9px !important;
+    font-size:10px !important;
+  }
+}
+
 @media (max-width: 390px) {
   .screen {
     padding: 8px !important;
@@ -9671,6 +11329,18 @@ button, input, select, textarea {
     overflow: visible !important;
   }
 }
+
+/* STORY PROGRESS — lower-left inside storyline box */
+.story-screen .story-progress {
+  left: 28px !important;
+  right: auto !important;
+  bottom: 10px !important;
+  transform: none !important;
+  text-align: left !important;
+}
+
+/* Part C navigation: only on interfaces where a previous view is meaningful. */
+.hc-partc-back{margin-top:10px!important;min-width:170px!important;font-size:10px!important;opacity:.96}
 </style>
 
 <script id="FINAL-RESPONSIVE-TOUCH-SAFETY">
@@ -9703,3 +11373,476 @@ button, input, select, textarea {
   },{passive:true});
 })();
 </script>
+<style id="user-final-map-playground-and-next-reset">
+/* FINAL USER REQUEST: keep the far-end NEXT LEVEL button normal — no stamp/pulse effect. */
+.hc-definitive-card .hc-def-next{
+  animation:none!important;
+  transform:none!important;
+  filter:none!important;
+  opacity:1!important;
+}
+
+/* STOICH WORLD MAP — playful playground-style environment, still matching the arcade/science palette. */
+.map-screen #adventureMap.saga-map{
+  position:relative!important;
+  overflow:hidden!important;
+  width:min(1500px,98vw)!important;
+  height:760px!important;
+  min-height:760px!important;
+  border:5px solid #35bfff!important;
+  border-radius:30px!important;
+  background:
+    radial-gradient(circle at 12% 13%,rgba(255,255,255,.9) 0 18px,transparent 20px),
+    radial-gradient(circle at 17% 12%,rgba(255,255,255,.75) 0 13px,transparent 15px),
+    radial-gradient(circle at 79% 16%,rgba(255,255,255,.85) 0 20px,transparent 22px),
+    radial-gradient(circle at 85% 14%,rgba(255,255,255,.7) 0 14px,transparent 16px),
+    linear-gradient(180deg,#78d9f5 0 38%,#9be16d 38% 100%)!important;
+  box-shadow:0 0 25px rgba(53,191,255,.55),0 0 65px rgba(53,191,255,.22),inset 0 0 55px rgba(255,255,255,.12)!important;
+}
+
+/* Extra playground zones fill the map so the field never feels empty. */
+.map-screen #adventureMap.saga-map::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:1;
+  background:
+    radial-gradient(ellipse at 13% 72%,rgba(255,224,117,.88) 0 7%,transparent 7.4%),
+    radial-gradient(ellipse at 84% 76%,rgba(255,224,117,.72) 0 8%,transparent 8.4%),
+    radial-gradient(ellipse at 51% 44%,rgba(81,198,101,.45) 0 13%,transparent 13.5%),
+    linear-gradient(160deg,transparent 0 46%,rgba(255,255,255,.13) 46.2% 46.7%,transparent 46.9% 100%);
+  opacity:.95;
+}
+
+.map-screen #adventureMap.saga-map::after{
+  content:"🛝     🎠        🌳   🧪   🌳        🎈     🪁\A\A     🛹       🟡 PLAYGROUND LAB       🟡       🛹\A\A 🌳        🧺          🔬          🧺        🌳";
+  white-space:pre;
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:10px;
+  z-index:2;
+  text-align:center;
+  font-family:"Segoe UI Emoji","Noto Color Emoji",sans-serif!important;
+  font-size:clamp(22px,3vw,42px)!important;
+  line-height:1.7!important;
+  letter-spacing:clamp(6px,2vw,24px)!important;
+  opacity:.78;
+  filter:drop-shadow(0 3px 2px rgba(0,0,0,.18));
+  pointer-events:none;
+}
+
+.map-screen #adventureMap.saga-map .map-connectors,
+.map-screen #adventureMap.saga-map .level-node,
+.map-screen #adventureMap.saga-map #chemist,
+.map-screen #adventureMap.saga-map .map-message{
+  z-index:8!important;
+}
+
+/* Five-level playground path. Levels 06–10 are hidden from the map. */
+.map-screen #adventureMap.saga-map .level-node[data-level="0"]{left:9%!important;top:73%!important}
+.map-screen #adventureMap.saga-map .level-node[data-level="1"]{left:27%!important;top:55%!important}
+.map-screen #adventureMap.saga-map .level-node[data-level="2"]{left:46%!important;top:70%!important}
+.map-screen #adventureMap.saga-map .level-node[data-level="3"]{left:65%!important;top:49%!important}
+.map-screen #adventureMap.saga-map .level-node[data-level="4"]{left:84%!important;top:65%!important}
+.map-screen #adventureMap.saga-map .level-node[data-level="5"],
+.map-screen #adventureMap.saga-map .level-node[data-level="6"],
+.map-screen #adventureMap.saga-map .level-node[data-level="7"],
+.map-screen #adventureMap.saga-map .level-node[data-level="8"],
+.map-screen #adventureMap.saga-map .level-node[data-level="9"]{
+  display:none!important;
+}
+
+/* Make the playground path feel broad and central. */
+.map-screen #adventureMap.saga-map .map-connectors path{
+  stroke-width:18!important;
+}
+.map-screen #adventureMap.saga-map .map-connectors path.connector-glow{
+  stroke-width:28!important;
+  opacity:.42!important;
+}
+
+/* Friendly little science/playground accents around the field. */
+.map-screen #adventureMap.saga-map .map-message{
+  bottom:18px!important;
+  left:50%!important;
+  transform:translateX(-50%)!important;
+  width:min(700px,88%)!important;
+  padding:12px 18px!important;
+  border-radius:18px!important;
+  background:rgba(255,248,201,.94)!important;
+  border:4px solid #5a3548!important;
+  box-shadow:0 6px 0 rgba(90,53,72,.35),0 0 16px rgba(255,255,255,.25)!important;
+}
+
+@media(max-width:900px){
+  .map-screen #adventureMap.saga-map{height:680px!important;min-height:680px!important}
+  .map-screen #adventureMap.saga-map .level-node[data-level="0"]{left:11%!important;top:72%!important}
+  .map-screen #adventureMap.saga-map .level-node[data-level="1"]{left:29%!important;top:53%!important}
+  .map-screen #adventureMap.saga-map .level-node[data-level="2"]{left:48%!important;top:68%!important}
+  .map-screen #adventureMap.saga-map .level-node[data-level="3"]{left:67%!important;top:48%!important}
+  .map-screen #adventureMap.saga-map .level-node[data-level="4"]{left:84%!important;top:63%!important}
+  .map-screen #adventureMap.saga-map::after{font-size:22px!important;letter-spacing:5px!important}
+}
+</style>
+
+<script id="user-final-five-level-map">
+(function(){
+  function applyFiveLevelMap(){
+    var map=document.getElementById('adventureMap');
+    if(!map || !map.classList.contains('saga-map')) return;
+    var nodes=map.querySelectorAll('.level-node');
+    nodes.forEach(function(node,index){
+      node.style.display=index<5?'':'none';
+    });
+    var paths=map.querySelectorAll('.map-connectors path');
+    var route='M90 555 L270 418 L460 532 L650 372 L840 494';
+    paths.forEach(function(path){ path.setAttribute('d',route); });
+  }
+  document.addEventListener('DOMContentLoaded',applyFiveLevelMap);
+  setTimeout(applyFiveLevelMap,120);
+  setTimeout(applyFiveLevelMap,600);
+  var oldRenderMap=window.renderMap;
+  if(typeof oldRenderMap==='function'){
+    window.renderMap=function(){
+      var result=oldRenderMap.apply(this,arguments);
+      setTimeout(applyFiveLevelMap,0);
+      setTimeout(applyFiveLevelMap,80);
+      return result;
+    };
+  }
+})();
+</script>
+
+<style id="user-final-reward-bank-and-stomach-map">
+/* =====================================================
+   LIVE COIN / XP BANK — stays visible while activities are open
+   ===================================================== */
+.hc-live-bank{
+  position:fixed!important;
+  top:14px!important;
+  right:18px!important;
+  z-index:2147483640!important;
+  display:flex!important;
+  align-items:center!important;
+  gap:10px!important;
+  padding:9px 13px!important;
+  border:3px solid #fff!important;
+  border-radius:14px!important;
+  background:rgba(5,18,35,.94)!important;
+  box-shadow:4px 4px 0 #000,0 0 18px rgba(80,220,255,.45)!important;
+  color:#fff!important;
+  font-family:"Press Start 2P",cursive!important;
+  font-size:11px!important;
+  opacity:0!important;
+  transform:translateY(-8px)!important;
+  pointer-events:none!important;
+  transition:.2s ease!important;
+}
+.hc-live-bank.show{opacity:1!important;transform:translateY(0)!important}
+.hc-live-bank div:first-child{color:#ffd84d!important}
+.hc-live-bank div:last-child{color:#7dff9a!important}
+
+.hc-live-reward-pop{
+  position:fixed!important;
+  left:50%!important;
+  top:23%!important;
+  z-index:2147483645!important;
+  transform:translate(-50%,18px) scale(.78)!important;
+  opacity:0!important;
+  pointer-events:none!important;
+  text-align:center!important;
+  font-family:"Press Start 2P",cursive!important;
+  font-weight:900!important;
+  text-shadow:3px 3px 0 #000!important;
+}
+.hc-live-reward-pop.show{animation:hcLiveRewardPop 1.25s ease-out forwards!important}
+.hc-live-coin-pop{color:#ffd84d!important;font-size:21px!important;line-height:1.6!important}
+.hc-live-xp-pop{color:#7dff9a!important;font-size:16px!important;line-height:1.6!important}
+@keyframes hcLiveRewardPop{
+  0%{opacity:0;transform:translate(-50%,18px) scale(.78)}
+  18%{opacity:1;transform:translate(-50%,0) scale(1.05)}
+  68%{opacity:1;transform:translate(-50%,-25px) scale(1)}
+  100%{opacity:0;transform:translate(-50%,-72px) scale(.96)}
+}
+
+/* =====================================================
+   MAP HEADER — title and subtitle live INSIDE the map
+   ===================================================== */
+.map-screen > .map-title,
+.map-screen > .map-subtitle{display:none!important}
+.saga-map .user-map-header{
+  position:absolute!important;
+  top:18px!important;
+  left:50%!important;
+  transform:translateX(-50%)!important;
+  z-index:20!important;
+  width:min(760px,88%)!important;
+  text-align:center!important;
+  pointer-events:none!important;
+}
+.saga-map .user-map-header .map-title-in{
+  font-family:"Press Start 2P",cursive!important;
+  font-size:clamp(18px,3vw,32px)!important;
+  line-height:1.2!important;
+  color:#fff!important;
+  text-shadow:4px 4px 0 #102533,0 0 12px rgba(91,226,255,.7)!important;
+  margin:0!important;
+}
+.saga-map .user-map-header .map-subtitle-in{
+  margin-top:9px!important;
+  font-family:"Comic Sans MS","Comic Sans",cursive!important;
+  font-size:clamp(11px,1.5vw,17px)!important;
+  font-weight:700!important;
+  color:#e8fbff!important;
+  text-shadow:2px 2px 0 #173243!important;
+}
+
+/* =====================================================
+   BIGGER LEVEL NODES + COMIC SANS TITLES
+   ===================================================== */
+.map-screen #adventureMap.saga-map .level-node{
+  width:108px!important;
+  height:108px!important;
+  border-width:7px!important;
+  font-family:"Press Start 2P",cursive!important;
+  box-shadow:8px 8px 0 #07131a,0 0 0 4px rgba(255,255,255,.2),0 0 24px rgba(78,221,255,.35)!important;
+}
+.map-screen #adventureMap.saga-map .level-badge{
+  font-size:13px!important;
+}
+.map-screen #adventureMap.saga-map .node-label{
+  top:116px!important;
+  font-family:"Comic Sans MS","Comic Sans",cursive!important;
+  font-size:19px!important;
+  font-weight:900!important;
+  letter-spacing:.2px!important;
+  text-shadow:3px 3px 0 #132330!important;
+}
+
+/* =====================================================
+   WIDE, COLORED, ORGANIC "STOMACH / INTESTINE" ROUTE
+   ===================================================== */
+.map-screen #adventureMap.saga-map .map-connectors path{
+  stroke-width:32!important;
+  stroke-linecap:round!important;
+  stroke-linejoin:round!important;
+  filter:drop-shadow(0 6px 0 rgba(0,0,0,.35))!important;
+}
+.map-screen #adventureMap.saga-map .map-connectors path.connector-glow{
+  stroke-width:46!important;
+  opacity:.5!important;
+  filter:blur(2px)!important;
+}
+.map-screen #adventureMap.saga-map .map-connectors path:not(.connector-glow){
+  stroke:url(#stoichRouteGradient)!important;
+}
+.map-screen #adventureMap.saga-map .map-connectors .route-inner{
+  stroke:url(#stoichRouteGradient)!important;
+  stroke-width:22!important;
+  fill:none!important;
+  opacity:.95!important;
+}
+
+@media(max-width:900px){
+  .hc-live-bank{right:8px!important;top:8px!important;font-size:8px!important;padding:7px 9px!important;gap:7px!important}
+  .map-screen #adventureMap.saga-map .level-node{width:88px!important;height:88px!important}
+  .map-screen #adventureMap.saga-map .node-label{top:95px!important;font-size:13px!important}
+  .map-screen #adventureMap.saga-map .level-badge{font-size:10px!important}
+}
+</style>
+
+<script id="user-final-reward-map-enhancement">
+(function(){
+  function setupRewardBank(){
+    if(typeof ensureLiveBank==='function') ensureLiveBank();
+  }
+
+  function enhanceMap(){
+    const map=document.getElementById('adventureMap');
+    if(!map)return;
+
+    /* Move the existing title/subtitle into the top area of the map. */
+    if(!map.querySelector('.user-map-header')){
+      const title=document.querySelector('.map-screen > .map-title');
+      const sub=document.querySelector('.map-screen > .map-subtitle');
+      const h=document.createElement('div');
+      h.className='user-map-header';
+      h.innerHTML='<div class="map-title-in">STOICH MAP</div><div class="map-subtitle-in">LEVEL PATH • FOLLOW THE ROAD</div>';
+      map.prepend(h);
+      if(title) title.setAttribute('aria-hidden','true');
+      if(sub) sub.setAttribute('aria-hidden','true');
+    }
+
+    /* Make the connector look like a thick, colorful winding organic path. */
+    const svg=map.querySelector('.map-connectors');
+    if(svg){
+      let defs=svg.querySelector('#stoichRouteGradient');
+      if(!defs){
+        const d=document.createElementNS('http://www.w3.org/2000/svg','defs');
+        const g=document.createElementNS('http://www.w3.org/2000/svg','linearGradient');
+        g.id='stoichRouteGradient'; g.setAttribute('x1','0%');g.setAttribute('y1','0%');g.setAttribute('x2','100%');g.setAttribute('y2','100%');
+        [['0%','#ff9f43'],['25%','#ff5e78'],['50%','#b56cff'],['75%','#39d9ff'],['100%','#62e66f']].forEach(([o,c])=>{const st=document.createElementNS('http://www.w3.org/2000/svg','stop');st.setAttribute('offset',o);st.setAttribute('stop-color',c);g.appendChild(st)});
+        d.appendChild(g);svg.insertBefore(d,svg.firstChild);
+      }
+      const route='M95 610 C150 520 215 545 260 455 C305 365 360 390 405 470 C450 550 510 565 555 475 C600 385 655 350 705 405 C755 460 790 535 855 500';
+      svg.querySelectorAll('path').forEach(p=>p.setAttribute('d',route));
+      if(!svg.querySelector('.route-inner')){
+        const inner=document.createElementNS('http://www.w3.org/2000/svg','path');
+        inner.setAttribute('class','route-inner');inner.setAttribute('d',route);svg.appendChild(inner);
+      }
+    }
+
+    /* Keep only Levels 01–05 visible. */
+    map.querySelectorAll('.level-node').forEach((n,i)=>{n.style.display=i<5?'':'none'});
+  }
+
+  document.addEventListener('DOMContentLoaded',()=>{
+    enhanceMap();
+    setTimeout(enhanceMap,120);
+    setTimeout(enhanceMap,650);
+  });
+  const old=window.renderMap;
+  if(typeof old==='function'){
+    window.renderMap=function(){const r=old.apply(this,arguments);setTimeout(enhanceMap,0);setTimeout(enhanceMap,100);return r;};
+  }
+})();
+</script>
+
+<style id="user-final-reward-bank-and-stomach-map">
+.hc-live-bank{position:fixed!important;top:12px!important;right:16px!important;z-index:2147483640!important;display:flex!important;gap:12px!important;padding:10px 14px!important;border:3px solid #fff!important;border-radius:14px!important;background:rgba(5,18,35,.95)!important;box-shadow:5px 5px 0 #000,0 0 18px rgba(80,220,255,.45)!important;color:#fff!important;font-family:"Press Start 2P",cursive!important;font-size:11px!important;opacity:0!important;transform:translateY(-8px)!important;pointer-events:none!important;transition:.2s ease!important}
+.hc-live-bank.show{opacity:1!important;transform:translateY(0)!important}.hc-live-bank span:first-child{color:#ffd84d!important}.hc-live-bank span:last-child{color:#7dff9a!important}
+.hc-live-reward-pop{position:fixed!important;left:50%!important;top:24%!important;z-index:2147483645!important;transform:translate(-50%,18px) scale(.78)!important;opacity:0!important;pointer-events:none!important;text-align:center!important;font-family:"Press Start 2P",cursive!important;font-weight:900!important;text-shadow:3px 3px 0 #000!important}.hc-live-reward-pop.show{animation:hcLiveRewardPop 1.25s ease-out forwards!important}.hc-live-reward-pop div:first-child{color:#ffd84d!important;font-size:22px!important;line-height:1.6!important}.hc-live-reward-pop div:last-child{color:#7dff9a!important;font-size:16px!important;line-height:1.6!important}@keyframes hcLiveRewardPop{0%{opacity:0;transform:translate(-50%,18px) scale(.78)}18%{opacity:1;transform:translate(-50%,0) scale(1.05)}68%{opacity:1;transform:translate(-50%,-25px) scale(1)}100%{opacity:0;transform:translate(-50%,-72px) scale(.96)}}
+.map-screen>.map-title,.map-screen>.map-subtitle{display:none!important}.saga-map .user-map-header{position:absolute!important;top:18px!important;left:50%!important;transform:translateX(-50%)!important;z-index:20!important;width:min(760px,88%)!important;text-align:center!important;pointer-events:none!important}.saga-map .user-map-header .map-title-in{font-family:"Press Start 2P",cursive!important;font-size:clamp(18px,3vw,32px)!important;line-height:1.2!important;color:#fff!important;text-shadow:4px 4px 0 #102533,0 0 12px rgba(91,226,255,.7)!important;margin:0!important}.saga-map .user-map-header .map-subtitle-in{margin-top:9px!important;font-family:"Comic Sans MS","Comic Sans",cursive!important;font-size:clamp(11px,1.5vw,17px)!important;font-weight:700!important;color:#e8fbff!important;text-shadow:2px 2px 0 #173243!important}
+.map-screen #adventureMap.saga-map .level-node{width:108px!important;height:108px!important;border-width:7px!important;font-family:"Press Start 2P",cursive!important;box-shadow:8px 8px 0 #07131a,0 0 0 4px rgba(255,255,255,.2),0 0 24px rgba(78,221,255,.35)!important}.map-screen #adventureMap.saga-map .level-badge{font-size:13px!important}.map-screen #adventureMap.saga-map .node-label{top:116px!important;font-family:"Comic Sans MS","Comic Sans",cursive!important;font-size:19px!important;font-weight:900!important;letter-spacing:.2px!important;text-shadow:3px 3px 0 #132330!important}
+.map-screen #adventureMap.saga-map .map-connectors path{stroke-width:32!important;stroke-linecap:round!important;stroke-linejoin:round!important;filter:drop-shadow(0 6px 0 rgba(0,0,0,.35))!important}.map-screen #adventureMap.saga-map .map-connectors path.connector-glow{stroke-width:46!important;opacity:.5!important;filter:blur(2px)!important}.map-screen #adventureMap.saga-map .map-connectors path:not(.connector-glow){stroke:url(#stoichRouteGradient)!important}.map-screen #adventureMap.saga-map .map-connectors .route-inner{stroke:url(#stoichRouteGradient)!important;stroke-width:22!important;fill:none!important;opacity:.95!important}
+@media(max-width:900px){.hc-live-bank{right:8px!important;top:8px!important;font-size:8px!important;padding:7px 9px!important;gap:7px!important}.map-screen #adventureMap.saga-map .level-node{width:88px!important;height:88px!important}.map-screen #adventureMap.saga-map .node-label{top:95px!important;font-size:13px!important}.map-screen #adventureMap.saga-map .level-badge{font-size:10px!important}}
+</style>
+<script id="user-final-reward-map-enhancement">
+(function(){
+function enhanceMap(){
+ const map=document.getElementById('adventureMap');if(!map)return;
+ if(!map.querySelector('.user-map-header')){const h=document.createElement('div');h.className='user-map-header';h.innerHTML='<div class="map-title-in">STOICH MAP</div><div class="map-subtitle-in">LEVEL PATH • FOLLOW THE ROAD</div>';map.prepend(h)}
+ const svg=map.querySelector('.map-connectors');
+ if(svg){let g=svg.querySelector('#stoichRouteGradient');if(!g){const d=document.createElementNS('http://www.w3.org/2000/svg','defs');g=document.createElementNS('http://www.w3.org/2000/svg','linearGradient');g.id='stoichRouteGradient';g.setAttribute('x1','0%');g.setAttribute('y1','0%');g.setAttribute('x2','100%');g.setAttribute('y2','100%');[['0%','#ff9f43'],['25%','#ff5e78'],['50%','#b56cff'],['75%','#39d9ff'],['100%','#62e66f']].forEach(([o,c])=>{const st=document.createElementNS('http://www.w3.org/2000/svg','stop');st.setAttribute('offset',o);st.setAttribute('stop-color',c);g.appendChild(st)});d.appendChild(g);svg.insertBefore(d,svg.firstChild)}const route='M95 610 C150 520 215 545 260 455 C305 365 360 390 405 470 C450 550 510 565 555 475 C600 385 655 350 705 405 C755 460 790 535 855 500';svg.querySelectorAll('path').forEach(p=>p.setAttribute('d',route));if(!svg.querySelector('.route-inner')){const inner=document.createElementNS('http://www.w3.org/2000/svg','path');inner.setAttribute('class','route-inner');inner.setAttribute('d',route);svg.appendChild(inner)}}
+ map.querySelectorAll('.level-node').forEach((n,i)=>{n.style.display=i<5?'':'none'});
+}
+document.addEventListener('DOMContentLoaded',()=>{enhanceMap();setTimeout(enhanceMap,120);setTimeout(enhanceMap,650)});const old=window.renderMap;if(typeof old==='function')window.renderMap=function(){const r=old.apply(this,arguments);setTimeout(enhanceMap,0);setTimeout(enhanceMap,100);return r};
+})();
+</script>
+
+<!-- USER FINAL PATCH: reward pop center + conditional charging component persistence + story black-bar cleanup -->
+<style id="user-final-reward-and-story-fix">
+/* Reward notification: put the actual earned coins/XP in the middle of the screen. */
+.hc-live-reward-pop{
+  position:fixed!important;
+  left:50%!important;
+  top:50%!important;
+  z-index:2147483647!important;
+  width:max-content!important;
+  max-width:90vw!important;
+  transform:translate(-50%,-50%) scale(.72)!important;
+  opacity:0!important;
+  pointer-events:none!important;
+  text-align:center!important;
+  font-family:"Press Start 2P",cursive!important;
+  font-weight:900!important;
+  text-shadow:4px 4px 0 #000!important;
+}
+.hc-live-reward-pop.show{animation:hcLiveRewardPopCenter 1.35s ease-out forwards!important}
+.hc-live-reward-pop div:first-child{font-size:clamp(20px,3vw,34px)!important;color:#ffd84d!important;line-height:1.55!important}
+.hc-live-reward-pop div:last-child{font-size:clamp(15px,2.2vw,24px)!important;color:#7dff9a!important;line-height:1.55!important}
+@keyframes hcLiveRewardPopCenter{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(.72)}
+  16%{opacity:1;transform:translate(-50%,-50%) scale(1.12)}
+  68%{opacity:1;transform:translate(-50%,-58%) scale(1)}
+  100%{opacity:0;transform:translate(-50%,-72%) scale(.96)}
+}
+
+/* Remove the black-looking top strip/unused top area from the 8-scene story/covers. */
+.story-screen,
+.story-screen .story-card{
+  background:transparent!important;
+}
+.story-screen{
+  min-height:100vh!important;
+  height:100vh!important;
+  padding:0!important;
+  overflow:hidden!important;
+}
+.story-screen .story-card{min-height:100vh!important;height:100vh!important}
+.story-screen .cutscene-stage{
+  top:0!important;
+  left:0!important;
+  right:0!important;
+  bottom:0!important;
+  height:100vh!important;
+  min-height:100vh!important;
+}
+.story-screen .cutscene-stage::after{
+  background:linear-gradient(180deg,transparent 35%,rgba(0,0,0,.10) 65%,rgba(0,0,0,.55) 100%)!important;
+}
+</style>
+
+<script id="user-final-conditional-charge-and-reward-pop">
+(function(){
+  // The charging behavior is handled directly in checkPartCCombination above.
+  // Keep the reward bank visible on every playable mission overlay.
+  function keepRewardBankVisible(){
+    if(typeof ensureLiveBank!=='function')return;
+    const overlays=document.querySelectorAll('.hc-partb-overlay,.hc-partc-overlay');
+    const active=[...overlays].some(x=>x.classList.contains('show') || getComputedStyle(x).display!=='none');
+    const gameScreens=['characterScreen','hubScreen','gameScreen','mapScreen','assessmentScreen'];
+    const screenActive=gameScreens.some(id=>{const e=document.getElementById(id);return e&&!e.hidden&&getComputedStyle(e).display!=='none'});
+    if(active||screenActive)ensureLiveBank();
+  }
+  document.addEventListener('DOMContentLoaded',function(){
+    setTimeout(keepRewardBankVisible,100);
+    setInterval(keepRewardBankVisible,500);
+  });
+})();
+</script>
+
+<style id="user-actual-final-visual-fix">
+/* Full-bleed story scenes: remove any top black strip caused by the old scene layout. */
+#storyScreen.story-screen{position:fixed!important;inset:0!important;width:100vw!important;height:100vh!important;min-height:100vh!important;margin:0!important;padding:0!important;background:#07101d!important;z-index:99999!important;}
+#storyScreen.story-screen .story-card{position:absolute!important;inset:0!important;width:100vw!important;height:100vh!important;min-height:100vh!important;margin:0!important;padding:0!important;display:block!important;background:transparent!important;}
+#storyScreen.story-screen .cutscene-stage{position:absolute!important;inset:0!important;width:100vw!important;height:100vh!important;min-height:100vh!important;margin:0!important;padding:0!important;}
+#storyScreen.story-screen .dialogue-box{position:absolute!important;left:50%!important;bottom:58px!important;transform:translateX(-50%)!important;z-index:30!important;}
+#storyScreen.story-screen .story-controls{position:absolute!important;right:28px!important;bottom:20px!important;z-index:40!important;}
+#storyScreen.story-screen .story-progress{position:absolute!important;left:28px!important;bottom:24px!important;z-index:40!important;}
+
+/* Reward notification is always centered over the active game scene. */
+#hcLiveRewardPop{position:fixed!important;left:50vw!important;top:50vh!important;right:auto!important;bottom:auto!important;z-index:2147483647!important;transform:translate(-50%,-50%) scale(.72)!important;}
+#hcLiveRewardPop.show{animation:hcLiveRewardPopCenterFinal 1.45s ease-out forwards!important;}
+@keyframes hcLiveRewardPopCenterFinal{0%{opacity:0;transform:translate(-50%,-50%) scale(.72)}15%{opacity:1;transform:translate(-50%,-50%) scale(1.1)}65%{opacity:1;transform:translate(-50%,-58%) scale(1)}100%{opacity:0;transform:translate(-50%,-72%) scale(.96)}}
+</style>
+
+<!-- SAFE LAPTOP VIEWPORT PATCH: no zoom/scaling; preserve original layout -->
+<style id="safe-laptop-viewport">
+html,body{
+  width:100%;
+  max-width:100%;
+  margin:0;
+  overflow-x:hidden!important;
+}
+@media (min-width:901px){
+  html,body{height:100%;}
+  body{overflow-y:hidden!important;}
+  .screen{
+    width:100vw!important;
+    max-width:100vw!important;
+    height:100vh!important;
+    min-height:0!important;
+    box-sizing:border-box!important;
+  }
+  /* Only the currently visible screen is contained; no JS zoom or transform. */
+  #homeScreen,#storyScreen,#characterScreen,#hubScreen,#mapScreen,#levelScreen,#gameScreen,#assessmentScreen{
+    max-height:100vh!important;
+  }
+  #gameScreen .game-container{
+    max-height:calc(100vh - 20px)!important;
+  }
+}
+</style>
