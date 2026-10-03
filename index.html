@@ -9993,6 +9993,11 @@ function clearConstruction(){
      ===================================================== */
   let __liveRewardCount = 0;
   function awardLiveReward(coinsEarned, xpEarned){
+    // Prevent duplicate rewards when a direct handler and a MutationObserver
+    // notice the same correct answer within the same moment.
+    const __now = Date.now();
+    if(window.__stoichLastRewardAt && (__now-window.__stoichLastRewardAt)<350) return;
+    window.__stoichLastRewardAt=__now;
     // Every correct submission receives a visible reward. If no explicit
     // amount is supplied, rotate through several reward values.
     __liveRewardCount++;
@@ -12899,6 +12904,7 @@ function bindWorkbench(s){
       return;
     }
     setupState[expected]=true;
+    if(typeof window.__stoichUniversalReward==='function')window.__stoichUniversalReward();
     zone.classList.add('wb-setup-filled');
     zone.innerHTML='<div class="wb-placed-card">'+setupValues[key]+'</div>';
     card.classList.add('used');
@@ -13094,6 +13100,7 @@ function bindWorkbench(s){
     el.className='wb-step5-calc-correct';
     el.textContent='CORRECT!';
     if(typeof soundCorrect==='function')soundCorrect();
+    if(typeof window.__stoichUniversalReward==='function')window.__stoichUniversalReward();
   };
 
   if(step5CheckAnswer){
@@ -14110,6 +14117,7 @@ document.addEventListener('click',function(e){
       if(Object.values(placed).every(Boolean)){
         root.querySelector('#l3c4SetupComplete').hidden=false;
         root.querySelector('#l3c4SetupContinue').style.display='inline-flex';
+        if(typeof window.__stoichC4Reward==='function') window.__stoichC4Reward(root.querySelector('#l3c4CardFeedback'));
       }
     }
 
@@ -14219,6 +14227,7 @@ document.addEventListener('click',function(e){
         input.disabled=true;
         fb.classList.remove('show');
         if(typeof soundCorrect==='function')soundCorrect();
+        if(typeof window.__stoichC4Reward==='function') window.__stoichC4Reward(fb);
         root.querySelector('#l3c4CalcRight').innerHTML='<span class="l3-c4-fraction-small l3-c4-result-fraction"><span class="top">12 mol Cl₂</span><span class="bar"></span><span class="bottom">2 <span class="l3-c4-cancel-term cancelled">mol Al</span></span></span>';
         root.querySelector('#l3c4DivideBlock').hidden=false;
         input.style.borderColor='#55dc66';
@@ -14235,6 +14244,7 @@ document.addEventListener('click',function(e){
         input.disabled=true;
         fb.classList.remove('show');
         if(typeof soundCorrect==='function')soundCorrect();
+        if(typeof window.__stoichC4Reward==='function') window.__stoichC4Reward(fb);
         root.querySelector('#l3c4FinalCalc').hidden=false;
         const finalBox=root.querySelector('.l3-c4-yellow-answer');
         if(finalBox) finalBox.textContent='6 mol Cl₂';
@@ -14655,6 +14665,7 @@ html:has(#l3Challenge4Step2Root),body:has(#l3Challenge4Step2Root){overflow-x:hid
         return;
       }
       if(typeof soundCorrect==='function')soundCorrect();
+      if(typeof window.__stoichC4Reward==='function') window.__stoichC4Reward(feedback);
       const cards=root.querySelectorAll('#'+(section==='l3c4S3Sec2'?'s3sec2':'s3sec3')+' .l3-c4-s3-choice');
       cards.forEach(x=>{x.disabled=true;x.style.setProperty('pointer-events','none','important');});
       if(feedback) feedback.innerHTML=`<div class="correct">CORRECT!</div><div class="l3-c4-s3-explain">${section==='l3c4S3Sec2' ? 'Cl₂ has 4 mol available, but 6 mol are needed. There is not enough Cl₂ to meet the amount needed.' : 'Al has 4 mol available, but only 2.7 mol are needed. The extra Al can remain after the reaction.'}</div><div class="l3-c4-s3-actions"><button type="button" class="arcade-btn green" id="${section==='l3c4S3Sec2'?'s3sec2Continue':'s3sec3Continue'}">CONTINUE ▶</button></div>`;
@@ -14914,19 +14925,19 @@ html:has(#l3Challenge4Step2Root),body:has(#l3Challenge4Step2Root){overflow-x:hid
       if(!gc){fb.innerHTML='<div class="try">TRY AGAIN</div><div class="clue">Check the GIVEN AMOUNT. Enter the 4 mol Cl₂ provided in the problem.</div>';g.focus();return;}
       if(!nc){fb.innerHTML='<div class="try">TRY AGAIN</div><div class="clue">TARGET SUBSTANCE: Enter the coefficient and substance of the product you are finding.</div>';n.focus();return;}
       if(!dc){fb.innerHTML='<div class="try">TRY AGAIN</div><div class="clue">STARTING SUBSTANCE: Use the coefficient and substance that match your given reactant, Cl₂.</div>';d.focus();return;}
-      correctSound();fb.innerHTML='<div class="correct">STOICHIOMETRIC SETUP COMPLETE! ✓</div>';root.querySelector('#s4SetupContinue').innerHTML=btn('s4SetupNext');root.querySelector('#s4SetupNext').onclick=()=>wipe(()=>show('l3c4S4Sec3'));
+      correctSound();fb.innerHTML='<div class="correct">STOICHIOMETRIC SETUP COMPLETE! ✓</div>';if(typeof window.__stoichC4Reward==='function')window.__stoichC4Reward(fb);root.querySelector('#s4SetupContinue').innerHTML=btn('s4SetupNext');root.querySelector('#s4SetupNext').onclick=()=>wipe(()=>show('l3c4S4Sec3'));
     }
     [g,n,d].forEach(x=>x.addEventListener('input',()=>{fb.innerHTML='';}));
     [g,n,d].forEach(x=>x.addEventListener('keydown',e=>{if(e.key==='Enter')setupCheck();}));
     const setupCheckWrap=document.createElement('div');setupCheckWrap.className='s4-actions';setupCheckWrap.style.marginTop='14px';
     const setupBtn=document.createElement('button');setupBtn.type='button';setupBtn.className='arcade-btn green';setupBtn.textContent='CHECK ANSWER ✓';setupBtn.id='s4SetupCheckBtn';setupCheckWrap.appendChild(setupBtn);
     root.querySelector('#s4SetupContinue').before(setupCheckWrap);setupBtn.onclick=setupCheck;
-    root.querySelector('#s4CancelBtn').onclick=()=>{correctSound();root.querySelector('#s4CancelFeedback').innerHTML='<div class="s4-calc">4 <span class="s4-cancel">mol Cl₂</span> × <span class="s4-fraction"><span>2 mol AlCl₃</span><span class="s4-bar"></span><span>3 <span class="s4-cancel">mol Cl₂</span></span></span> = ?</div><div class="s4-limit">MATCHING UNITS CANCELLED ✓</div><div class="s4-dialogue">mol Cl₂ ↔ mol Cl₂<br><b>REMAINING UNIT: mol AlCl₃</b><br><span style="font-size:14px">The matching mol Cl₂ units cancel, leaving mol AlCl₃ as the unit of the answer.</span></div>'+btn('s4CancelContinue');root.querySelector('#s4CancelBtn').hidden=true;root.querySelector('#s4CancelContinue').onclick=()=>wipe(()=>show('l3c4S4Sec4'));};
+    root.querySelector('#s4CancelBtn').onclick=()=>{correctSound();root.querySelector('#s4CancelFeedback').innerHTML='<div class="s4-calc">4 <span class="s4-cancel">mol Cl₂</span> × <span class="s4-fraction"><span>2 mol AlCl₃</span><span class="s4-bar"></span><span>3 <span class="s4-cancel">mol Cl₂</span></span></span> = ?</div><div class="s4-limit">MATCHING UNITS CANCELLED ✓</div><div class="s4-dialogue">mol Cl₂ ↔ mol Cl₂<br><b>REMAINING UNIT: mol AlCl₃</b><br><span style="font-size:14px">The matching mol Cl₂ units cancel, leaving mol AlCl₃ as the unit of the answer.</span></div>'+btn('s4CancelContinue');if(typeof window.__stoichC4Reward==='function')window.__stoichC4Reward(root.querySelector('#s4CancelFeedback'));root.querySelector('#s4CancelBtn').hidden=true;root.querySelector('#s4CancelContinue').onclick=()=>wipe(()=>show('l3c4S4Sec4'));};
     const mi=root.querySelector('#s4MultiplyInput'),mfb=root.querySelector('#s4MulFeedback');
-    function mulCheck(){const v=numeric(mi.value);if(Math.abs(v-8)>1e-9){wrongSound();mfb.innerHTML='<div class="try">TRY AGAIN</div><div class="clue">Check the two numbers you are multiplying. Use 4 and 2.</div>';return;}correctSound();mfb.innerHTML='<div class="correct">CORRECT! ✓</div>';root.querySelector('#s4PartB').hidden=false;mi.disabled=true;}
+    function mulCheck(){const v=numeric(mi.value);if(Math.abs(v-8)>1e-9){wrongSound();mfb.innerHTML='<div class="try">TRY AGAIN</div><div class="clue">Check the two numbers you are multiplying. Use 4 and 2.</div>';return;}correctSound();mfb.innerHTML='<div class="correct">CORRECT! ✓</div>';if(typeof window.__stoichC4Reward==='function')window.__stoichC4Reward(mfb);root.querySelector('#s4PartB').hidden=false;mi.disabled=true;}
     root.querySelector('#s4MultiplyCheckBtn').onclick=mulCheck;mi.addEventListener('keydown',e=>{if(e.key==='Enter')mulCheck();});mi.addEventListener('blur',()=>{});
     const di=root.querySelector('#s4DivideInput'),dfb=root.querySelector('#s4DivFeedback');
-    function divCheck(){const v=numeric(di.value);if(!Number.isFinite(v)||Math.abs(v-(8/3))>0.05){wrongSound();dfb.innerHTML='<div class="try">TRY AGAIN</div><div class="clue">Divide 8 by 3. You may round your answer to the nearest tenth.</div>';return;}correctSound();dfb.innerHTML='<div class="correct">CORRECT! ✓</div>';di.disabled=true;root.querySelector('#s4FinalCalc').hidden=false;}
+    function divCheck(){const v=numeric(di.value);if(!Number.isFinite(v)||Math.abs(v-(8/3))>0.05){wrongSound();dfb.innerHTML='<div class="try">TRY AGAIN</div><div class="clue">Divide 8 by 3. You may round your answer to the nearest tenth.</div>';return;}correctSound();dfb.innerHTML='<div class="correct">CORRECT! ✓</div>';if(typeof window.__stoichC4Reward==='function')window.__stoichC4Reward(dfb);di.disabled=true;root.querySelector('#s4FinalCalc').hidden=false;}
     root.querySelector('#s4DivideCheckBtn').onclick=divCheck;di.addEventListener('keydown',e=>{if(e.key==='Enter')divCheck();});di.addEventListener('blur',()=>{});
     root.querySelector('#s4Sec4Continue').onclick=()=>wipe(()=>show('l3c4S4Sec5'));
     root.querySelector('#s4NextPercent').onclick=()=>{wipe(()=>{root.remove();root=null;if(typeof window.showL3Challenge4PercentYield==='function')window.showL3Challenge4PercentYield();else{const x=document.createElement('section');x.id='l3Challenge4PercentYieldBridge';x.style.cssText='min-height:100vh;background:#07131a;color:#fff;display:flex;align-items:center;justify-content:center;text-align:center;font-family:"Press Start 2P",cursive;padding:24px;box-sizing:border-box;';x.innerHTML='<div style="width:min(850px,96vw);background:#142f39;border:4px solid #111;box-shadow:6px 6px #000;border-radius:10px;padding:28px;"><div style="color:#59dcff;font-size:11px;">LEVEL 3: THE LAST SUPPLY</div><div style="color:#ffe36a;font-size:22px;line-height:1.5;margin-top:10px;">STEP 5: FIND THE PERCENT YIELD</div></div>';document.body.appendChild(x);}});};
@@ -15210,6 +15221,7 @@ html:has(#l3Challenge4Step2Root),body:has(#l3Challenge4Step2Root){overflow-x:hid
       if(!Number.isFinite(tv)||Math.abs(tv-2.7)>0.005){if(typeof wrongSound==='function')wrongSound();sf.innerHTML='<div class="try">TRY AGAIN</div><div class="clue">Check the THEORETICAL YIELD. Use the value shown in the Yield Guide.</div>';st.focus();return;}
       if(typeof correctSound==='function')correctSound();
       sf.innerHTML='<div class="correct">PERCENT-YIELD SETUP COMPLETE! ✓</div>';
+      if(typeof window.__stoichC4Reward==='function')window.__stoichC4Reward(sf);
       sa.value='2.16'; st.value='2.7'; sa.disabled=true; st.disabled=true;
       root.querySelector('#pySetupCheck').style.display='none';
       divideStage.hidden=false;
@@ -15221,7 +15233,7 @@ html:has(#l3Challenge4Step2Root),body:has(#l3Challenge4Step2Root){overflow-x:hid
       const v=num(d.value);
       if(!Number.isFinite(v)||Math.abs(v-.8)>0.005){if(typeof wrongSound==='function')wrongSound();df.innerHTML='<div class="try">TRY AGAIN</div><div class="clue">Divide the actual yield by the theoretical yield.</div>';return;}
       if(typeof correctSound==='function')correctSound();
-      df.innerHTML='<div class="correct">CORRECT! ✓</div>'; d.value='0.8'; d.disabled=true;
+      df.innerHTML='<div class="correct">CORRECT! ✓</div>'; if(typeof window.__stoichC4Reward==='function')window.__stoichC4Reward(df); d.value='0.8'; d.disabled=true;
       divideStage.querySelector('#pyDivideCheck').style.display='none';
       partBStage.hidden=false;
     }
@@ -15231,7 +15243,7 @@ html:has(#l3Challenge4Step2Root),body:has(#l3Challenge4Step2Root){overflow-x:hid
       const v=num(pe.value);
       if(!Number.isFinite(v)||Math.abs(v-80)>0.05){if(typeof wrongSound==='function')wrongSound();pf.innerHTML='<div class="try">TRY AGAIN</div><div class="clue">Multiply your result by 100 to convert it to a percent.</div>';return;}
       if(typeof correctSound==='function')correctSound();
-      pf.innerHTML='<div class="correct">CORRECT! ✓</div>'; pe.value='80'; pe.disabled=true;
+      pf.innerHTML='<div class="correct">CORRECT! ✓</div>'; if(typeof window.__stoichC4Reward==='function')window.__stoichC4Reward(pf); pe.value='80'; pe.disabled=true;
       partBStage.querySelector('#pyPercentCheck').style.display='none';
       finalStage.hidden=false;
     }
@@ -15798,7 +15810,7 @@ html:has(#l3Challenge4Step2Root),body:has(#l3Challenge4Step2Root){overflow-x:hid
     if(active && !lastTasteState) soundActivityComplete();
     lastTasteState=active;
   });
-  observer.observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:['class','hidden']});
+  observer.observe(document.body,{subtree:true,childList:true});
 })();
 </script>
 
@@ -18135,7 +18147,7 @@ html,body{
     if(el('rlabHearts'))el('rlabHearts').textContent='♥'.repeat(Math.max(0,S.lives||0))+'♡'.repeat(Math.max(0,3-(S.lives||0)));
     setChallengeProgress(L2.completedChallenges);
   }
-  function reward(){if(typeof awardLiveReward==='function')awardLiveReward();setHUD()}
+  function reward(){if(typeof window.__stoichUniversalReward==='function')window.__stoichUniversalReward();setHUD()}
   function correctMsg(msg){return '<div class="rlab-feedback rlab-success">✓ '+esc(msg)+'</div>'}
   function wrongMsg(msg){return '<div class="rlab-feedback">'+esc(msg)+'</div>'}
   function note(text){return '<div class="rlab-note">'+text+'</div>'}
@@ -18268,7 +18280,7 @@ html,body{
       const placed={H:0,O:0};
       function check(atom){
         const box=card.querySelector('[data-molecule-box="'+atom+'"]'); const filled=box.querySelectorAll('.rlab-slot.filled').length;
-        if(filled===2 && !box.classList.contains('assembled')){box.classList.add('assembled');placed[atom]=1;const zone=box.querySelector('.rlab-drop-zone');if(zone)zone.classList.add('connecting');setTimeout(()=>{const result=box.querySelector('.rlab-built-result');result.classList.add('show');result.querySelector('.rlab-built-molecule').innerHTML=moleculeVisual(atom==='H'?'H2':'O2','built'+atom,false);if(typeof soundCorrect==='function')soundCorrect();},550);}
+        if(filled===2 && !box.classList.contains('assembled')){box.classList.add('assembled');placed[atom]=1;const zone=box.querySelector('.rlab-drop-zone');if(zone)zone.classList.add('connecting');setTimeout(()=>{const result=box.querySelector('.rlab-built-result');result.classList.add('show');result.querySelector('.rlab-built-molecule').innerHTML=moleculeVisual(atom==='H'?'H2':'O2','built'+atom,false);if(typeof soundCorrect==='function')soundCorrect(); if(typeof window.__stoichUniversalReward==='function')window.__stoichUniversalReward();},550);}
         if(placed.H&&placed.O){const panel=el('rlabScanPanel');if(panel)panel.hidden=false;}
       }
       sources.forEach(src=>{src.addEventListener('dragstart',e=>{const orb=src;const atom=orb.dataset.atom||orb.getAttribute('data-atom')||'';const atomId=orb.dataset.atomId||'';e.dataTransfer.setData('text/plain',atom);e.dataTransfer.setData('application/x-stoich-atom-id',atomId);e.dataTransfer.effectAllowed='move';orb.classList.add('dragging');});src.addEventListener('dragend',()=>src.classList.remove('dragging'));});
@@ -18745,7 +18757,7 @@ html,body{
         btn.classList.add('selected-correct');
         feedback.hidden=false;feedback.className='rlab-c4-feedback correct';
         feedback.innerHTML='<div class="rlab-c4-correct-line">✓ CORRECT!</div><div>Fe: 4 → 4 ✓</div><div>O: 6 → 6 ✓</div><p>Correct. The number of each type of atom is the same on both sides.</p><p>This reaction is already balanced, so its coefficients are ready to be decoded.</p><button id="rlabC4Decode" type="button" class="arcade-btn green">DECODE THE MOLE RATIOS ▶</button>';
-        if(typeof soundCorrect==='function')soundCorrect();
+        if(typeof soundCorrect==='function')soundCorrect(); if(typeof window.__stoichUniversalReward==='function')window.__stoichUniversalReward();
         card.querySelector('#rlabC4Decode').onclick=()=>renderC4Questions(0);
       }else{
         btn.classList.add('selected-wrong');
@@ -18784,7 +18796,7 @@ html,body{
       if(ok){
         btn.classList.add('selected-correct');fb.hidden=false;fb.className='rlab-c4-feedback correct';
         fb.innerHTML='<div class="rlab-c4-correct-line">✓ CORRECT!</div><div class="rlab-c4-answer">'+item.show+'</div><button id="rlabC4QContinue" type="button" class="arcade-btn green">CONTINUE ▶</button>';
-        if(typeof soundCorrect==='function')soundCorrect();
+        if(typeof soundCorrect==='function')soundCorrect(); if(typeof window.__stoichUniversalReward==='function')window.__stoichUniversalReward();
         card.querySelector('#rlabC4QContinue').onclick=()=>{
           if(index<questions.length-1){renderC4Questions(index+1);}
           else{renderC4Decoded();}
@@ -18858,7 +18870,7 @@ html,body{
       if(btn.dataset.answer==='no'){
         btn.classList.add('selected-correct'); fb.hidden=false; fb.className='rlab-c4-feedback correct';
         fb.innerHTML='<div class="rlab-c4-correct-line">✓ CORRECT!</div><p>Correct. The reaction is not balanced.</p><p>Before we can read the mole relationships, we need to repair the reaction.</p><button id="rlabR2Repair" type="button" class="arcade-btn green">REPAIR REACTION</button>';
-        if(typeof soundCorrect==='function')soundCorrect();
+        if(typeof soundCorrect==='function')soundCorrect(); if(typeof window.__stoichUniversalReward==='function')window.__stoichUniversalReward();
         card.querySelector('#rlabR2Repair').onclick=()=>r2Wipe(()=>{L2.step=9;render()});
       }else{
         btn.classList.add('selected-wrong'); fb.hidden=false; fb.className='rlab-c4-feedback wrong';
@@ -18905,7 +18917,7 @@ html,body{
       if(ok){
         input.disabled=true;check.disabled=true;fb.hidden=false;fb.className='rlab-c4-feedback correct';
         fb.innerHTML='<div class="rlab-c4-correct-line">✓ CORRECT!</div><div class="rlab-c4-answer">'+item.show+'</div>'+(index<qs.length-1?'<button id="r2QContinue" type="button" class="arcade-btn green">CONTINUE ▶</button>':'<button id="r2QFinish" type="button" class="arcade-btn green">CONTINUE ▶</button>');
-        if(typeof soundCorrect==='function')soundCorrect();
+        if(typeof soundCorrect==='function')soundCorrect(); if(typeof window.__stoichUniversalReward==='function')window.__stoichUniversalReward();
         const next=card.querySelector('#r2QContinue'); if(next)next.onclick=()=>renderC4Reaction2Questions(index+1);
         const finish=card.querySelector('#r2QFinish'); if(finish)finish.onclick=()=>{L2.step=11;r2Wipe(()=>renderC4Reaction2Decoded())};
       }else{
@@ -18956,7 +18968,7 @@ html,body{
       if(btn.dataset.answer==='no'){
         btn.classList.add('selected-correct'); fb.hidden=false; fb.className='rlab-c4-feedback correct';
         fb.innerHTML='<div class="rlab-c4-correct-line">✓ CORRECT!</div><p>Correct. This reaction is not balanced yet.</p><p>Repair the reaction before decoding its mole ratios.</p><button id="rlabR3Repair" type="button" class="arcade-btn green">REPAIR REACTION</button>';
-        if(typeof soundCorrect==='function')soundCorrect();
+        if(typeof soundCorrect==='function')soundCorrect(); if(typeof window.__stoichUniversalReward==='function')window.__stoichUniversalReward();
         card.querySelector('#rlabR3Repair').onclick=()=>r2Wipe(()=>{L2.step=13;render()});
       }else{
         btn.classList.add('selected-wrong'); fb.hidden=false; fb.className='rlab-c4-feedback wrong';
@@ -18999,7 +19011,7 @@ html,body{
     const input=card.querySelector('#r3AnswerInput'),check=card.querySelector('#r3CheckAnswer'),fb=card.querySelector('#rlabR3QFeedback');
     const attempt=()=>{
       const ok=normalizeR3Answer(input.value)===item.answer;
-      if(ok){input.disabled=true;check.disabled=true;fb.hidden=false;fb.className='rlab-c4-feedback correct';fb.innerHTML='<div class="rlab-c4-correct-line">✓ CORRECT!</div><div class="rlab-c4-answer">'+item.show+'</div>'+(index<qs.length-1?'<button id="r3QContinue" type="button" class="arcade-btn green">CONTINUE ▶</button>':'<button id="r3QFinish" type="button" class="arcade-btn green">CONTINUE ▶</button>');if(typeof soundCorrect==='function')soundCorrect();
+      if(ok){input.disabled=true;check.disabled=true;fb.hidden=false;fb.className='rlab-c4-feedback correct';fb.innerHTML='<div class="rlab-c4-correct-line">✓ CORRECT!</div><div class="rlab-c4-answer">'+item.show+'</div>'+(index<qs.length-1?'<button id="r3QContinue" type="button" class="arcade-btn green">CONTINUE ▶</button>':'<button id="r3QFinish" type="button" class="arcade-btn green">CONTINUE ▶</button>');if(typeof soundCorrect==='function')soundCorrect(); if(typeof window.__stoichUniversalReward==='function')window.__stoichUniversalReward();
         const next=card.querySelector('#r3QContinue'); if(next)next.onclick=()=>renderC4Reaction3Questions(index+1);
         const finish=card.querySelector('#r3QFinish'); if(finish)finish.onclick=()=>{L2.step=15;r2Wipe(()=>renderC4Reaction3Final())};
       }else{fb.hidden=false;fb.className='rlab-c4-feedback wrong';fb.innerHTML='<div class="rlab-c4-wrong-line">✕ NOT QUITE!</div><p>'+item.hint+'</p><button id="r3QTry" type="button" class="arcade-btn blue">TRY AGAIN</button>';if(typeof soundWrong==='function')soundWrong();card.querySelector('#r3QTry').onclick=()=>{fb.hidden=true;input.focus()};}
@@ -19037,7 +19049,7 @@ html,body{
         btn.classList.add('selected-correct');
         fb.hidden=false;fb.className='rlab-c4-feedback correct';
         fb.innerHTML='<div class="rlab-c4-correct-line">✓ CORRECT!</div><p>Nice work. You identified what the relationship describes.</p><button id="rlabMRQ1Continue" type="button" class="arcade-btn green">CONTINUE ▶</button>';
-        if(typeof soundCorrect==='function')soundCorrect();
+        if(typeof soundCorrect==='function')soundCorrect(); if(typeof window.__stoichUniversalReward==='function')window.__stoichUniversalReward();
         card.querySelector('#rlabMRQ1Continue').onclick=()=>renderC4MoleRatioCheckpointQ2();
       }else{
         btn.classList.add('selected-wrong');
@@ -19079,7 +19091,7 @@ html,body{
         btn.classList.add('selected-correct');
         fb.hidden=false;fb.className='rlab-c4-feedback correct';
         fb.innerHTML='<div class="rlab-c4-correct-line">✓ CORRECT!</div><p>Nice work. You kept the same relationship when the amount of N₂ changed.</p><button id="rlabMRQ2Continue" type="button" class="arcade-btn green">CONTINUE ▶</button>';
-        if(typeof soundCorrect==='function')soundCorrect();
+        if(typeof soundCorrect==='function')soundCorrect(); if(typeof window.__stoichUniversalReward==='function')window.__stoichUniversalReward();
         card.querySelector('#rlabMRQ2Continue').onclick=()=>renderC4MoleRatioCheckpointFinal();
       }else{
         btn.classList.add('selected-wrong');
@@ -19187,7 +19199,7 @@ html,body{
       fb.className='rlab-c4-feedback '+(correct?'correct':'wrong');
       if(correct){
         fb.innerHTML='<div class="rlab-c4-correct-line">✓ CORRECT!</div><p>'+q.correct+'</p><button id="rlabMR2Continue" type="button" class="arcade-btn green">'+(isLast?'CONTINUE ▶':'NEXT TEST ▶')+'</button>';
-        if(typeof soundCorrect==='function')soundCorrect();
+        if(typeof soundCorrect==='function')soundCorrect(); if(typeof window.__stoichUniversalReward==='function')window.__stoichUniversalReward();
         card.querySelector('#rlabMR2Continue').onclick=()=>r2Wipe(()=>isLast?renderC4MoleRatioCheckpointIIFinal():renderC4MoleRatioCheckpointIIQuestion(index+1));
       }else{
         fb.innerHTML='<div class="rlab-c4-wrong-line">✕ NOT QUITE!</div><p>'+q.wrong+'</p><button id="rlabMR2Try" type="button" class="arcade-btn blue">TRY AGAIN</button>';
@@ -21564,7 +21576,7 @@ html.l3-question-lock{overflow:hidden!important;height:100vh!important;}
     const step1Active=bodyText.includes('STEP 1') && wb.offsetParent !== null;
     if(step1Active){ welcome.style.display='none'; wb.style.display='block'; }
   });
-  observer.observe(document.body,{subtree:true,childList:true,characterData:true,attributes:true});
+  observer.observe(document.body,{subtree:true,childList:true,characterData:true});
 })();
 
 function showWorkbenchProblemHeader(){
@@ -22556,7 +22568,7 @@ body.l3-c4-step2-scroll-open{overflow:auto!important;}
       const feedback=root.querySelector('#l3c4S2CancelledFeedback');
       if(feedback)feedback.hidden=false;
       const calcRow=root.querySelector('#l3c4S2CalculateRow');
-      if(calcRow)calcRow.hidden=false;
+      if(calcRow)calcRow.hidden=false;if(typeof window.__stoichC4Reward==='function')window.__stoichC4Reward(cancelBtn);
     };
     root.querySelector('#l3c4S2CalculateBtn').onclick=()=>wipe(()=>{ root.classList.add('l3-c4-calc-scroll'); document.body.classList.add('l3-c4-step2-scroll-open'); show('l3c4S2Calc'); window.scrollTo(0,0); });
     root.querySelector('#l3c4S2CancelBack').onclick=()=>wipe(()=>show('l3c4S2Setup'));
@@ -22582,14 +22594,14 @@ body.l3-c4-step2-scroll-open{overflow:auto!important;}
     function place(card,zone){
       const key=card.dataset.key, zk=zone.dataset.zone;
       if(key!==zk){if(typeof soundWrong==='function')soundWrong();const clues={given:'Clue: Start with the amount that is already given in the problem.',target:'Clue: Look for the substance we are trying to find.',starting:'Clue: Match the substance from the given amount with the denominator.'};feedback('TRY AGAIN — '+clues[zk],false);card.animate([{transform:'translateX(0)'},{transform:'translateX(-5px)'},{transform:'translateX(5px)'},{transform:'translateX(0)'}],{duration:220});return;}
-      if(placed[zk])return;placed[zk]=true;zone.classList.add('filled');zone.innerHTML='<div class="l3-c4-zone-label">'+(zk==='given'?'DROP HERE:<br>GIVEN AMOUNT':zk==='target'?'DROP HERE:<br>TARGET SUBSTANCE':'DROP HERE:<br>STARTING SUBSTANCE')+'</div><div class="l3-c4-placed">'+card.textContent+'</div>';card.classList.add('used');card.draggable=false;if(typeof soundCorrect==='function')soundCorrect();feedback('CORRECT! Nice match.',true);
+      if(placed[zk])return;placed[zk]=true;zone.classList.add('filled');zone.innerHTML='<div class="l3-c4-zone-label">'+(zk==='given'?'DROP HERE:<br>GIVEN AMOUNT':zk==='target'?'DROP HERE:<br>TARGET SUBSTANCE':'DROP HERE:<br>STARTING SUBSTANCE')+'</div><div class="l3-c4-placed">'+card.textContent+'</div>';card.classList.add('used');card.draggable=false;if(typeof soundCorrect==='function')soundCorrect();if(typeof window.__stoichC4Reward==='function')window.__stoichC4Reward(zone);feedback('CORRECT! Nice match.',true);
       if(Object.values(placed).every(Boolean)){root.querySelector('#l3c4S2Complete').hidden=false;root.querySelector('#l3c4S2SetupContinue').style.display='inline-flex';}
     }
     root.querySelectorAll('.l3-c4-card').forEach(card=>{card.addEventListener('dragstart',e=>e.dataTransfer.setData('text/plain',card.dataset.key));card.addEventListener('click',()=>{const z=zones.find(x=>!x.classList.contains('filled'));if(z)place(card,z);});});
     zones.forEach(zone=>{zone.addEventListener('dragover',e=>e.preventDefault());zone.addEventListener('drop',e=>{e.preventDefault();const key=e.dataTransfer.getData('text/plain');const c=root.querySelector('.l3-c4-card[data-key="'+key+'"]');if(c)place(c,zone);});});
 
-    root.querySelector('#l3c4S2MulCheck').onclick=()=>{const i=root.querySelector('#l3c4S2Mul'),f=root.querySelector('#l3c4S2MulFb');if(i.value.trim()==='8'){i.disabled=true;i.style.borderColor='#55dc66';f.classList.remove('show');if(typeof soundCorrect==='function')soundCorrect();root.querySelector('#l3c4S2DivideBlock').hidden=false;}else{if(typeof soundWrong==='function')soundWrong();f.textContent='TRY AGAIN — Check the two numbers you are multiplying. Use 4 and 2.';f.classList.add('show');i.select();}};
-    root.querySelector('#l3c4S2DivCheck').onclick=()=>{const i=root.querySelector('#l3c4S2Div'),f=root.querySelector('#l3c4S2DivFb');if(i.value.trim()==='2.7'){i.disabled=true;i.style.borderColor='#55dc66';f.classList.remove('show');if(typeof soundCorrect==='function')soundCorrect();root.querySelector('#l3c4S2FinalCalc').hidden=false;}else{if(typeof soundWrong==='function')soundWrong();f.textContent='TRY AGAIN — Use 8 and divide it by 3.';f.classList.add('show');i.select();}};
+    root.querySelector('#l3c4S2MulCheck').onclick=()=>{const i=root.querySelector('#l3c4S2Mul'),f=root.querySelector('#l3c4S2MulFb');if(i.value.trim()==='8'){i.disabled=true;i.style.borderColor='#55dc66';f.classList.remove('show');if(typeof soundCorrect==='function')soundCorrect();if(typeof window.__stoichC4Reward==='function')window.__stoichC4Reward(i);root.querySelector('#l3c4S2DivideBlock').hidden=false;}else{if(typeof soundWrong==='function')soundWrong();f.textContent='TRY AGAIN — Check the two numbers you are multiplying. Use 4 and 2.';f.classList.add('show');i.select();}};
+    root.querySelector('#l3c4S2DivCheck').onclick=()=>{const i=root.querySelector('#l3c4S2Div'),f=root.querySelector('#l3c4S2DivFb');if(i.value.trim()==='2.7'){i.disabled=true;i.style.borderColor='#55dc66';f.classList.remove('show');if(typeof soundCorrect==='function')soundCorrect();if(typeof window.__stoichC4Reward==='function')window.__stoichC4Reward(i);root.querySelector('#l3c4S2FinalCalc').hidden=false;}else{if(typeof soundWrong==='function')soundWrong();f.textContent='TRY AGAIN — Use 8 and divide it by 3.';f.classList.add('show');i.select();}};
   }
 
   document.addEventListener('click',function(e){
@@ -23252,5 +23264,979 @@ transition lock/wipe that could otherwise leave the page looking black.
   else boot();
   setTimeout(boot,300);
   setTimeout(boot,1200);
+})();
+</script>
+
+<!-- =========================================================
+     FINAL LEVEL LOCK SYMBOL OVERLAY
+     Visual-only map enhancement:
+     - Level 02 and Level 03 show a faded lock inside their circles
+       while the Chemist has not reached them.
+     - The lock fades/scales away when the Chemist reaches that node.
+     - Does not replace or alter the existing level labels/content.
+========================================================= -->
+<style id="FINAL_LEVEL_LOCK_SYMBOLS">
+.map-screen #adventureMap .level-node .level-lock-overlay{
+  position:absolute;
+  inset:0;
+  z-index:5;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  pointer-events:none;
+  opacity:.68;
+  transition:opacity .35s ease, transform .35s ease, visibility .35s ease;
+  transform:scale(1);
+}
+
+/* Soft translucent veil so the lock reads as a faded "locked" state
+   without changing the actual circle itself. */
+.map-screen #adventureMap .level-node .level-lock-overlay::before{
+  content:"";
+  position:absolute;
+  inset:4px;
+  border-radius:50%;
+  background:rgba(20,31,38,.18);
+  pointer-events:none;
+}
+
+.map-screen #adventureMap .level-node .level-lock-icon{
+  position:relative;
+  z-index:6;
+  width:42px;
+  height:34px;
+  border:4px solid rgba(255,255,255,.72);
+  border-radius:7px;
+  background:rgba(55,69,76,.78);
+  box-shadow:0 3px 0 rgba(0,0,0,.35);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:Arial,sans-serif;
+  font-size:22px;
+  line-height:1;
+  color:rgba(255,255,255,.82);
+  text-shadow:1px 1px 0 rgba(0,0,0,.45);
+}
+
+.map-screen #adventureMap .level-node .level-lock-icon::before{
+  content:"";
+  position:absolute;
+  width:22px;
+  height:20px;
+  left:50%;
+  top:-17px;
+  transform:translateX(-50%);
+  border:4px solid rgba(255,255,255,.72);
+  border-bottom:0;
+  border-radius:12px 12px 0 0;
+}
+
+.map-screen #adventureMap .level-node.lock-symbol-hidden .level-lock-overlay{
+  opacity:0;
+  transform:scale(.55);
+  visibility:hidden;
+}
+
+@media(max-width:900px){
+  .map-screen #adventureMap .level-node .level-lock-icon{
+    width:34px;
+    height:28px;
+    border-width:3px;
+    font-size:18px;
+  }
+  .map-screen #adventureMap .level-node .level-lock-icon::before{
+    width:18px;
+    height:16px;
+    top:-13px;
+    border-width:3px;
+  }
+}
+</style>
+
+<script id="FINAL_LEVEL_LOCK_SYMBOLS_JS">
+(function(){
+  'use strict';
+
+  var LOCK_LEVELS=[1,2]; // Level 02 and Level 03 (zero-based map indexes)
+  var proximity=28;
+  var lastChemistLevel=null;
+
+  function getMap(){
+    return document.getElementById('adventureMap');
+  }
+
+  function getNode(index){
+    return document.querySelector(
+      '#adventureMap .level-node[data-level="'+index+'"]'
+    );
+  }
+
+  function ensureLock(node,index){
+    if(!node || LOCK_LEVELS.indexOf(index)===-1)return;
+
+    var overlay=node.querySelector('.level-lock-overlay');
+    if(!overlay){
+      overlay=document.createElement('span');
+      overlay.className='level-lock-overlay';
+      overlay.setAttribute('aria-hidden','true');
+
+      var icon=document.createElement('span');
+      icon.className='level-lock-icon';
+      icon.textContent='🔒';
+
+      overlay.appendChild(icon);
+      node.appendChild(overlay);
+    }
+  }
+
+  function setLockVisible(index,visible){
+    var node=getNode(index);
+    if(!node)return;
+    ensureLock(node,index);
+    node.classList.toggle('lock-symbol-hidden',!visible);
+  }
+
+  function applyLockState(chemistLevel){
+    var map=getMap();
+    if(!map)return;
+
+    LOCK_LEVELS.forEach(function(index){
+      var node=getNode(index);
+      if(!node)return;
+
+      ensureLock(node,index);
+
+      /* A future node keeps its lock until the Chemist actually
+         reaches that node. */
+      var reached=Number.isFinite(chemistLevel) && chemistLevel>=index;
+      setLockVisible(index,!reached);
+    });
+  }
+
+  function nodeCenter(node,mapRect){
+    var r=node.getBoundingClientRect();
+    return {
+      x:r.left+r.width/2-mapRect.left,
+      y:r.top+r.height/2-mapRect.top
+    };
+  }
+
+  function updateFromChemistPosition(){
+    var map=getMap();
+    var chemist=document.getElementById('chemist');
+    if(!map || !chemist || map.hidden)return;
+
+    var mapRect=map.getBoundingClientRect();
+    var cr=chemist.getBoundingClientRect();
+    if(!cr.width || !cr.height)return;
+
+    var cx=cr.left+cr.width/2-mapRect.left;
+    var cy=cr.top+cr.height/2-mapRect.top;
+
+    var nearest=-1;
+    var nearestDist=Infinity;
+
+    document.querySelectorAll('#adventureMap .level-node[data-level]').forEach(function(node){
+      var idx=Number(node.getAttribute('data-level'));
+      if(!Number.isFinite(idx) || idx>2)return;
+
+      var c=nodeCenter(node,mapRect);
+      var d=Math.hypot(cx-c.x,cy-c.y);
+
+      if(d<nearestDist){
+        nearestDist=d;
+        nearest=idx;
+      }
+    });
+
+    if(nearest>=0 && nearestDist<=proximity){
+      if(lastChemistLevel!==nearest){
+        lastChemistLevel=nearest;
+        applyLockState(nearest);
+      }
+    }else if(lastChemistLevel===null){
+      /* First render: fall back to the saved/current level only
+         until the Chemist's actual position is measurable. */
+      var fallback=(typeof S!=='undefined' && Number.isFinite(Number(S.level)))
+        ? Number(S.level) : 0;
+      lastChemistLevel=fallback;
+      applyLockState(fallback);
+    }
+  }
+
+  function decorateMap(){
+    var map=getMap();
+    if(!map)return;
+
+    LOCK_LEVELS.forEach(function(index){
+      ensureLock(getNode(index),index);
+    });
+
+    updateFromChemistPosition();
+  }
+
+  /* Expose a tiny helper so the existing map journey can explicitly
+     synchronize the visual state without changing its navigation. */
+  window.__updateStoichLevelLocks=function(level){
+    var n=Number(level);
+    if(Number.isFinite(n)){
+      lastChemistLevel=n;
+      applyLockState(n);
+    }else{
+      updateFromChemistPosition();
+    }
+  };
+
+  /* The existing map renderer rebuilds node.innerHTML. Re-apply the
+     lock overlay after every such rebuild. */
+  var tries=0;
+  function hookRenderer(){
+    if(typeof window.renderMap==='function' && !window.__stoichLockRendererHooked){
+      var originalRenderMap=window.renderMap;
+      window.renderMap=function(){
+        var result=originalRenderMap.apply(this,arguments);
+        setTimeout(decorateMap,0);
+        setTimeout(decorateMap,80);
+        return result;
+      };
+      window.__stoichLockRendererHooked=true;
+    }
+    tries++;
+    if(tries<40 && !window.__stoichLockRendererHooked){
+      setTimeout(hookRenderer,100);
+    }
+  }
+
+  /* Observe map DOM changes as a second safety net because several
+     late scripts in this file also patch the map nodes. */
+  function observeMap(){
+    var mapScreen=document.getElementById('mapScreen');
+    if(!mapScreen)return;
+
+    var observer=new MutationObserver(function(){
+      decorateMap();
+    });
+    observer.observe(mapScreen,{childList:true,subtree:true});
+  }
+
+  function boot(){
+    decorateMap();
+    hookRenderer();
+    observeMap();
+
+    setInterval(function(){
+      updateFromChemistPosition();
+    },120);
+  }
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',boot,{once:true});
+  }else{
+    boot();
+  }
+
+  window.addEventListener('resize',function(){
+    setTimeout(updateFromChemistPosition,80);
+  });
+})();
+</script>
+
+
+
+<!-- CLEAN FINAL REWARD SYSTEM: ONE BLUE BANK + ONE LIVE POPUP -->
+<style id="CLEAN_FINAL_REWARD_SYSTEM_STYLE">
+/* Remove only the duplicate local coin/XP HUDs. Keep KIT STATION / WORKBENCH labels. */
+#level3KitScreen .l3-hud .l3-hud-chip:nth-child(2),
+#level3KitScreen .l3-hud .l3-hud-chip:nth-child(3),
+#l3WorkbenchScreen .wb-hud .wb-chip:nth-child(2),
+#l3WorkbenchScreen .wb-hud .wb-chip:nth-child(3){display:none!important;}
+
+/* ONE stable blue wallet. Nothing animates, moves, fades, or transforms it. */
+#hcLiveBank{
+  position:fixed!important;
+  top:12px!important;
+  right:16px!important;
+  left:auto!important;
+  bottom:auto!important;
+  z-index:2147483647!important;
+  display:none!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:12px!important;
+  width:max-content!important;
+  height:auto!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:10px 14px!important;
+  box-sizing:border-box!important;
+  border:3px solid #fff!important;
+  border-radius:14px!important;
+  background:rgba(5,18,35,.98)!important;
+  box-shadow:5px 5px 0 #000,0 0 18px rgba(80,220,255,.45)!important;
+  color:#fff!important;
+  opacity:1!important;
+  visibility:visible!important;
+  transform:none!important;
+  filter:none!important;
+  animation:none!important;
+  transition:none!important;
+  will-change:auto!important;
+  pointer-events:none!important;
+}
+#hcLiveBank.clean-active{display:flex!important;}
+#hcLiveBank *{animation:none!important;transition:none!important;}
+#hcLiveBank span:first-child{color:#ffd84d!important;}
+#hcLiveBank span:last-child{color:#7dff9a!important;}
+#hcLiveBank b{color:#fff!important;opacity:1!important;}
+
+/* One popup node, centered like Level 1. It does NOT affect the bank. */
+#cleanLiveRewardPopup{
+  position:fixed!important;
+  left:50%!important;
+  top:50%!important;
+  z-index:2147483647!important;
+  display:none!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:max-content!important;
+  max-width:90vw!important;
+  margin:0!important;
+  padding:0!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  pointer-events:none!important;
+  text-align:center!important;
+  white-space:nowrap!important;
+  font-family:Arial,sans-serif!important;
+  font-weight:900!important;
+}
+#cleanLiveRewardPopup.clean-show{display:flex!important;animation:cleanRewardPop 1050ms ease-out forwards!important;}
+#cleanLiveRewardPopup .clean-coins,
+#cleanLiveRewardPopup .clean-xp{
+  font-size:15px!important;
+  line-height:1.45!important;
+  font-weight:900!important;
+  color:#ffd21f!important;
+  text-shadow:2px 2px 0 #000!important;
+}
+#cleanLiveRewardPopup .clean-coins{transform:translateX(-10px) rotate(-7deg)!important;}
+#cleanLiveRewardPopup .clean-xp{transform:translateX(10px) rotate(7deg)!important;}
+@keyframes cleanRewardPop{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(.82);}
+  18%{opacity:1;transform:translate(-50%,-58%) scale(1);}
+  65%{opacity:1;transform:translate(-50%,-62%) scale(1);}
+  100%{opacity:0;transform:translate(-50%,-78%) scale(1.03);}
+}
+</style>
+<style id="RELATIONSHIP_LAB_HIDE_DUPLICATE_COIN_XP_BANK">
+/* Relationship Lab already uses the blue global reward bank. Keep hearts, hide only the local coin/XP counters. */
+#relationshipLabScreen .rlab-stats span:nth-child(2),
+#relationshipLabScreen .rlab-stats span:nth-child(3){display:none!important;}
+</style>
+<script id="CLEAN_FINAL_REWARD_SYSTEM_JS">
+(function(){
+  'use strict';
+
+  var rewardSteps=[
+    {coins:10,xp:15},
+    {coins:15,xp:20},
+    {coins:20,xp:25},
+    {coins:25,xp:30},
+    {coins:30,xp:40}
+  ];
+  var rewardCount=Number(window.__cleanRewardCount)||0;
+  var lastRewardAt=0;
+  var popupTimer=0;
+
+  function state(){return (typeof S!=='undefined'&&S)?S:(window.S||null);}
+  function visible(id){
+    var e=document.getElementById(id);
+    if(!e)return false;
+    var c=getComputedStyle(e);
+    return !e.hidden&&c.display!=='none'&&c.visibility!=='hidden'&&c.opacity!=='0';
+  }
+  function level2Or3Active(){
+    if(visible('relationshipLabScreen'))return true;
+    if(visible('level3KitScreen')||visible('l3WorkbenchScreen')||visible('l3ReactionChamber'))return true;
+    if(document.querySelector('#l3Challenge4Step1Root,#l3Challenge4Step2Root,#l3Challenge4Step3Root,#l3Challenge4Step4Root,#l3Challenge4PercentYieldRoot,[id^=l3Challenge4],[id^=l3PercentYield],#wbLab,#wbStep6CalculationScreen,#wbStep6FinalAnswerState'))return true;
+    return false;
+  }
+  function level3Element(el){
+    if(!el||el.nodeType!==1||!el.closest)return false;
+    return !!el.closest('#level3KitScreen,#l3WorkbenchScreen,#l3ReactionChamber,#wbLab,#wbStep6CalculationScreen,#wbStep6FinalAnswerState,#l3Challenge4Step1Root,#l3Challenge4Step2Root,#l3Challenge4Step3Root,#l3Challenge4Step4Root,#l3Challenge4PercentYieldRoot,[id^=l3Challenge4],[id^=l3PercentYield]');
+  }
+
+  function ensureBank(){
+    var s=state();
+    if(!s)return null;
+    var b=document.getElementById('hcLiveBank');
+    if(!b){
+      b=document.createElement('div');
+      b.id='hcLiveBank';
+      b.innerHTML='<span>🪙 <b data-live-coins>0</b></span><span>⭐ <b data-live-xp>0</b> XP</span>';
+      document.body.appendChild(b);
+    }
+    var c=b.querySelector('[data-live-coins]');
+    var x=b.querySelector('[data-live-xp]');
+    if(c)c.textContent=String(Number(s.coins)||0);
+    if(x)x.textContent=String(Number(s.xp)||0);
+    if(level2Or3Active()) b.classList.add('clean-active');
+    else b.classList.remove('clean-active');
+    return b;
+  }
+
+  function syncHud(){
+    var s=state(); if(!s)return;
+    ['mapCoins','gameCoins','rlabCoins'].forEach(function(id){var e=document.getElementById(id);if(e)e.textContent=String(s.coins);});
+    ['mapXP','gameXP','rlabXP'].forEach(function(id){var e=document.getElementById(id);if(e)e.textContent=String(s.xp);});
+    ensureBank();
+  }
+
+  function popup(coins,xp){
+    var p=document.getElementById('cleanLiveRewardPopup');
+    if(!p){
+      p=document.createElement('div');
+      p.id='cleanLiveRewardPopup';
+      document.body.appendChild(p);
+    }
+    p.innerHTML='<div class="clean-coins">+'+coins+' COINS</div><div class="clean-xp">+'+xp+' XP</div>';
+    p.classList.remove('clean-show');
+    void p.offsetWidth;
+    p.classList.add('clean-show');
+    clearTimeout(popupTimer);
+    popupTimer=setTimeout(function(){p.classList.remove('clean-show');},1050);
+  }
+
+  function giveReward(){
+    var now=Date.now();
+    if(now-lastRewardAt<500)return false;
+    var s=state();
+    if(!s)return false;
+    lastRewardAt=now;
+    rewardCount++;
+    window.__cleanRewardCount=rewardCount;
+    var r=rewardSteps[(rewardCount-1)%rewardSteps.length];
+    s.coins=Math.max(0,Number(s.coins)||0)+r.coins;
+    s.xp=Math.max(0,Number(s.xp)||0)+r.xp;
+    syncHud();
+    popup(r.coins,r.xp);
+    if(typeof soundCoin==='function'){try{soundCoin();}catch(e){}}
+    return true;
+  }
+
+  /* Existing Level 2 handlers already call this function. */
+  window.__stoichUniversalReward=giveReward;
+  /* Direct Challenge 4 hook: mark the feedback node so the existing observer cannot double-award it. */
+  window.__stoichC4Reward=function(node){
+    try{
+      if(node){
+        node.dataset.cleanRewarded='1';
+        node.querySelectorAll && node.querySelectorAll('.correct,.complete,.success').forEach(function(x){x.dataset.cleanRewarded='1';});
+      }
+      if(typeof window.__stoichUniversalReward==='function') window.__stoichUniversalReward();
+    }catch(e){}
+  };
+
+  /* Do NOT replace Level 1's original awardLiveReward. */
+
+  function successNode(el){
+    if(!level3Element(el))return false;
+    if(el.id==='hcLiveBank'||el.id==='cleanLiveRewardPopup')return false;
+    if(el.closest('#hcLiveBank,#cleanLiveRewardPopup'))return false;
+    if(el.dataset&&el.dataset.cleanRewarded==='1')return false;
+    var t=(el.textContent||'').replace(/\s+/g,' ').trim().toUpperCase();
+    if(!t||t.length>500)return false;
+    var q=(String(el.className||'')+' '+String(el.id||'')).toLowerCase();
+    var byClass=/feedback|correct|success|complete|perfect/.test(q);
+    var byText=/\bCORRECT!?\b|\bKIT COMPLETE!?\b|\bTASK COMPLETE!?\b|\bSTOICHIOMETRIC SETUP COMPLETE\b|\bSUCCESS!?\b|\bPERFECT!?\b/.test(t);
+    if(!byClass&&!byText)return false;
+    var child=el.querySelector&&el.querySelector('.correct,.feedback,.success,.complete,[class*="feedback"],[class*="correct"],[class*="complete"]');
+    if(child&&child!==el)return false;
+    el.dataset.cleanRewarded='1';
+    return true;
+  }
+
+  function scan(root){
+    if(!root||root.nodeType!==1)return;
+    if(successNode(root))giveReward();
+    if(root.querySelectorAll){
+      root.querySelectorAll('#level3KitScreen [class*="feedback"],#level3KitScreen [class*="correct"],#level3KitScreen [class*="complete"],#l3WorkbenchScreen [class*="feedback"],#l3WorkbenchScreen [class*="correct"],#l3WorkbenchScreen [class*="complete"],#l3ReactionChamber [class*="feedback"],#l3ReactionChamber [class*="correct"],#l3ReactionChamber [class*="complete"],[id^=l3Challenge4] [class*="feedback"],[id^=l3Challenge4] [class*="correct"],[id^=l3Challenge4] [class*="complete"],[id^=l3Challenge4][id*="Feedback"],[id^=l3Challenge4][id*="feedback"],[id^=l3PercentYield][id*="Feedback"],[id^=l3PercentYield][id*="feedback"]').forEach(function(el){
+        if(successNode(el))giveReward();
+      });
+    }
+  }
+
+  function boot(){
+    syncHud();
+    /* Only observe newly-added/changed content. Never observe style/class attributes. */
+    var obs=new MutationObserver(function(ms){
+      ms.forEach(function(m){
+        if(m.type==='characterData'){
+          var p=m.target&&m.target.parentElement;
+          if(p)scan(p);
+        }else{
+          if(m.target&&m.target.nodeType===1)scan(m.target);
+          Array.prototype.forEach.call(m.addedNodes||[],function(n){if(n&&n.nodeType===1)scan(n);});
+        }
+      });
+    });
+    obs.observe(document.body,{subtree:true,childList:true,characterData:true});
+    window.__cleanRewardObserver=obs;
+
+    /* One modest sync timer for screen transitions; it never writes bank styles. */
+    setInterval(function(){syncHud();},700);
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});
+  else boot();
+})();
+</script>
+
+
+<!-- FINAL MICRO-FIX: ONE BLUE BANK STAYS VISIBLE THROUGH THE ENTIRE LEVEL 3 -->
+<style id="L3_ONE_BLUE_BANK_ALL_CHALLENGES">
+#hcLiveBank.l3-bank-force-visible{display:flex!important;opacity:1!important;visibility:visible!important;transform:none!important;}
+</style>
+<script id="L3_ONE_BLUE_BANK_ALL_CHALLENGES_JS">
+(function(){
+  'use strict';
+  function visible(id){
+    var e=document.getElementById(id); if(!e)return false;
+    var c=getComputedStyle(e);
+    return !e.hidden&&c.display!=='none'&&c.visibility!=='hidden'&&c.opacity!=='0';
+  }
+  function l3Active(){
+    return visible('level3KitScreen')||visible('l3WorkbenchScreen')||visible('l3ReactionChamber')||
+      !!document.querySelector('#wbLab,#wbStep6CalculationScreen,#wbStep6FinalAnswerState,#l3Challenge4Step1Root,#l3Challenge4Step2Root,#l3Challenge4Step3Root,#l3Challenge4Step4Root,#l3Challenge4PercentYieldRoot,[id^="l3Challenge4"],[id^="l3PercentYield"]');
+  }
+  function sync(){
+    var b=document.getElementById('hcLiveBank');
+    var st=(typeof S!=='undefined'&&S)?S:(window.S||null);
+    if(!b||!st||!l3Active())return;
+    var c=b.querySelector('[data-live-coins]'),x=b.querySelector('[data-live-xp]');
+    if(c)c.textContent=String(Number(st.coins)||0);
+    if(x)x.textContent=String(Number(st.xp)||0);
+    b.classList.add('clean-active','l3-bank-force-visible');
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',sync,{once:true});else sync();
+  setInterval(sync,350);
+})();
+</script>
+
+<!-- FINAL MAP BANK + ALL-LEVELS-COMPLETE VISUAL FIX -->
+<style id="final-map-bank-and-complete-state">
+/* On the MAP, hide the single blue live bank. The existing white map bank
+   (#mapCoins / #mapXP in the map topbar) remains visible. */
+body:has(#mapScreen:not([hidden])) #hcLiveBank{
+  display:none!important;
+  visibility:hidden!important;
+  opacity:0!important;
+  pointer-events:none!important;
+}
+
+/* After Level 03 is completed, all three level circles become green and
+   every faded lock symbol is removed/hidden. */
+.map-screen #adventureMap.all-levels-complete .level-node[data-level="0"],
+.map-screen #adventureMap.all-levels-complete .level-node[data-level="1"],
+.map-screen #adventureMap.all-levels-complete .level-node[data-level="2"]{
+  background:
+    radial-gradient(circle at 32% 24%,rgba(255,255,255,.5),transparent 18%),
+    linear-gradient(145deg,#8df06f,#1fae62 58%,#12634d)!important;
+  color:#092b12!important;
+  opacity:1!important;
+  filter:none!important;
+  cursor:pointer!important;
+  animation:none!important;
+}
+.map-screen #adventureMap.all-levels-complete .level-node .level-lock-overlay,
+.map-screen #adventureMap.all-levels-complete .level-node .level-lock-icon{
+  display:none!important;
+  visibility:hidden!important;
+  opacity:0!important;
+}
+</style>
+<script id="final-map-bank-and-complete-state-js">
+(function(){
+  'use strict';
+
+  function getState(){
+    return (typeof S!=='undefined'&&S)?S:(window.S||null);
+  }
+
+  function mapVisible(){
+    var m=document.getElementById('mapScreen');
+    if(!m)return false;
+    var c=getComputedStyle(m);
+    return !m.hidden&&c.display!=='none'&&c.visibility!=='hidden';
+  }
+
+  function syncFinalMapState(){
+    var map=document.getElementById('adventureMap');
+    var st=getState();
+    if(!map||!st)return;
+
+    /* The blue bank is for active levels only. The map's white topbar bank
+       is the only money bank shown while the player is on the map. */
+    var blue=document.getElementById('hcLiveBank');
+    if(blue && mapVisible()){
+      blue.classList.remove('clean-active','show','l3-bank-force-visible');
+      blue.style.display='none';
+      blue.style.visibility='hidden';
+      blue.style.opacity='0';
+    }
+
+    var completed=Array.isArray(st.completed) &&
+      st.completed.length>=3 &&
+      !!st.completed[0] && !!st.completed[1] && !!st.completed[2];
+
+    map.classList.toggle('all-levels-complete',completed);
+
+    if(completed){
+      for(var i=0;i<3;i++){
+        var node=map.querySelector('.level-node[data-level="'+i+'"]');
+        if(!node)continue;
+        node.classList.remove('locked','done');
+        node.classList.add('current');
+        node.classList.add('lock-symbol-hidden');
+        var lock=node.querySelector('.level-lock-overlay');
+        if(lock)lock.style.display='none';
+      }
+    }
+  }
+
+  function boot(){
+    syncFinalMapState();
+    setTimeout(syncFinalMapState,100);
+    setTimeout(syncFinalMapState,350);
+    setTimeout(syncFinalMapState,1000);
+  }
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',boot,{once:true});
+  }else boot();
+
+  /* Keep the state correct after the existing map renderer, level-complete
+     navigation, or reward-bank visibility code runs. */
+  setInterval(syncFinalMapState,250);
+})();
+</script>
+
+
+
+<!-- RESPONSIVE FINAL LAYER: SAME GAME, ADAPTIVE UI -->
+<style id="STOICH_RESPONSIVE_FINAL_LAYER">
+/* =========================================================
+   STOICH WORLD — RESPONSIVE PRESENTATION ONLY
+   This layer intentionally leaves existing game logic/IDs intact.
+   ========================================================= */
+:root{
+  --sw-vw:100vw;
+  --sw-vh:100dvh;
+  --sw-gutter:clamp(10px,2.2vw,25px);
+  --sw-tap:clamp(44px,6vw,58px);
+}
+
+html{
+  width:100%;
+  min-height:100%;
+  overflow-x:hidden;
+  overflow-y:auto;
+  -webkit-text-size-adjust:100%;
+  text-size-adjust:100%;
+}
+
+body{
+  width:100%;
+  min-width:0;
+  min-height:var(--sw-vh);
+  margin:0;
+  overflow-x:hidden;
+  overscroll-behavior-x:none;
+  -webkit-overflow-scrolling:touch;
+}
+
+/* Every existing screen keeps its current design but gains a safe viewport. */
+.screen{
+  width:100%;
+  max-width:100vw;
+  min-width:0;
+  min-height:var(--sw-vh);
+  box-sizing:border-box;
+  padding:var(--sw-gutter);
+  overflow-x:hidden;
+}
+
+.screen *{
+  box-sizing:border-box;
+}
+
+/* Images/illustrations never stretch outside their available space. */
+.screen img,
+.screen video,
+.screen svg{
+  max-width:100%;
+  height:auto;
+}
+
+/* Keep long educational text and equations inside their panels. */
+.screen p,
+.screen h1,
+.screen h2,
+.screen h3,
+.screen h4,
+.screen h5,
+.screen h6,
+.screen label,
+.screen .instruction,
+.screen .description,
+.screen .question,
+.screen .feedback{
+  overflow-wrap:anywhere;
+  word-break:normal;
+}
+
+/* Touch-friendly controls without changing their existing appearance. */
+button,
+.arcade-btn,
+.level-node,
+.map-node,
+.choice,
+.choice-btn,
+.answer-btn,
+.nav-btn,
+.next-btn,
+.back-btn,
+.continue-btn,
+.check-btn,
+.submit-btn,
+.calculate-btn{
+  touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;
+}
+
+button{
+  max-width:100%;
+}
+
+/* Existing draggable objects can be moved by finger as well as mouse.
+   Existing pointer/mouse handlers remain untouched. */
+[draggable="true"],
+.drag-item,
+.draggable,
+[data-draggable="true"]{
+  touch-action:none;
+  -webkit-user-select:none;
+  user-select:none;
+  -webkit-touch-callout:none;
+}
+
+input,
+textarea,
+select{
+  max-width:100%;
+  min-width:0;
+}
+
+/* Prevent iOS Safari from zooming the page merely because an input is focused. */
+@media (max-width:900px){
+  input,
+  textarea,
+  select{
+    font-size:max(16px,1em)!important;
+  }
+}
+
+/* =========================================================
+   TABLETS / IPADS
+   ========================================================= */
+@media (min-width:701px) and (max-width:1100px){
+  .screen{
+    padding:clamp(14px,2.4vw,24px);
+  }
+
+  .screen > *{
+    max-width:100%;
+  }
+
+  .arcade-btn{
+    min-height:46px;
+    max-width:100%;
+  }
+}
+
+/* =========================================================
+   PHONES — portrait
+   ========================================================= */
+@media (max-width:700px) and (orientation:portrait){
+  .screen{
+    padding:clamp(9px,3.2vw,16px);
+  }
+
+  /* Existing fixed-width cards/panels are allowed to shrink to the
+     available viewport instead of forcing horizontal scrolling. */
+  .screen > div,
+  .screen > section,
+  .screen > main,
+  .screen > article{
+    max-width:100%;
+  }
+
+  .arcade-btn,
+  button{
+    min-height:44px;
+    max-width:100%;
+  }
+
+  /* Keep the single blue reward bank readable and inside the phone. */
+  #hcLiveBank{
+    max-width:calc(100vw - 20px)!important;
+    right:10px!important;
+    top:max(8px,env(safe-area-inset-top))!important;
+    padding:8px 10px!important;
+    gap:8px!important;
+    font-size:clamp(9px,2.5vw,13px)!important;
+  }
+
+  #cleanLiveRewardPopup{
+    max-width:calc(100vw - 24px)!important;
+    white-space:normal!important;
+  }
+
+  #cleanLiveRewardPopup .clean-coins,
+  #cleanLiveRewardPopup .clean-xp{
+    font-size:clamp(13px,4vw,17px)!important;
+  }
+}
+
+/* =========================================================
+   SMALL PHONES
+   ========================================================= */
+@media (max-width:420px){
+  .screen{
+    padding:8px;
+  }
+
+  #hcLiveBank{
+    right:8px!important;
+    max-width:calc(100vw - 16px)!important;
+    gap:6px!important;
+    padding:7px 8px!important;
+    border-width:2px!important;
+    border-radius:10px!important;
+  }
+
+  .arcade-btn,
+  button{
+    min-height:44px;
+  }
+}
+
+/* =========================================================
+   PHONE / TABLET — landscape
+   ========================================================= */
+@media (max-width:900px) and (orientation:landscape){
+  .screen{
+    min-height:var(--sw-vh);
+    padding:clamp(8px,1.8vw,16px);
+  }
+
+  /* Use width efficiently while respecting the reduced landscape height. */
+  .screen > *{
+    max-width:100%;
+  }
+
+  #hcLiveBank{
+    top:max(7px,env(safe-area-inset-top))!important;
+    right:max(8px,env(safe-area-inset-right))!important;
+    max-width:45vw!important;
+    padding:7px 10px!important;
+    gap:8px!important;
+    font-size:clamp(8px,1.7vw,12px)!important;
+  }
+
+  #cleanLiveRewardPopup{
+    max-width:80vw!important;
+  }
+}
+
+/* =========================================================
+   VERY SHORT LANDSCAPE SCREENS
+   ========================================================= */
+@media (orientation:landscape) and (max-height:600px){
+  .screen{
+    padding-top:clamp(6px,1.4vh,12px);
+    padding-bottom:clamp(6px,1.4vh,12px);
+  }
+
+  .arcade-btn,
+  button{
+    min-height:40px;
+  }
+}
+
+/* Safe-area support for notched phones/tablets. */
+@supports (padding:max(0px)){ 
+  .screen{
+    padding-left:max(var(--sw-gutter),env(safe-area-inset-left));
+    padding-right:max(var(--sw-gutter),env(safe-area-inset-right));
+  }
+}
+
+/* The map remains tappable on small screens. */
+#mapScreen,
+#mapScreen #adventureMap{
+  max-width:100vw;
+}
+
+/* Never let the responsive layer create an accidental horizontal scrollbar. */
+body,
+.screen,
+.screen > *{
+  scrollbar-width:thin;
+}
+</style>
+
+<script id="STOICH_RESPONSIVE_FINAL_LAYER_JS">
+(function(){
+  'use strict';
+
+  /* Recalculate viewport units without reloading or resetting the game. */
+  function updateViewportVars(){
+    var root=document.documentElement;
+    var vv=window.visualViewport;
+    var w=vv&&vv.width?vv.width:window.innerWidth;
+    var h=vv&&vv.height?vv.height:window.innerHeight;
+    root.style.setProperty('--sw-vw',Math.max(1,w)+'px');
+    root.style.setProperty('--sw-vh',Math.max(1,h)+'px');
+    root.dataset.swOrientation=(w>=h?'landscape':'portrait');
+    root.dataset.swDeviceWidth=String(Math.round(w));
+  }
+
+  function scheduleViewportUpdate(){
+    updateViewportVars();
+    requestAnimationFrame(updateViewportVars);
+  }
+
+  function boot(){
+    updateViewportVars();
+    window.addEventListener('resize',scheduleViewportUpdate,{passive:true});
+    window.addEventListener('orientationchange',function(){
+      /* Orientation changes must preserve the current activity/state. */
+      setTimeout(scheduleViewportUpdate,50);
+      setTimeout(scheduleViewportUpdate,250);
+    },{passive:true});
+    if(window.visualViewport){
+      window.visualViewport.addEventListener('resize',scheduleViewportUpdate,{passive:true});
+    }
+  }
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',boot,{once:true});
+  }else{
+    boot();
+  }
 })();
 </script>
