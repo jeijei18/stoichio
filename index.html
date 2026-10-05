@@ -5861,250 +5861,57 @@ body.rlab-transition-lock:has(#l3Challenge4Step1Root){
   font-weight:900!important;
 }
 </style>
-<style id="SIGA_RESPONSIVE_TOUCH_CSS">
-/* SIGA RESPONSIVE + TOUCH + PWA ADAPTATION v1 */
-:root{
-  --siga-vh:100dvh;
-  --siga-safe-top:env(safe-area-inset-top,0px);
-  --siga-safe-right:env(safe-area-inset-right,0px);
-  --siga-safe-bottom:env(safe-area-inset-bottom,0px);
-  --siga-safe-left:env(safe-area-inset-left,0px);
-}
-html{
-  min-height:100%;
-  min-height:100dvh;
-  background:#07131a;
-  -webkit-text-size-adjust:100%;
-  text-size-adjust:100%;
-}
-body{
-  min-height:100dvh;
-  min-height:var(--siga-vh);
-  width:100%;
-  max-width:100vw;
-  overscroll-behavior-x:none;
-  -webkit-tap-highlight-color:transparent;
-}
-.screen{
-  min-height:100vh;
-  min-height:100dvh;
-  min-height:var(--siga-vh);
-  padding-top:max(12px,var(--siga-safe-top));
-  padding-right:max(12px,var(--siga-safe-right));
-  padding-bottom:max(12px,var(--siga-safe-bottom));
-  padding-left:max(12px,var(--siga-safe-left));
-}
-button,
-.arcade-btn,
-.small-btn,
-.level-node,
-.character-card,
-.hub-card,
-.map-camera,
-input,
-select,
-textarea{
-  -webkit-tap-highlight-color:transparent;
-}
-button,
-.arcade-btn,
-.small-btn,
-.level-node,
-.character-card,
-.hub-card{
-  touch-action:manipulation;
-}
-button,
-.arcade-btn,
-.small-btn{
-  min-height:44px;
-}
-input,select,textarea{
-  font-size:16px;
-  max-width:100%;
-}
-img,svg,canvas,video{
-  max-width:100%;
-}
-.bank-card,
-.burger-ingredient,
-.hc-recipe-piece,
-.hc-partb-item,
-.hc-partc-material,
-.rl ab-molecule,
-.rlab-molecule,
-.rlab-c2-slot,
-.rlab-molecule-slot,
-.rlab-reactor-slot,
-.atom-ball,
-.token,
-.draggable,
-[data-draggable="true"]{
-  touch-action:none;
-  -webkit-user-select:none;
-  user-select:none;
-  -webkit-user-drag:none;
-}
-.level-node{
-  min-width:58px;
-  min-height:58px;
-}
-.map-screen #adventureMap .level-node{
-  touch-action:manipulation!important;
-}
-.modal{
-  padding-top:max(12px,var(--siga-safe-top));
-  padding-right:max(12px,var(--siga-safe-right));
-  padding-bottom:max(12px,var(--siga-safe-bottom));
-  padding-left:max(12px,var(--siga-safe-left));
-}
-.modal-card{
-  max-height:min(90vh,90dvh);
-  max-width:min(600px,96vw);
-  overscroll-behavior:contain;
-}
-.toast,.xp-pop{
-  max-width:min(92vw,680px);
-}
-.game-container,
-.character-wrapper,
-.hub-wrapper{
-  width:min(1350px,100%);
-  max-width:100%;
-}
-.game-header,.topbar{
-  align-items:center;
-}
-.reaction-builder,
-.balance-equation,
-.formula-bank,
-.construction-actions,
-.balance-controls,
-.hint-row,
-.modal-actions,
-.reward-stats{
-  max-width:100%;
-}
-.reaction-builder,
-.formula-bank{
-  overflow:visible;
-}
-.bank-card{
-  max-width:100%;
-}
-.coeff-input{
-  min-width:58px;
-}
-.story-card{
-  min-height:100dvh;
-}
-.story-controls{
-  padding-bottom:max(4px,var(--siga-safe-bottom));
-}
-@media (hover:none) and (pointer:coarse){
-  .arcade-btn:hover,
-  .character-card:hover,
-  .hub-card:hover,
-  .bank-card:hover,
-  .level-node:hover{
-    transform:none;
-  }
-  .arcade-btn:active{
-    transform:translate(3px,3px);
-    box-shadow:3px 3px 0 #000;
-  }
-}
-@media (max-width:900px){
-  .screen{padding-left:max(10px,var(--siga-safe-left));padding-right:max(10px,var(--siga-safe-right));}
-  .topbar,.game-header{gap:8px;}
-  .brand{font-size:clamp(13px,3.2vw,20px);}
-  .stats,.game-stats{gap:7px;}
-  .stat,.game-stat{font-size:clamp(10px,2.5vw,14px);padding:9px 10px;}
-  .level-card{margin:18px auto;padding:22px 16px;}
-  .mission-box{padding:17px;font-size:clamp(11px,2.6vw,14px);}
-  .construction-panel,.balance-panel,.atom-lab{padding:16px;}
-  .formula-bank{gap:9px;}
-  .bank-card{width:clamp(112px,28vw,165px);min-height:78px;}
-  .reaction-slot{width:clamp(105px,27vw,170px);}
-  .reaction-builder{gap:8px;padding:13px;}
-  .formula-display{min-width:70px;font-size:clamp(15px,3.8vw,20px);}
-  .operator,.equation-operator{font-size:clamp(17px,4vw,23px);}
-  .map-camera{width:min(190px,48vw);}
-  .map-message{max-width:90%;white-space:normal;text-align:center;}
+\n<style id="stoich-responsive-device-layer">
+/* Additive device-adaptation layer. Existing game content and JavaScript are preserved. */
+html{width:100%;max-width:100%;-webkit-text-size-adjust:100%;text-size-adjust:100%;overflow-x:clip;}
+body{width:100%;min-width:0;max-width:100%;min-height:100vh;min-height:100dvh;overflow-x:clip;overscroll-behavior-x:none;-webkit-tap-highlight-color:transparent;}
+img,video,canvas,svg{max-width:100%;}
+button,input,select,textarea{max-width:100%;}
+button{touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
+input,select,textarea{font-size:max(16px,1em);touch-action:manipulation;}
+/* Make drag targets respond to a finger/stylus without changing existing drag handlers. */
+[draggable="true"],.draggable,.drag-item,.drag-card,.dragObject,.drag-object,.drop-zone,.dropZone,.drop-target{ -webkit-user-select:none;user-select:none;-webkit-touch-callout:none;touch-action:pan-y; }
+.screen{width:100%;max-width:100%;min-width:0;box-sizing:border-box;}
+/* Let common rows wrap instead of getting cut off on narrow screens. */
+.button-row,.input-row,.choices,.choice-grid,.stats,.hud,.reward-row,.l3-c4-actions,.wb-continue-row{max-width:100%;}
+@media (min-width:601px) and (max-width:1100px){
+  .screen{padding-left:max(14px,env(safe-area-inset-left));padding-right:max(14px,env(safe-area-inset-right));}
+  button,.arcade-btn{min-height:44px;}
+  .home-card,.story-card,.panel,.card,.modal,.l3-panel,.rlab-c4-panel{max-width:96vw;}
+  .equation,.reaction,.chemical-equation,.rlab-c3-equation{max-width:100%;}
 }
 @media (max-width:600px){
-  .screen{padding-top:max(8px,var(--siga-safe-top));padding-bottom:max(8px,var(--siga-safe-bottom));}
-  .home-card{width:100%;padding:25px 14px;box-shadow:8px 8px 0 #000;}
-  .subtitle{font-size:clamp(11px,3.2vw,14px);}
-  .character-title,.hub-title{font-size:clamp(17px,5vw,22px);}
-  .character-subtitle,.hub-subtitle{font-size:10px;}
-  .character-card{min-height:220px;padding:18px 12px;}
-  .character-grid,.hub-cards{gap:15px;}
-  .arcade-btn{font-size:clamp(11px,3.2vw,16px);padding:13px 15px;}
-  .small-btn{font-size:10px;padding:10px 12px;}
-  .mission-strip{padding:13px 12px;font-size:11px;}
-  .panel-title{font-size:13px;}
-  .bank-card{width:calc(50% - 5px);min-height:76px;}
-  .bank-card .formula{font-size:clamp(20px,6vw,28px);}
-  .reaction-builder{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;}
-  .reaction-slot{width:100%;min-width:0;min-height:76px;}
-  .construction-actions,.balance-controls,.hint-row,.modal-actions{width:100%;}
-  .construction-actions .arcade-btn,
-  .balance-controls .arcade-btn,
-  .hint-row .arcade-btn,
-  .modal-actions .arcade-btn{flex:1 1 140px;}
-  .coeff-input{width:62px;height:50px;}
-  .formula-display{min-width:62px;padding:9px 7px;}
-  .atom-board{gap:8px;}
-  .element-row{grid-template-columns:38px 54px minmax(0,1fr);gap:6px;}
-  .atom-column{padding:10px;}
-  .atom-column-title{font-size:11px;}
-  .element-symbol{width:36px;height:36px;font-size:13px;}
-  .atom-count{font-size:9px;}
-  .atom-count strong{font-size:15px;}
-  .atom-ball{width:24px;height:24px;font-size:7px;}
-  .reward-box{font-size:10px;padding:10px 12px;}
-  .reward-stars{font-size:30px;letter-spacing:4px;}
-  .modal-card{padding:20px 14px;border-width:5px;}
-  .modal-title{font-size:16px;}
-  .modal-text{font-size:11px;line-height:1.8;}
-  .toast{bottom:max(18px,var(--siga-safe-bottom));font-size:10px;padding:12px 14px;}
-  .xp-pop{font-size:clamp(18px,6vw,25px);}
+  html,body{font-size:clamp(13px,3.5vw,16px);}
+  .screen{padding: max(8px,env(safe-area-inset-top)) max(8px,env(safe-area-inset-right)) max(12px,env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left));}
+  button,.arcade-btn{min-height:44px;max-width:100%;padding:10px 12px;font-size:clamp(11px,3.2vw,15px);}
+  input,select,textarea{min-height:44px;font-size:16px!important;}
+  .home-card,.story-card,.panel,.card,.modal,.guide-card,.challenge-card,.mission-card,.content-card,.l3-panel,.rlab-c4-panel{box-sizing:border-box;width:min(100%,96vw);max-width:96vw;}
+  .button-row,.input-row,.choices,.choice-grid,.stats,.hud,.reward-row,.l3-c4-actions,.wb-continue-row{flex-wrap:wrap;}
+  .equation,.reaction,.chemical-equation,.formula,.problem,.question,.rlab-c3-equation-wrap{max-width:100%;}
+  .equation,.reaction,.chemical-equation,.rlab-c3-equation-wrap{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;}
+  .map-screen,.map-container,.adventure-map,.candy-map,#adventureMap{max-width:100%;}
+  .map-screen{overflow-x:hidden;}
+  #hcLiveBank,#cleanLiveRewardPopup{max-width:calc(100vw - 16px);}
+  .l3-c4-actions{gap:8px;}
+  .l3-c4-actions button{flex:1 1 auto;}
+  /* Preserve the game's own map positioning; only prevent viewport overflow. */
+  .level-node{max-width:24vw;max-height:24vw;}
+  *{overflow-wrap:anywhere;}
 }
-@media (max-width:430px){
-  .game-stats .game-stat,.stats .stat{padding:7px 8px;font-size:9px;border-width:3px;box-shadow:3px 3px 0 #000;}
-  .game-title{font-size:15px;}
-  .formula-bank{gap:7px;}
-  .bank-card{width:calc(50% - 4px);}
-  .reaction-builder{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);}
-  .reaction-slot{min-height:68px;}
-  .token span{font-size:19px;}
+@media (max-width:380px){
+  .screen{padding-left:6px;padding-right:6px;}
+  button,.arcade-btn{padding:9px 10px;font-size:11px;}
+  .level-node{max-width:22vw;max-height:22vw;}
 }
-@media (max-height:560px) and (orientation:landscape){
-  .screen{padding-top:max(6px,var(--siga-safe-top));padding-bottom:max(6px,var(--siga-safe-bottom));}
-  .story-actor{bottom:18%;}
-  .dialogue-box{min-height:95px;margin-bottom:8px;padding:10px 14px;}
-  .story-controls{bottom:max(8px,var(--siga-safe-bottom));}
-  .map-screen #adventureMap.saga-map{height:calc(100dvh - 110px)!important;min-height:500px!important;}
-  .modal-card{max-height:86dvh;}
+@media (max-width:900px) and (orientation:landscape){
+  .screen{min-height:100dvh;padding-top:max(6px,env(safe-area-inset-top));padding-bottom:max(8px,env(safe-area-inset-bottom));}
+  .home-card,.story-card,.panel,.card,.modal,.l3-panel,.rlab-c4-panel{max-height:calc(100dvh - 16px);overflow-y:auto;-webkit-overflow-scrolling:touch;}
 }
-@media (prefers-reduced-motion:reduce){
-  *,*::before,*::after{
-    scroll-behavior:auto!important;
-    animation-duration:.001ms!important;
-    animation-iteration-count:1!important;
-    transition-duration:.001ms!important;
-  }
+@media (hover:none) and (pointer:coarse){
+  button,.arcade-btn,[role="button"]{touch-action:manipulation;}
+  [draggable="true"],.draggable,.drag-item,.drag-card,.dragObject,.drag-object,.drop-zone,.dropZone,.drop-target{cursor:grab;}
 }
 </style>
-
-<link id="SIGA_PWA_MANIFEST" rel="manifest" href="./manifest.json">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="STOICH WORLD">
-<meta name="application-name" content="STOICH WORLD">
-
 </head>
 
 <body>
@@ -15631,60 +15438,6 @@ html:has(#l3Challenge4Step2Root),body:has(#l3Challenge4Step2Root){overflow-x:hid
   window.__pyStartLearningTypewriter=startLearningTypewriter;
 })();
 </script>
-
-<script id="SIGA_RESPONSIVE_TOUCH_PWA_v1">
-(function(){
-  'use strict';
-
-  /* Keep the game viewport synchronized with mobile browser UI changes. */
-  function syncViewport(){
-    var vv=window.visualViewport;
-    var h=vv&&vv.height?vv.height:window.innerHeight;
-    document.documentElement.style.setProperty('--siga-vh',Math.round(h)+'px');
-    document.documentElement.style.setProperty('--siga-vw',Math.round(vv&&vv.width?vv.width:window.innerWidth)+'px');
-  }
-  syncViewport();
-  window.addEventListener('resize',syncViewport,{passive:true});
-  window.addEventListener('orientationchange',function(){setTimeout(syncViewport,50);setTimeout(syncViewport,300);},{passive:true});
-  if(window.visualViewport)window.visualViewport.addEventListener('resize',syncViewport,{passive:true});
-
-  /* Prevent accidental double-tap zoom on game controls without disabling
-     normal page pinch-zoom accessibility. */
-  document.addEventListener('dblclick',function(e){
-    var t=e.target&&e.target.closest?e.target.closest('button,.arcade-btn,.small-btn,.level-node,.character-card,.hub-card'):null;
-    if(t)e.preventDefault();
-  },{passive:false});
-
-  /* Give draggable game pieces reliable pointer capture. This complements,
-     rather than replaces, the existing drag handlers in the E-SIM. */
-  document.addEventListener('pointerdown',function(e){
-    var el=e.target&&e.target.closest?e.target.closest(
-      '.bank-card,.burger-ingredient,.hc-recipe-piece,.hc-partb-item,.hc-partc-material,'+
-      '.rlab-molecule,.rlab-molecule-slot,.rlab-reactor-slot,.rlab-c2-slot,'+
-      '.draggable,[data-draggable="true"]'
-    ):null;
-    if(!el)return;
-    if(e.pointerType==='touch'||e.pointerType==='pen'){
-      try{el.setPointerCapture(e.pointerId);}catch(_){}
-    }
-  },true);
-
-  /* Never let a synthetic browser drag image interfere with touch dragging. */
-  document.addEventListener('dragstart',function(e){
-    if(e.pointerType==='touch')e.preventDefault();
-  },true);
-
-  /* PWA registration. GitHub Pages/HTTPS is required for service workers. */
-  if('serviceWorker' in navigator && (location.protocol==='https:' || location.hostname==='localhost')){
-    window.addEventListener('load',function(){
-      navigator.serviceWorker.register('./sw.js',{scope:'./'}).catch(function(err){
-        console.warn('SIGA service worker registration failed:',err);
-      });
-    },{once:true});
-  }
-})();
-</script>
-
 </body>
 
 <style id="wb-step5-excellent-typewriter-fix">
