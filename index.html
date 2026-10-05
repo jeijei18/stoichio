@@ -5861,89 +5861,7 @@ body.rlab-transition-lock:has(#l3Challenge4Step1Root){
   font-weight:900!important;
 }
 </style>
-\n<style id="stoich-responsive-device-layer">
-/* Additive device-adaptation layer. Existing game content and JavaScript are preserved. */
-html{width:100%;max-width:100%;-webkit-text-size-adjust:100%;text-size-adjust:100%;overflow-x:clip;}
-body{width:100%;min-width:0;max-width:100%;min-height:100vh;min-height:100dvh;overflow-x:clip;overscroll-behavior-x:none;-webkit-tap-highlight-color:transparent;}
-img,video,canvas,svg{max-width:100%;}
-button,input,select,textarea{max-width:100%;}
-button{touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
-input,select,textarea{font-size:max(16px,1em);touch-action:manipulation;}
-/* Make drag targets respond to a finger/stylus without changing existing drag handlers. */
-[draggable="true"],.draggable,.drag-item,.drag-card,.dragObject,.drag-object,.drop-zone,.dropZone,.drop-target{ -webkit-user-select:none;user-select:none;-webkit-touch-callout:none;touch-action:pan-y; }
-.screen{width:100%;max-width:100%;min-width:0;box-sizing:border-box;}
-/* Let common rows wrap instead of getting cut off on narrow screens. */
-.button-row,.input-row,.choices,.choice-grid,.stats,.hud,.reward-row,.l3-c4-actions,.wb-continue-row{max-width:100%;}
-@media (min-width:601px) and (max-width:1100px){
-  .screen{padding-left:max(14px,env(safe-area-inset-left));padding-right:max(14px,env(safe-area-inset-right));}
-  button,.arcade-btn{min-height:44px;}
-  .home-card,.story-card,.panel,.card,.modal,.l3-panel,.rlab-c4-panel{max-width:96vw;}
-  .equation,.reaction,.chemical-equation,.rlab-c3-equation{max-width:100%;}
-}
-@media (max-width:600px){
-  html,body{font-size:clamp(13px,3.5vw,16px);}
-  .screen{padding: max(8px,env(safe-area-inset-top)) max(8px,env(safe-area-inset-right)) max(12px,env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left));}
-  button,.arcade-btn{min-height:44px;max-width:100%;padding:10px 12px;font-size:clamp(11px,3.2vw,15px);}
-  input,select,textarea{min-height:44px;font-size:16px!important;}
-  .home-card,.story-card,.panel,.card,.modal,.guide-card,.challenge-card,.mission-card,.content-card,.l3-panel,.rlab-c4-panel{box-sizing:border-box;width:min(100%,96vw);max-width:96vw;}
-  .button-row,.input-row,.choices,.choice-grid,.stats,.hud,.reward-row,.l3-c4-actions,.wb-continue-row{flex-wrap:wrap;}
-  .equation,.reaction,.chemical-equation,.formula,.problem,.question,.rlab-c3-equation-wrap{max-width:100%;}
-  .equation,.reaction,.chemical-equation,.rlab-c3-equation-wrap{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;}
-  .map-screen,.map-container,.adventure-map,.candy-map,#adventureMap{max-width:100%;}
-  .map-screen{overflow-x:hidden;}
-  #hcLiveBank,#cleanLiveRewardPopup{max-width:calc(100vw - 16px);}
-  .l3-c4-actions{gap:8px;}
-  .l3-c4-actions button{flex:1 1 auto;}
-  /* Preserve the game's own map positioning; only prevent viewport overflow. */
-  .level-node{max-width:24vw;max-height:24vw;}
-  *{overflow-wrap:anywhere;}
-}
-@media (max-width:380px){
-  .screen{padding-left:6px;padding-right:6px;}
-  button,.arcade-btn{padding:9px 10px;font-size:11px;}
-  .level-node{max-width:22vw;max-height:22vw;}
-}
-@media (max-width:900px) and (orientation:landscape){
-  .screen{min-height:100dvh;padding-top:max(6px,env(safe-area-inset-top));padding-bottom:max(8px,env(safe-area-inset-bottom));}
-  .home-card,.story-card,.panel,.card,.modal,.l3-panel,.rlab-c4-panel{max-height:calc(100dvh - 16px);overflow-y:auto;-webkit-overflow-scrolling:touch;}
-}
-@media (hover:none) and (pointer:coarse){
-  button,.arcade-btn,[role="button"]{touch-action:manipulation;}
-  [draggable="true"],.draggable,.drag-item,.drag-card,.dragObject,.drag-object,.drop-zone,.dropZone,.drop-target{cursor:grab;}
-}
-</style>
-<style id="stoich-mobile-compact-drag-fix">
-html,body{width:100%;max-width:100%;overflow-x:hidden;-webkit-text-size-adjust:100%;text-size-adjust:100%}
-body{min-width:0!important;margin:0!important;overscroll-behavior-x:none}
-*,*::before,*::after{box-sizing:border-box}
-img,canvas,video,svg{max-width:100%;height:auto}
-button,[role="button"]{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
-input,select,textarea{max-width:100%;font-size:16px}
-[draggable="true"],.drag-item,.drag-card,.dragObject,.ingredient,.ingredient-card,.missing-ingredient,.missingIngredient,.drop-zone,.dropZone{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
-@media(pointer:coarse){
-[draggable="true"],.drag-item,.drag-card,.dragObject,.ingredient,.ingredient-card,.missing-ingredient,.missingIngredient,.drop-zone,.dropZone{touch-action:none!important;-webkit-user-drag:none!important;cursor:grab}
-}
-@media(max-width:600px){
-html,body{font-size:clamp(13px,3.4vw,16px)!important}
-.screen{width:100%!important;max-width:100%!important;min-height:100dvh!important;padding:6px max(7px,env(safe-area-inset-right)) 8px max(7px,env(safe-area-inset-left))!important}
-h1{font-size:clamp(23px,7vw,36px)!important;line-height:1.05!important}
-h2{font-size:clamp(19px,5.8vw,29px)!important;line-height:1.1!important}
-h3{font-size:clamp(16px,5vw,24px)!important;line-height:1.15!important}
-.panel,.card,.guide-card,.challenge-card,.story-card,.content-card,.mission-card,.modal{max-width:94vw!important}
-button{min-height:42px;min-width:42px;padding:8px 11px}
-.equation,.reaction,.chemical-equation,.formula{max-width:100%!important;overflow-x:auto!important;overflow-y:hidden!important;white-space:nowrap;-webkit-overflow-scrolling:touch}
-.button-row,.input-row,.choices,.choice-grid,.stats,.reward-row{max-width:100%!important;flex-wrap:wrap!important}
-*{overflow-wrap:anywhere}
-}
-@media(max-width:380px){html,body{font-size:13px!important}button{min-height:40px;padding:7px 9px}}
-@media(max-width:900px) and (orientation:landscape){
-.screen{min-height:100dvh!important;padding-top:5px!important;padding-bottom:6px!important}
-.panel,.card,.guide-card,.challenge-card,.story-card{max-height:calc(100dvh - 12px);overflow-y:auto;-webkit-overflow-scrolling:touch}
-}
-@media(min-width:601px) and (max-width:1100px){
-.screen{width:100%!important;max-width:100%!important;padding-left:max(12px,env(safe-area-inset-left))!important;padding-right:max(12px,env(safe-area-inset-right))!important}
-}
-</style></head>
+</head>
 
 <body>
 
@@ -15469,36 +15387,7 @@ html:has(#l3Challenge4Step2Root),body:has(#l3Challenge4Step2Root){overflow-x:hid
   window.__pyStartLearningTypewriter=startLearningTypewriter;
 })();
 </script>
-<script id="stoich-touch-drag-bridge">
-(function(){
-"use strict";
-var active=null,ghost=null,startX=0,startY=0,moved=false;
-function touch(e){return e&&(e.pointerType==="touch"||e.pointerType==="pen")}
-function item(el){return el&&el.closest?el.closest('[draggable="true"],.drag-item,.drag-card,.dragObject,.ingredient,.ingredient-card,.missing-ingredient,.missingIngredient'):null}
-function zone(el){return el&&el.closest?el.closest('.drop-zone,.dropZone,[class*="drop-zone"],[class*="dropZone"]'):null}
-function clean(){if(ghost&&ghost.parentNode)ghost.parentNode.removeChild(ghost);ghost=null;if(active){active.style.removeProperty("opacity");active.style.removeProperty("touch-action")}active=null;moved=false}
-document.addEventListener("pointerdown",function(e){if(!touch(e))return;var t=item(e.target);if(!t)return;active=t;startX=e.clientX;startY=e.clientY;moved=false;try{t.setPointerCapture(e.pointerId)}catch(_){}t.style.touchAction="none"},{passive:false});
-document.addEventListener("pointermove",function(e){
-if(!active||!touch(e))return;
-var dx=e.clientX-startX,dy=e.clientY-startY;
-if(!moved&&Math.hypot(dx,dy)<6)return;
-moved=true;e.preventDefault();
-if(!ghost){ghost=active.cloneNode(true);ghost.style.position="fixed";ghost.style.pointerEvents="none";ghost.style.zIndex="2147483000";ghost.style.width=Math.min(active.getBoundingClientRect().width,220)+"px";ghost.style.opacity=".82";document.body.appendChild(ghost)}
-ghost.style.left=(e.clientX-ghost.offsetWidth/2)+"px";ghost.style.top=(e.clientY-ghost.offsetHeight/2)+"px";
-},{passive:false});
-document.addEventListener("pointerup",function(e){
-if(!active||!touch(e))return;
-var t=document.elementFromPoint(e.clientX,e.clientY),z=zone(t);
-if(moved&&z){
-try{var o=new Event("dragover",{bubbles:true,cancelable:true});z.dispatchEvent(o)}catch(_){}
-try{var d=new Event("drop",{bubbles:true,cancelable:true});z.dispatchEvent(d)}catch(_){}
-try{active.dispatchEvent(new Event("dragend",{bubbles:true}))}catch(_){}
-}
-clean();
-},{passive:false});
-document.addEventListener("pointercancel",function(e){if(active&&touch(e))clean()},{passive:false});
-})();
-</script></body>
+</body>
 
 <style id="wb-step5-excellent-typewriter-fix">
 .wb-step5-followup-enter{animation:wbStep5ExcellentIn .55s ease-out both;}
